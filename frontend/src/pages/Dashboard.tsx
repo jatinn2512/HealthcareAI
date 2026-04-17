@@ -107,6 +107,23 @@ const Dashboard = () => {
         ))}
       </section>
 
+      <section className="rounded-2xl border border-primary/30 bg-primary/10 p-4">
+        <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+          <div>
+            <p className="text-sm font-semibold text-foreground">Health Risk Report</p>
+            <p className="text-xs text-muted-foreground">See current risks, expected impact, and next recommended actions.</p>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="h-10 rounded-xl border-primary/50 bg-card/80 px-4 text-sm font-semibold"
+            onClick={() => navigate("/report")}
+          >
+            Open Report
+          </Button>
+        </div>
+      </section>
+
       <section className="grid gap-6 lg:grid-cols-2">
         <motion.article
           initial={{ opacity: 0, y: 16 }}
