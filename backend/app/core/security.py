@@ -54,24 +54,27 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     return hmac.compare_digest(computed_digest, expected_digest)
 
 
-def create_access_token(subject: str, token_version: int = 0) -> str:
+def create_access_token(subject: str, *, token_version: int = 0, role: str = "USER") -> str:
     expire = datetime.now(UTC) + timedelta(minutes=settings.access_token_expire_minutes)
     payload: dict[str, Any] = {
         "sub": subject,
         "type": "access",
         "tv": token_version,
+        "role": str(role).strip().upper() or "USER",
         "exp": expire,
         "iat": datetime.now(UTC),
     }
     return jwt.encode(payload, settings.secret_key, algorithm=ALGORITHM)
 
 
-def create_refresh_token(subject: str, jti: str | None = None) -> str:
+def create_refresh_token(subject: str, jti: str | None = None, *, token_version: int = 0, role: str = "USER") -> str:
     expire = datetime.now(UTC) + timedelta(days=settings.refresh_token_expire_days)
     payload: dict[str, Any] = {
         "sub": subject,
         "type": "refresh",
         "jti": jti or str(uuid4()),
+        "tv": token_version,
+        "role": str(role).strip().upper() or "USER",
         "exp": expire,
         "iat": datetime.now(UTC),
     }
