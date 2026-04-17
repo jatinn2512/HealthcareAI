@@ -15,6 +15,7 @@ import Pricing from "./pages/Pricing";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import InstantAlert from "./pages/InstantAlert";
+import Report from "./pages/Report";
 import HospitalLogin from "./pages/hospital/Login";
 import HospitalDashboard from "./pages/hospital/Dashboard";
 import Doctors from "./pages/hospital/Doctors";
@@ -143,6 +144,16 @@ const AnimatedRoutes = () => {
           }
         />
         <Route
+          path="/report"
+          element={
+            <ProtectedRoute>
+              <PageTransition>
+                <Report />
+              </PageTransition>
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/community"
           element={
             <ProtectedRoute>
@@ -201,6 +212,7 @@ const AnimatedRoutes = () => {
         <Route path="/patient/food" element={<Navigate to="/food" replace />} />
         <Route path="/patient/aqi" element={<Navigate to="/aqi" replace />} />
         <Route path="/patient/analysis" element={<Navigate to="/analysis" replace />} />
+        <Route path="/patient/report" element={<Navigate to="/report" replace />} />
         <Route path="/patient/community" element={<Navigate to="/community" replace />} />
         <Route path="/patient/pricing" element={<Navigate to="/pricing" replace />} />
         <Route path="/patient/instant-alert" element={<Navigate to="/instant-alert" replace />} />

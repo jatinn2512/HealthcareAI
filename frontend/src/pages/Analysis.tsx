@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Activity, BarChart3, Flame, Leaf, Wind } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import AppLayout from "@/components/AppLayout";
 import { Button } from "@/components/Button";
 
@@ -25,6 +26,7 @@ const chartSeries = {
 } as const;
 
 const Analysis = () => {
+  const navigate = useNavigate();
   const [tab, setTab] = useState<AnalysisTab>("overall");
   const [range, setRange] = useState<TimeRange>("last_week");
   const rows = chartSeries[range];
@@ -47,42 +49,50 @@ const Analysis = () => {
   return (
     <AppLayout title="Deep Analysis" subtitle="Detailed trends for health, food, AQI, and overall score.">
       <section className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="inline-flex rounded-2xl border border-border/60 bg-card/60 p-1">
+            {[
+              { key: "overall", label: "Overall" },
+              { key: "health", label: "Health" },
+              { key: "food", label: "Food" },
+              { key: "aqi", label: "AQI" },
+            ].map((item) => (
+              <Button
+                key={item.key}
+                type="button"
+                variant={tab === item.key ? "default" : "ghost"}
+                className="h-9 rounded-xl px-4 text-xs"
+                onClick={() => setTab(item.key as AnalysisTab)}
+              >
+                {item.label}
+              </Button>
+            ))}
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="h-9 rounded-xl border-primary/40 bg-card/70 px-4 text-xs font-semibold"
+            onClick={() => navigate("/report")}
+          >
+            Open Report
+          </Button>
+        </div>
+
         <div className="inline-flex rounded-2xl border border-border/60 bg-card/60 p-1">
           {[
-            { key: "overall", label: "Overall" },
-            { key: "health", label: "Health" },
-            { key: "food", label: "Food" },
-            { key: "aqi", label: "AQI" },
+            { key: "last_week", label: "Last Week" },
+            { key: "this_month", label: "This Month" },
           ].map((item) => (
             <Button
               key={item.key}
               type="button"
-              variant={tab === item.key ? "default" : "ghost"}
+              variant={range === item.key ? "default" : "ghost"}
               className="h-9 rounded-xl px-4 text-xs"
-              onClick={() => setTab(item.key as AnalysisTab)}
+              onClick={() => setRange(item.key as TimeRange)}
             >
               {item.label}
             </Button>
           ))}
-        </div>
-
-        <div className="inline-flex rounded-2xl border border-border/60 bg-card/60 p-1">
-          <Button
-            type="button"
-            variant={range === "last_week" ? "default" : "ghost"}
-            className="h-9 rounded-xl px-4 text-xs"
-            onClick={() => setRange("last_week")}
-          >
-            Last Week
-          </Button>
-          <Button
-            type="button"
-            variant={range === "this_month" ? "default" : "ghost"}
-            className="h-9 rounded-xl px-4 text-xs"
-            onClick={() => setRange("this_month")}
-          >
-            This Month
-          </Button>
         </div>
       </section>
 
