@@ -59,6 +59,8 @@ type BluetoothLike = {
   requestDevice: (options: { acceptAllDevices: boolean; optionalServices?: string[] }) => Promise<{ name?: string }>;
 };
 
+const WEARABLE_SYNCED_EVENT = "curasync:wearable-synced";
+
 const toIntOrNull = (value: string): number | null => {
   const normalized = value.trim();
   if (!normalized) return null;
@@ -237,6 +239,15 @@ const Settings = () => {
         `sleep: ${syncSummary.sleep ? "yes" : "no"}`,
       ];
       setWearableSuccess(`${response.data.message} (${segments.join(", ")})`);
+      window.dispatchEvent(
+        new CustomEvent(WEARABLE_SYNCED_EVENT, {
+          detail: {
+            source_device: payload.source_device,
+            synced: syncSummary,
+            at: new Date().toISOString(),
+          },
+        }),
+      );
     } catch (err) {
       setWearableError(err instanceof Error ? err.message : "Wearable sync failed.");
     } finally {

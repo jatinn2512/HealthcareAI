@@ -1,6 +1,23 @@
-import { useState } from "react";
-import { AlertTriangle, CheckCircle2, ClipboardCheck, ShieldAlert, Stethoscope } from "lucide-react";
+import { useEffect, useState } from "react";
+import {
+  Activity,
+  AlertTriangle,
+  CheckCircle2,
+  ClipboardCheck,
+  HeartPulse,
+  Moon,
+  ShieldAlert,
+  Stethoscope,
+  UtensilsCrossed,
+} from "lucide-react";
 import AppLayout from "@/components/AppLayout";
+import { apiClient } from "@/lib/apiClient";
+import {
+  CLINICAL_OVERVIEW_FALLBACKS,
+  getBpInterpretation,
+  getPulseInterpretation,
+  getSpo2Interpretation,
+} from "@/lib/clinicalOverview";
 
 const riskCards = [
   {
@@ -49,8 +66,80 @@ const nextSteps = [
   "Re-check analysis trend after 1 week and consult doctor if symptoms persist.",
 ] as const;
 
+type RiskOverview = {
+  sleep?: {
+    sleep_date?: string | null;
+    duration_minutes?: number | null;
+    quality_score?: number | null;
+  } | null;
+  activity?: {
+    steps?: number | null;
+    workout_minutes?: number | null;
+  } | null;
+  vitals?: {
+    heart_rate?: number | null;
+    systolic_bp?: number | null;
+    diastolic_bp?: number | null;
+    spo2?: number | null;
+    temperature_c?: number | null;
+    logged_at?: string | null;
+  } | null;
+  food?: {
+    latest_item?: string | null;
+    latest_alert?: string | null;
+  } | null;
+};
+
+const formatDateTime = (value: string | null | undefined): string => {
+  if (!value) return "N/A";
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return value;
+  return parsed.toLocaleString();
+};
+
 const Report = () => {
   const [view, setView] = useState<"user" | "doctor">("user");
+  const [overview, setOverview] = useState<RiskOverview | null>(null);
+  const [isLoadingOverview, setIsLoadingOverview] = useState(false);
+  const [overviewError, setOverviewError] = useState("");
+
+  useEffect(() => {
+    const loadOverview = async () => {
+      setIsLoadingOverview(true);
+      setOverviewError("");
+      try {
+        const response = await apiClient.get<RiskOverview>("/risk/overview");
+        if (response.error) {
+          throw new Error(response.error);
+        }
+        setOverview(response.data ?? null);
+      } catch (error) {
+        setOverviewError(error instanceof Error ? error.message : "Unable to load latest user overview.");
+      } finally {
+        setIsLoadingOverview(false);
+      }
+    };
+
+    void loadOverview();
+  }, []);
+
+  const sleepOverview = overview?.sleep ?? null;
+  const activityOverview = overview?.activity ?? null;
+  const vitalsOverview = overview?.vitals ?? null;
+  const foodOverview = overview?.food ?? null;
+
+  const resolvedSleepDuration = sleepOverview?.duration_minutes ?? CLINICAL_OVERVIEW_FALLBACKS.sleepDurationMinutes;
+  const resolvedSleepQuality = sleepOverview?.quality_score ?? CLINICAL_OVERVIEW_FALLBACKS.sleepQualityScore;
+  const resolvedActivitySteps = activityOverview?.steps ?? CLINICAL_OVERVIEW_FALLBACKS.activitySteps;
+  const resolvedWorkoutMinutes = activityOverview?.workout_minutes ?? CLINICAL_OVERVIEW_FALLBACKS.activityWorkoutMinutes;
+  const resolvedHeartRate = vitalsOverview?.heart_rate ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsHeartRate;
+  const resolvedSystolicBp = vitalsOverview?.systolic_bp ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsSystolicBp;
+  const resolvedDiastolicBp = vitalsOverview?.diastolic_bp ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsDiastolicBp;
+  const resolvedSpo2 = vitalsOverview?.spo2 ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsSpo2;
+  const resolvedTemperature = vitalsOverview?.temperature_c ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsTemperatureC;
+  const resolvedVitalsLoggedAt = vitalsOverview?.logged_at ?? null;
+  const resolvedFoodAlert = foodOverview?.latest_alert?.toUpperCase() || "N/A";
+  const resolvedFoodItem = foodOverview?.latest_item || "No latest meal";
 
   return (
     <AppLayout title="Risk Report" subtitle="Summary of risk, expected outcomes, and next action plan.">
@@ -114,6 +203,76 @@ const Report = () => {
                 <p className="text-xs text-muted-foreground">{item.note}</p>
               </article>
             ))}
+          </div>
+        </section>
+      ) : null}
+
+      {view === "user" ? (
+        <section className="rounded-3xl border border-border/60 bg-card/70 p-5">
+          <h2 className="mb-3 text-lg font-semibold">User Clinical Add-ons</h2>
+          {overviewError ? (
+            <div className="mb-3 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-500">{overviewError}</div>
+          ) : null}
+          {isLoadingOverview ? <p className="mb-3 text-sm text-muted-foreground">Loading latest user data...</p> : null}
+
+          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <article className="rounded-2xl border border-border/60 bg-background/60 p-3">
+              <p className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                <Moon className="h-3.5 w-3.5" />
+                Sleep
+              </p>
+              <p className="mt-1 text-sm font-semibold">{resolvedSleepDuration} mins</p>
+              <p className="text-[11px] text-muted-foreground">Quality: {resolvedSleepQuality}</p>
+            </article>
+            <article className="rounded-2xl border border-border/60 bg-background/60 p-3">
+              <p className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                <Activity className="h-3.5 w-3.5" />
+                Activity
+              </p>
+              <p className="mt-1 text-sm font-semibold">{resolvedActivitySteps} steps</p>
+              <p className="text-[11px] text-muted-foreground">Workout: {resolvedWorkoutMinutes} mins</p>
+            </article>
+            <article className="rounded-2xl border border-border/60 bg-background/60 p-3">
+              <p className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                <HeartPulse className="h-3.5 w-3.5" />
+                Cardiac Pulse
+              </p>
+              <p className="mt-1 text-sm font-semibold">HR {resolvedHeartRate} bpm</p>
+              <p className="text-[11px] text-muted-foreground">{getPulseInterpretation(resolvedHeartRate)}</p>
+            </article>
+            <article className="rounded-2xl border border-border/60 bg-background/60 p-3">
+              <p className="inline-flex items-center gap-1 text-xs text-muted-foreground">
+                <UtensilsCrossed className="h-3.5 w-3.5" />
+                Food Alert
+              </p>
+              <p className="mt-1 text-sm font-semibold">{resolvedFoodAlert}</p>
+              <p className="text-[11px] text-muted-foreground">{resolvedFoodItem}</p>
+            </article>
+          </div>
+
+          <div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+            <article className="rounded-2xl border border-border/60 bg-background/60 p-3">
+              <p className="text-xs text-muted-foreground">Blood Pressure</p>
+              <p className="mt-1 text-sm font-semibold">
+                {resolvedSystolicBp}/{resolvedDiastolicBp} mmHg
+              </p>
+              <p className="text-[11px] text-muted-foreground">{getBpInterpretation(resolvedSystolicBp, resolvedDiastolicBp)}</p>
+            </article>
+            <article className="rounded-2xl border border-border/60 bg-background/60 p-3">
+              <p className="text-xs text-muted-foreground">SpO2</p>
+              <p className="mt-1 text-sm font-semibold">{resolvedSpo2}%</p>
+              <p className="text-[11px] text-muted-foreground">{getSpo2Interpretation(resolvedSpo2)}</p>
+            </article>
+            <article className="rounded-2xl border border-border/60 bg-background/60 p-3">
+              <p className="text-xs text-muted-foreground">Temperature</p>
+              <p className="mt-1 text-sm font-semibold">{resolvedTemperature} °C</p>
+              <p className="text-[11px] text-muted-foreground">Core body temperature reading</p>
+            </article>
+            <article className="rounded-2xl border border-border/60 bg-background/60 p-3">
+              <p className="text-xs text-muted-foreground">Vitals Timestamp</p>
+              <p className="mt-1 text-sm font-semibold">{formatDateTime(resolvedVitalsLoggedAt)}</p>
+              <p className="text-[11px] text-muted-foreground">Latest clinical capture</p>
+            </article>
           </div>
         </section>
       ) : null}

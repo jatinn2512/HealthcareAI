@@ -34,6 +34,11 @@ class DoctorConnectResponse(BaseModel):
     patient: DoctorPatientLiteResponse
 
 
+class DoctorDisconnectResponse(BaseModel):
+    message: str
+    patient: DoctorPatientLiteResponse
+
+
 class DoctorPatientCardResponse(BaseModel):
     patient: DoctorPatientLiteResponse
     linked_at: datetime

@@ -100,6 +100,7 @@ def latest_overview(db: Session, user_id: int) -> dict:
             "sleep_date": latest_sleep.sleep_date,
             "duration_minutes": latest_sleep.duration_minutes,
             "quality_score": latest_sleep.quality_score,
+            "created_at": latest_sleep.created_at,
         }
         if latest_sleep
         else None
@@ -108,6 +109,9 @@ def latest_overview(db: Session, user_id: int) -> dict:
         {
             "steps": latest_activity.steps,
             "workout_minutes": latest_activity.workout_minutes,
+            "calories_burned": latest_activity.calories_burned,
+            "distance_km": latest_activity.distance_km,
+            "logged_at": latest_activity.logged_at,
         }
         if latest_activity
         else None
@@ -116,6 +120,10 @@ def latest_overview(db: Session, user_id: int) -> dict:
         {
             "heart_rate": latest_vitals.heart_rate,
             "systolic_bp": latest_vitals.systolic_bp,
+            "diastolic_bp": latest_vitals.diastolic_bp,
+            "spo2": latest_vitals.spo2,
+            "temperature_c": latest_vitals.temperature_c,
+            "logged_at": latest_vitals.logged_at,
         }
         if latest_vitals
         else None

@@ -9,6 +9,7 @@ import {
   RefreshCw,
   Stethoscope,
   UserRound,
+  X,
 } from "lucide-react";
 import AppLayout from "@/components/AppLayout";
 import { Button } from "@/components/Button";
@@ -17,6 +18,12 @@ import { doctors } from "@/data/hospitalData";
 import { getAccessToken, getApiBaseUrl } from "@/lib/auth";
 import { apiClient } from "@/lib/apiClient";
 import { scanStructuredDataFromImage } from "@/lib/cameraScan";
+import {
+  CLINICAL_OVERVIEW_FALLBACKS,
+  getBpInterpretation,
+  getPulseInterpretation,
+  getSpo2Interpretation,
+} from "@/lib/clinicalOverview";
 
 type DoctorPatientLite = {
   id: number;
@@ -28,6 +35,11 @@ type DoctorPatientLite = {
 type DoctorConnectResponse = {
   message: string;
   linked_at: string;
+  patient: DoctorPatientLite;
+};
+
+type DoctorDisconnectResponse = {
+  message: string;
   patient: DoctorPatientLite;
 };
 
@@ -52,6 +64,10 @@ type DoctorPatientReportResponse = {
     vitals?: {
       heart_rate?: number | null;
       systolic_bp?: number | null;
+      diastolic_bp?: number | null;
+      spo2?: number | null;
+      temperature_c?: number | null;
+      logged_at?: string | null;
     } | null;
     food?: {
       latest_item?: string | null;
@@ -124,7 +140,7 @@ const parseTokenCandidate = (value: string | null | undefined): string => {
 };
 
 const extractTokenFromScan = (parsed: Record<string, unknown> | null, rawValue: string): string => {
-  const tokenFields = ["token_code", "connect_code", "qr_payload", "code"];
+  const tokenFields = ["token_code", "connect_code", "qr_payload", "code", "patient_id", "id"];
   if (parsed) {
     for (const field of tokenFields) {
       const value = parsed[field];
@@ -154,6 +170,8 @@ const Doctor = () => {
   const [isExporting, setIsExporting] = useState(false);
   const [exportScope, setExportScope] = useState<ExportScope>("weekly");
   const [lastSyncedAt, setLastSyncedAt] = useState<Date | null>(null);
+  const [showConnectModal, setShowConnectModal] = useState(false);
+  const [isDisconnectingPatientId, setIsDisconnectingPatientId] = useState<number | null>(null);
 
   const activeDoctor = useMemo(() => doctors.find((item) => item.id === doctorId) ?? doctors[0], [doctorId]);
   const todayAppointments = useMemo(() => appointmentMap[doctorId] ?? [], [doctorId]);
@@ -228,9 +246,14 @@ const Doctor = () => {
 
   const handleConnectWithCode = async (overrideCode?: string) => {
     if (isConnecting) return;
-    const resolvedCode = (overrideCode ?? connectCode).trim();
+    const resolvedCode = parseTokenCandidate(overrideCode ?? connectCode);
     if (!resolvedCode) {
       setConnectError("Connect code is required.");
+      return;
+    }
+    if (/^\d+$/.test(resolvedCode)) {
+      setPatientIdInput(resolvedCode);
+      await handleConnectWithPatientId(resolvedCode);
       return;
     }
 
@@ -246,16 +269,19 @@ const Doctor = () => {
       setConnectCode("");
       await loadConnectedPatients();
       setSelectedPatientId(response.data.patient.id);
+      await loadSelectedReport(response.data.patient.id);
+      setShowConnectModal(false);
     } catch (error) {
-      setConnectError(error instanceof Error ? error.message : "Unable to connect patient.");
+      const message = error instanceof Error ? error.message : "Unable to connect patient.";
+      setConnectError(message.includes("Failed to fetch") ? "Failed to fetch: backend/API not reachable. Check backend server and API URL." : message);
     } finally {
       setIsConnecting(false);
     }
   };
 
-  const handleConnectWithPatientId = async () => {
+  const handleConnectWithPatientId = async (overrideId?: string) => {
     if (isConnecting) return;
-    const parsedId = Number(patientIdInput.trim());
+    const parsedId = Number((overrideId ?? patientIdInput).trim());
     if (!parsedId || Number.isNaN(parsedId) || parsedId <= 0) {
       setConnectError("Valid patient ID is required.");
       return;
@@ -273,8 +299,11 @@ const Doctor = () => {
       setPatientIdInput("");
       await loadConnectedPatients();
       setSelectedPatientId(response.data.patient.id);
+      await loadSelectedReport(response.data.patient.id);
+      setShowConnectModal(false);
     } catch (error) {
-      setConnectError(error instanceof Error ? error.message : "Unable to connect patient by ID.");
+      const message = error instanceof Error ? error.message : "Unable to connect patient by ID.";
+      setConnectError(message.includes("Failed to fetch") ? "Failed to fetch: backend/API not reachable. Check backend server and API URL." : message);
     } finally {
       setIsConnecting(false);
     }
@@ -295,10 +324,36 @@ const Doctor = () => {
       setConnectCode(detectedToken);
       await handleConnectWithCode(detectedToken);
       setShowScanModal(false);
+      setShowConnectModal(false);
     } catch (error) {
-      setConnectError(error instanceof Error ? error.message : "Unable to scan token.");
+      const message = error instanceof Error ? error.message : "Unable to scan token.";
+      setConnectError(message.includes("Failed to fetch") ? "Failed to fetch: backend/API not reachable. Check backend server and API URL." : message);
     } finally {
       setIsScanProcessing(false);
+    }
+  };
+
+  const handleDisconnectPatient = async (patientId: number) => {
+    if (isDisconnectingPatientId) return;
+
+    setIsDisconnectingPatientId(patientId);
+    setConnectError("");
+    setConnectSuccess("");
+    try {
+      const response = await apiClient.post<DoctorDisconnectResponse>("/doctor/disconnect", { patient_id: patientId });
+      if (response.error || !response.data) {
+        throw new Error(response.error || "Unable to disconnect patient.");
+      }
+      setConnectSuccess(`Disconnected: ${response.data.patient.full_name}`);
+      if (selectedPatientId === patientId) {
+        setSelectedPatientId(null);
+        setPatientReport(null);
+      }
+      await loadConnectedPatients();
+    } catch (error) {
+      setConnectError(error instanceof Error ? error.message : "Unable to disconnect patient.");
+    } finally {
+      setIsDisconnectingPatientId(null);
     }
   };
 
@@ -355,6 +410,16 @@ const Doctor = () => {
   const activityOverview = patientReport?.overview.activity ?? null;
   const vitalsOverview = patientReport?.overview.vitals ?? null;
   const foodOverview = patientReport?.overview.food ?? null;
+  const resolvedSleepDuration = sleepOverview?.duration_minutes ?? CLINICAL_OVERVIEW_FALLBACKS.sleepDurationMinutes;
+  const resolvedSleepQuality = sleepOverview?.quality_score ?? CLINICAL_OVERVIEW_FALLBACKS.sleepQualityScore;
+  const resolvedActivitySteps = activityOverview?.steps ?? CLINICAL_OVERVIEW_FALLBACKS.activitySteps;
+  const resolvedWorkoutMinutes = activityOverview?.workout_minutes ?? CLINICAL_OVERVIEW_FALLBACKS.activityWorkoutMinutes;
+  const resolvedHeartRate = vitalsOverview?.heart_rate ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsHeartRate;
+  const resolvedSystolicBp = vitalsOverview?.systolic_bp ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsSystolicBp;
+  const resolvedDiastolicBp = vitalsOverview?.diastolic_bp ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsDiastolicBp;
+  const resolvedSpo2 = vitalsOverview?.spo2 ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsSpo2;
+  const resolvedTemperature = vitalsOverview?.temperature_c ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsTemperatureC;
+  const resolvedVitalsLoggedAt = vitalsOverview?.logged_at ?? patientReport?.linked_at ?? null;
 
   return (
     <AppLayout title="Doctor Dashboard" subtitle="Appointments, patient connection via QR, and connected user reports.">
@@ -414,52 +479,13 @@ const Doctor = () => {
             Connect Patient
           </h2>
           <p className="mb-4 text-sm text-muted-foreground">
-            Scan patient's QR/code, enter connect code, or connect directly using patient ID.
+            Open popup to scan QR/code or enter patient ID. Connected patient data syncs automatically.
           </p>
-
-          {connectError ? <div className="mb-3 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-500">{connectError}</div> : null}
-          {connectSuccess ? (
-            <div className="mb-3 rounded-lg border border-green-500/30 bg-green-500/10 px-3 py-2 text-sm text-green-500">{connectSuccess}</div>
-          ) : null}
-
-          <div className="grid gap-2 sm:grid-cols-[1fr,auto]">
-            <input
-              value={connectCode}
-              onChange={(event) => setConnectCode(event.target.value)}
-              placeholder="Enter connect code (example: CSXXXXXXXXXX)"
-              className="h-10 rounded-xl border border-border/60 bg-card px-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/25"
-            />
-            <Button type="button" className="h-10 rounded-xl px-4 text-xs" onClick={() => void handleConnectWithCode()} disabled={isConnecting}>
-              <Link2 className="h-4 w-4" />
-              {isConnecting ? "Connecting..." : "Connect"}
-            </Button>
-          </div>
-
-          <div className="mt-2 grid gap-2 sm:grid-cols-[1fr,auto]">
-            <input
-              value={patientIdInput}
-              onChange={(event) => setPatientIdInput(event.target.value)}
-              placeholder="Or enter patient ID (example: 12)"
-              className="h-10 rounded-xl border border-border/60 bg-card px-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/25"
-            />
-            <Button type="button" variant="outline" className="h-10 rounded-xl px-4 text-xs" onClick={() => void handleConnectWithPatientId()} disabled={isConnecting}>
-              <UserRound className="h-4 w-4" />
-              Connect by ID
-            </Button>
-          </div>
-
-          <div className="mt-3">
-            <Button
-              type="button"
-              variant="outline"
-              className="h-9 rounded-xl px-3 text-xs"
-              onClick={() => setShowScanModal(true)}
-              disabled={isConnecting}
-            >
-              <Camera className="h-4 w-4" />
-              Scan QR / Photo
-            </Button>
-          </div>
+          {connectSuccess ? <div className="mb-3 rounded-lg border border-green-500/30 bg-green-500/10 px-3 py-2 text-sm text-green-500">{connectSuccess}</div> : null}
+          <Button type="button" className="h-10 rounded-xl px-4 text-xs" onClick={() => setShowConnectModal(true)}>
+            <Link2 className="h-4 w-4" />
+            Connect Patient
+          </Button>
         </article>
 
         <article className="glass-card rounded-3xl border-border/50 p-5 sm:p-6">
@@ -470,22 +496,37 @@ const Doctor = () => {
           <div className="space-y-2.5">
             {connectedPatients.length ? (
               connectedPatients.map((row) => (
-                <button
+                <article
                   key={row.patient.id}
-                  type="button"
-                  onClick={() => setSelectedPatientId(row.patient.id)}
                   className={`w-full rounded-2xl border px-3.5 py-3 text-left transition ${
                     selectedPatientId === row.patient.id
                       ? "border-primary/45 bg-primary/10"
-                      : "border-border/60 bg-card/55 hover:border-primary/30"
+                      : "border-border/60 bg-card/55"
                   }`}
                 >
-                  <p className="text-sm font-semibold">{row.patient.full_name}</p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    Age {row.patient.age} | {row.patient.gender || "N/A"}
-                  </p>
-                  <p className="mt-1 text-[11px] text-muted-foreground">Linked: {formatDateTime(row.linked_at)}</p>
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedPatientId(row.patient.id)}
+                    className="w-full text-left"
+                  >
+                    <p className="text-sm font-semibold">{row.patient.full_name}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Age {row.patient.age} | {row.patient.gender || "N/A"}
+                    </p>
+                    <p className="mt-1 text-[11px] text-muted-foreground">Linked: {formatDateTime(row.linked_at)}</p>
+                  </button>
+                  <div className="mt-3 flex justify-end">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="h-8 rounded-lg px-3 text-[11px] text-red-600 hover:text-red-700"
+                      disabled={isDisconnectingPatientId === row.patient.id}
+                      onClick={() => void handleDisconnectPatient(row.patient.id)}
+                    >
+                      {isDisconnectingPatientId === row.patient.id ? "Disconnecting..." : "Disconnect"}
+                    </Button>
+                  </div>
+                </article>
               ))
             ) : (
               <div className="rounded-2xl border border-dashed border-border/70 bg-card/45 px-3.5 py-4 text-sm text-muted-foreground">
@@ -563,23 +604,48 @@ const Doctor = () => {
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
               <article className="rounded-2xl border border-border/60 bg-card/55 p-3">
                 <p className="text-xs text-muted-foreground">Sleep</p>
-                <p className="mt-1 text-sm font-semibold">{sleepOverview?.duration_minutes ?? "N/A"} mins</p>
-                <p className="text-[11px] text-muted-foreground">Quality: {sleepOverview?.quality_score ?? "N/A"}</p>
+                <p className="mt-1 text-sm font-semibold">{resolvedSleepDuration} mins</p>
+                <p className="text-[11px] text-muted-foreground">Quality: {resolvedSleepQuality}</p>
               </article>
               <article className="rounded-2xl border border-border/60 bg-card/55 p-3">
                 <p className="text-xs text-muted-foreground">Activity</p>
-                <p className="mt-1 text-sm font-semibold">{activityOverview?.steps ?? "N/A"} steps</p>
-                <p className="text-[11px] text-muted-foreground">Workout: {activityOverview?.workout_minutes ?? "N/A"} mins</p>
+                <p className="mt-1 text-sm font-semibold">{resolvedActivitySteps} steps</p>
+                <p className="text-[11px] text-muted-foreground">Workout: {resolvedWorkoutMinutes} mins</p>
               </article>
               <article className="rounded-2xl border border-border/60 bg-card/55 p-3">
-                <p className="text-xs text-muted-foreground">Vitals</p>
-                <p className="mt-1 text-sm font-semibold">HR {vitalsOverview?.heart_rate ?? "N/A"}</p>
-                <p className="text-[11px] text-muted-foreground">SBP {vitalsOverview?.systolic_bp ?? "N/A"}</p>
+                <p className="text-xs text-muted-foreground">Cardiac Pulse</p>
+                <p className="mt-1 text-sm font-semibold">HR {resolvedHeartRate} bpm</p>
+                <p className="text-[11px] text-muted-foreground">{getPulseInterpretation(resolvedHeartRate)}</p>
               </article>
               <article className="rounded-2xl border border-border/60 bg-card/55 p-3">
                 <p className="text-xs text-muted-foreground">Food Alert</p>
                 <p className="mt-1 text-sm font-semibold">{foodOverview?.latest_alert?.toUpperCase() || "N/A"}</p>
                 <p className="text-[11px] text-muted-foreground">{foodOverview?.latest_item || "No latest meal"}</p>
+              </article>
+            </div>
+
+            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              <article className="rounded-2xl border border-border/60 bg-card/55 p-3">
+                <p className="text-xs text-muted-foreground">Blood Pressure</p>
+                <p className="mt-1 text-sm font-semibold">
+                  {resolvedSystolicBp}/{resolvedDiastolicBp} mmHg
+                </p>
+                <p className="text-[11px] text-muted-foreground">{getBpInterpretation(resolvedSystolicBp, resolvedDiastolicBp)}</p>
+              </article>
+              <article className="rounded-2xl border border-border/60 bg-card/55 p-3">
+                <p className="text-xs text-muted-foreground">SpO2</p>
+                <p className="mt-1 text-sm font-semibold">{resolvedSpo2}%</p>
+                <p className="text-[11px] text-muted-foreground">{getSpo2Interpretation(resolvedSpo2)}</p>
+              </article>
+              <article className="rounded-2xl border border-border/60 bg-card/55 p-3">
+                <p className="text-xs text-muted-foreground">Temperature</p>
+                <p className="mt-1 text-sm font-semibold">{resolvedTemperature} °C</p>
+                <p className="text-[11px] text-muted-foreground">Core body temperature reading</p>
+              </article>
+              <article className="rounded-2xl border border-border/60 bg-card/55 p-3">
+                <p className="text-xs text-muted-foreground">Vitals Timestamp</p>
+                <p className="mt-1 text-sm font-semibold">{formatDateTime(resolvedVitalsLoggedAt)}</p>
+                <p className="text-[11px] text-muted-foreground">Latest clinical capture</p>
               </article>
             </div>
 
@@ -633,6 +699,67 @@ const Doctor = () => {
           ))}
         </div>
       </section>
+
+      {showConnectModal ? (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4">
+          <div className="w-full max-w-xl rounded-3xl border border-border/60 bg-card p-5 shadow-2xl">
+            <div className="mb-4 flex items-center justify-between gap-3">
+              <h3 className="text-lg font-semibold">Connect Patient</h3>
+              <button
+                type="button"
+                className="rounded-lg border border-border/60 p-1.5 text-muted-foreground hover:text-foreground"
+                onClick={() => setShowConnectModal(false)}
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+
+            {connectError ? <div className="mb-3 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-500">{connectError}</div> : null}
+            {connectSuccess ? (
+              <div className="mb-3 rounded-lg border border-green-500/30 bg-green-500/10 px-3 py-2 text-sm text-green-500">{connectSuccess}</div>
+            ) : null}
+
+            <div className="grid gap-2 sm:grid-cols-[1fr,auto]">
+              <input
+                value={connectCode}
+                onChange={(event) => setConnectCode(event.target.value)}
+                placeholder="Enter connect code (example: CSXXXXXXXXXX)"
+                className="h-10 rounded-xl border border-border/60 bg-card px-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/25"
+              />
+              <Button type="button" className="h-10 rounded-xl px-4 text-xs" onClick={() => void handleConnectWithCode()} disabled={isConnecting}>
+                <Link2 className="h-4 w-4" />
+                {isConnecting ? "Connecting..." : "Connect"}
+              </Button>
+            </div>
+
+            <div className="mt-2 grid gap-2 sm:grid-cols-[1fr,auto]">
+              <input
+                value={patientIdInput}
+                onChange={(event) => setPatientIdInput(event.target.value)}
+                placeholder="Or enter patient ID (example: 12)"
+                className="h-10 rounded-xl border border-border/60 bg-card px-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/25"
+              />
+              <Button type="button" variant="outline" className="h-10 rounded-xl px-4 text-xs" onClick={() => void handleConnectWithPatientId()} disabled={isConnecting}>
+                <UserRound className="h-4 w-4" />
+                Connect by ID
+              </Button>
+            </div>
+
+            <div className="mt-3">
+              <Button
+                type="button"
+                variant="outline"
+                className="h-9 rounded-xl px-3 text-xs"
+                onClick={() => setShowScanModal(true)}
+                disabled={isConnecting}
+              >
+                <Camera className="h-4 w-4" />
+                Scan QR / Photo
+              </Button>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       <CameraCaptureModal
         open={showScanModal}

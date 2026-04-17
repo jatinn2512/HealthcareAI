@@ -7,6 +7,7 @@ from app.db.session import get_core_db, get_tracking_db
 from app.models.user import User
 from app.schemas.doctor import (
     DoctorConnectByIdRequest,
+    DoctorDisconnectResponse,
     DoctorConnectRequest,
     DoctorConnectResponse,
     DoctorConnectTokenResponse,
@@ -60,6 +61,19 @@ def connect_patient_by_id(
     return DoctorConnectResponse(
         message="Patient connected successfully.",
         linked_at=link.created_at,
+        patient=DoctorPatientLiteResponse(id=patient.id, full_name=patient.full_name, age=patient.age, gender=patient.gender),
+    )
+
+
+@router.post("/disconnect", response_model=DoctorDisconnectResponse)
+def disconnect_patient(
+    payload: DoctorConnectByIdRequest,
+    current_user: User = Depends(auth_service.get_current_user),
+    db: Session = Depends(get_core_db),
+):
+    patient = doctor_service.disconnect_doctor_from_patient(db, current_user.id, payload.patient_id)
+    return DoctorDisconnectResponse(
+        message="Patient disconnected successfully.",
         patient=DoctorPatientLiteResponse(id=patient.id, full_name=patient.full_name, age=patient.age, gender=patient.gender),
     )
 

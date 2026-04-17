@@ -6,6 +6,7 @@ from fastapi import HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.core.config import settings
 from app.models.doctor_link import DoctorPatientLink, PatientShareToken
 from app.models.risk_assessment import RiskAssessment
 from app.models.user import User
@@ -19,6 +20,16 @@ CONNECT_TOKEN_TTL_MINUTES = 30
 
 def _utc_now() -> datetime:
     return datetime.now(UTC)
+
+
+def _as_utc(value: datetime) -> datetime:
+    if value.tzinfo is None:
+        return value.replace(tzinfo=UTC)
+    return value.astimezone(UTC)
+
+
+def _self_connect_allowed() -> bool:
+    return settings.environment.strip().lower() == "development"
 
 
 def _normalize_token_code(token_code: str) -> str:
@@ -84,13 +95,13 @@ def connect_doctor_to_patient(db: Session, doctor_user: User, token_code: str) -
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Connect token is revoked. Ask patient for a new token.")
     if share_token.claimed_at is not None:
         raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Connect token already used.")
-    if share_token.expires_at <= now:
+    if _as_utc(share_token.expires_at) <= now:
         raise HTTPException(status_code=status.HTTP_410_GONE, detail="Connect token expired. Ask patient for a fresh token.")
 
     patient = db.scalar(select(User).where(User.id == share_token.patient_user_id, User.is_active.is_(True)))
     if not patient:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Patient account no longer exists.")
-    if patient.id == doctor_user.id:
+    if patient.id == doctor_user.id and not _self_connect_allowed():
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="You cannot connect to your own account.")
 
     link = db.scalar(
@@ -116,7 +127,7 @@ def connect_doctor_to_patient_by_id(db: Session, doctor_user: User, patient_user
     patient = db.scalar(select(User).where(User.id == patient_user_id, User.is_active.is_(True)))
     if not patient:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Patient not found.")
-    if patient.id == doctor_user.id:
+    if patient.id == doctor_user.id and not _self_connect_allowed():
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="You cannot connect to your own account.")
 
     now = _utc_now()
@@ -134,6 +145,25 @@ def connect_doctor_to_patient_by_id(db: Session, doctor_user: User, patient_user
     db.commit()
     db.refresh(link)
     return link, patient
+
+
+def disconnect_doctor_from_patient(db: Session, doctor_user_id: int, patient_user_id: int) -> User:
+    link = db.scalar(
+        select(DoctorPatientLink).where(
+            DoctorPatientLink.doctor_user_id == doctor_user_id,
+            DoctorPatientLink.patient_user_id == patient_user_id,
+        )
+    )
+    if not link:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Patient is not connected to your doctor account.")
+
+    patient = db.scalar(select(User).where(User.id == patient_user_id, User.is_active.is_(True)))
+    if not patient:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Patient not found.")
+
+    db.delete(link)
+    db.commit()
+    return patient
 
 
 def list_doctor_patients(db: Session, doctor_user_id: int) -> list[tuple[DoctorPatientLink, User]]:

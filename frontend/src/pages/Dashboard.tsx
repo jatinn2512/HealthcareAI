@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
   Activity,
+  Bluetooth,
   Copy,
   Flame,
   Footprints,
@@ -19,13 +20,6 @@ import AppLayout from "@/components/AppLayout";
 import { Button } from "@/components/Button";
 import { apiClient } from "@/lib/apiClient";
 import { useAuth } from "@/lib/authContext";
-
-const stats = [
-  { label: "Steps", value: "8,432", target: "10,000", icon: Footprints, color: "text-health-teal", bg: "bg-health-teal/12", percent: 84 },
-  { label: "Calories", value: "1,845", target: "2,200", icon: Flame, color: "text-health-rose", bg: "bg-health-rose/12", percent: 84 },
-  { label: "Sleep", value: "7.2h", target: "8h", icon: Moon, color: "text-health-indigo", bg: "bg-health-indigo/12", percent: 90 },
-  { label: "Heart Rate", value: "72", target: "bpm", icon: HeartPulse, color: "text-health-cyan", bg: "bg-health-cyan/12", percent: 100 },
-] as const;
 
 const weeklyData = [
   { day: "Mon", steps: 6200 },
@@ -63,7 +57,10 @@ const quickActions = [
   { label: "Log Symptoms", icon: Stethoscope, path: "/health" },
   { label: "Add Meal", icon: UtensilsCrossed, path: "/food" },
   { label: "Check AQI", icon: Wind, path: "/aqi" },
+  { label: "Sync Watch", icon: Bluetooth, path: "/settings" },
 ] as const;
+
+const WEARABLE_SYNCED_EVENT = "curasync:wearable-synced";
 
 type DoctorConnectTokenResponse = {
   token_code: string;
@@ -78,6 +75,30 @@ type DoctorConnectTokenResponse = {
   };
 };
 
+type RiskOverview = {
+  sleep?: {
+    sleep_date?: string | null;
+    duration_minutes?: number | null;
+    quality_score?: number | null;
+    created_at?: string | null;
+  } | null;
+  activity?: {
+    steps?: number | null;
+    workout_minutes?: number | null;
+    calories_burned?: number | null;
+    distance_km?: number | null;
+    logged_at?: string | null;
+  } | null;
+  vitals?: {
+    heart_rate?: number | null;
+    systolic_bp?: number | null;
+    diastolic_bp?: number | null;
+    spo2?: number | null;
+    temperature_c?: number | null;
+    logged_at?: string | null;
+  } | null;
+};
+
 const formatLocalDateTime = (isoValue: string): string => {
   const parsed = new Date(isoValue);
   if (Number.isNaN(parsed.getTime())) return isoValue;
@@ -86,6 +107,8 @@ const formatLocalDateTime = (isoValue: string): string => {
 
 const Dashboard = () => {
   const [now, setNow] = useState<Date>(() => new Date());
+  const [riskOverview, setRiskOverview] = useState<RiskOverview | null>(null);
+  const [wearableLastSyncAt, setWearableLastSyncAt] = useState<string | null>(null);
   const [doctorConnectToken, setDoctorConnectToken] = useState<DoctorConnectTokenResponse | null>(null);
   const [isGeneratingDoctorToken, setIsGeneratingDoctorToken] = useState(false);
   const [doctorConnectError, setDoctorConnectError] = useState("");
@@ -95,12 +118,82 @@ const Dashboard = () => {
   const maxSteps = Math.max(...weeklyData.map((row) => row.steps));
   const resolvedName = user?.full_name || "User";
   const insights = useMemo(() => getTimeBasedInsights(now.getHours()), [now]);
+  const stats = useMemo(
+    () => [
+      {
+        label: "Steps",
+        value: `${riskOverview?.activity?.steps ?? 8432}`,
+        target: "10,000",
+        icon: Footprints,
+        color: "text-health-teal",
+        bg: "bg-health-teal/12",
+        percent: Math.min(100, Math.round(((riskOverview?.activity?.steps ?? 8432) / 10000) * 100)),
+      },
+      {
+        label: "Calories",
+        value: `${riskOverview?.activity?.calories_burned ?? 1845}`,
+        target: "2,200",
+        icon: Flame,
+        color: "text-health-rose",
+        bg: "bg-health-rose/12",
+        percent: Math.min(100, Math.round(((riskOverview?.activity?.calories_burned ?? 1845) / 2200) * 100)),
+      },
+      {
+        label: "Sleep",
+        value: `${(((riskOverview?.sleep?.duration_minutes ?? 432) / 60) || 0).toFixed(1)}h`,
+        target: "8h",
+        icon: Moon,
+        color: "text-health-indigo",
+        bg: "bg-health-indigo/12",
+        percent: Math.min(100, Math.round(((riskOverview?.sleep?.duration_minutes ?? 432) / 480) * 100)),
+      },
+      {
+        label: "Heart Rate",
+        value: `${riskOverview?.vitals?.heart_rate ?? 72}`,
+        target: "bpm",
+        icon: HeartPulse,
+        color: "text-health-cyan",
+        bg: "bg-health-cyan/12",
+        percent: 100,
+      },
+    ],
+    [riskOverview],
+  );
 
   useEffect(() => {
     const timer = window.setInterval(() => {
       setNow(new Date());
     }, 60_000);
     return () => window.clearInterval(timer);
+  }, []);
+
+  const loadRiskOverview = async () => {
+    const response = await apiClient.get<RiskOverview>("/risk/overview");
+    if (response.data) {
+      setRiskOverview(response.data);
+      const latestTimestamp =
+        response.data.vitals?.logged_at ||
+        response.data.activity?.logged_at ||
+        response.data.sleep?.created_at ||
+        null;
+      if (latestTimestamp) {
+        setWearableLastSyncAt(latestTimestamp);
+      }
+    }
+  };
+
+  useEffect(() => {
+    void loadRiskOverview();
+    const refresh = () => {
+      void loadRiskOverview();
+    };
+    const intervalId = window.setInterval(refresh, 20_000);
+    window.addEventListener(WEARABLE_SYNCED_EVENT, refresh as EventListener);
+    return () => {
+      window.clearInterval(intervalId);
+      window.removeEventListener(WEARABLE_SYNCED_EVENT, refresh as EventListener);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleGenerateDoctorConnectToken = async () => {
@@ -163,6 +256,11 @@ const Dashboard = () => {
           </motion.article>
         ))}
       </section>
+      {wearableLastSyncAt ? (
+        <section className="rounded-xl border border-health-teal/30 bg-health-teal/10 px-4 py-2.5 text-xs text-health-teal">
+          Wearable data synced at {formatLocalDateTime(wearableLastSyncAt)}
+        </section>
+      ) : null}
 
       <section className="rounded-2xl border border-primary/30 bg-primary/10 p-4">
         <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
