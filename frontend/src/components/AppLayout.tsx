@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import HealthChatbot from "@/components/HealthChatbot";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/lib/authContext";
+import { clearHospitalRole } from "@/lib/hospitalRole";
 import {
   markAllNotificationsRead,
   markNotificationRead,
@@ -80,6 +81,10 @@ const AppLayout = ({ title, subtitle, centerHeader = false, hideHeader = false, 
     "/pricing": "Search plans and subscriptions...",
     "/profile": "Search profile details...",
     "/settings": "Search account settings...",
+    "/hospital/admin": "Search admin operations...",
+    "/hospital/doctor": "Search appointments and rounds...",
+    "/hospital/nurse": "Search nurse duties and rounds...",
+    "/hospital/staff-account": "Search staff operations...",
     "/hospital/dashboard": "Search hospital analytics...",
     "/hospital/doctors": "Search doctors and duty roster...",
     "/hospital/staff": "Search staff tasks...",
@@ -131,6 +136,7 @@ const AppLayout = ({ title, subtitle, centerHeader = false, hideHeader = false, 
     setIsLoggingOut(true);
 
     try {
+      clearHospitalRole();
       await logout();
       navigate("/", { replace: true });
     } finally {

@@ -17,9 +17,16 @@ import {
 } from "lucide-react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/Button";
+import { HOSPITAL_ROLE_LABELS, readHospitalRole, resolveHospitalRoleLanding, type HospitalRole } from "@/lib/hospitalRole";
 import { cn } from "@/lib/utils";
 
-const patientLinks = [
+type NavItem = {
+  label: string;
+  to: string;
+  icon: (typeof Activity);
+};
+
+const patientLinks: NavItem[] = [
   { label: "Dashboard", to: "/dashboard", icon: LayoutDashboard },
   { label: "Health", to: "/health", icon: HeartPulse },
   // { label: "Food", to: "/food", icon: Leaf },
@@ -31,15 +38,42 @@ const patientLinks = [
   { label: "Settings", to: "/settings", icon: Settings },
 ] as const;
 
-const hospitalLinks = [
-  { label: "Dashboard", to: "/hospital/dashboard", icon: LayoutDashboard },
-  { label: "Doctors", to: "/hospital/doctors", icon: Stethoscope },
-  { label: "Staff", to: "/hospital/staff", icon: ClipboardList },
-  { label: "Resources", to: "/hospital/resources", icon: BedDouble },
-  { label: "Emergency", to: "/hospital/emergency", icon: Siren },
-  { label: "Profile", to: "/hospital/profile", icon: UserRound },
-  { label: "Settings", to: "/hospital/settings", icon: Settings },
-] as const;
+const hospitalLinksByRole: Record<HospitalRole, NavItem[]> = {
+  admin: [
+    { label: "Admin Dashboard", to: "/hospital/admin", icon: LayoutDashboard },
+    { label: "Doctors", to: "/hospital/doctors", icon: Stethoscope },
+    { label: "Nurse Tasks", to: "/hospital/staff", icon: ClipboardList },
+    { label: "Resources", to: "/hospital/resources", icon: BedDouble },
+    { label: "Emergency", to: "/hospital/emergency", icon: Siren },
+    { label: "Profile", to: "/hospital/profile", icon: UserRound },
+    { label: "Settings", to: "/hospital/settings", icon: Settings },
+    { label: "Switch Role", to: "/hospital/role-select", icon: Users },
+  ],
+  doctor: [
+    { label: "Doctor Dashboard", to: "/hospital/doctor", icon: Stethoscope },
+    { label: "Emergency", to: "/hospital/emergency", icon: Siren },
+    { label: "Profile", to: "/hospital/profile", icon: UserRound },
+    { label: "Settings", to: "/hospital/settings", icon: Settings },
+    { label: "Switch Role", to: "/hospital/role-select", icon: Users },
+  ],
+  nurse: [
+    { label: "Nurse Dashboard", to: "/hospital/nurse", icon: ClipboardList },
+    { label: "Resources", to: "/hospital/resources", icon: BedDouble },
+    { label: "Emergency", to: "/hospital/emergency", icon: Siren },
+    { label: "Profile", to: "/hospital/profile", icon: UserRound },
+    { label: "Settings", to: "/hospital/settings", icon: Settings },
+    { label: "Switch Role", to: "/hospital/role-select", icon: Users },
+  ],
+  staff: [
+    { label: "Staff Dashboard", to: "/hospital/staff-account", icon: Users },
+    { label: "Resources", to: "/hospital/resources", icon: BedDouble },
+    { label: "Profile", to: "/hospital/profile", icon: UserRound },
+    { label: "Settings", to: "/hospital/settings", icon: Settings },
+    { label: "Switch Role", to: "/hospital/role-select", icon: ClipboardList },
+  ],
+};
+
+const hospitalGuestLinks: NavItem[] = [{ label: "Choose Role", to: "/hospital/role-select", icon: Users }];
 
 const defaultHospitalRedirects = [
   { label: "Doctors", to: "/doctors", icon: Stethoscope },
@@ -58,12 +92,17 @@ const Sidebar = ({ onNavigate }: SidebarProps) => {
   const isHospitalRoute =
     location.pathname.startsWith("/hospital") ||
     defaultHospitalRedirects.some((route) => location.pathname === route.to);
-  const links = isHospitalRoute ? hospitalLinks : patientLinks;
-  const homeRoute = isHospitalRoute ? "/hospital/dashboard" : "/dashboard";
-  const subtitle = isHospitalRoute ? "Hospital Console" : "Health Companion";
-  const utilityTitle = isHospitalRoute ? "Emergency Desk" : "Quick Safety";
-  const utilityLabel = isHospitalRoute ? "Open Alerts" : "Open Instant Alert";
-  const utilityPath = isHospitalRoute ? "/hospital/emergency" : "/instant-alert";
+  const selectedRole = isHospitalRoute ? readHospitalRole() : null;
+  const links = isHospitalRoute ? (selectedRole ? hospitalLinksByRole[selectedRole] : hospitalGuestLinks) : patientLinks;
+  const homeRoute = isHospitalRoute ? resolveHospitalRoleLanding(selectedRole) : "/dashboard";
+  const subtitle = isHospitalRoute
+    ? selectedRole
+      ? `${HOSPITAL_ROLE_LABELS[selectedRole]} Panel`
+      : "Hospital Console"
+    : "Health Companion";
+  const utilityTitle = isHospitalRoute ? "Role Access" : "Quick Safety";
+  const utilityLabel = isHospitalRoute ? "Switch Role" : "Open Instant Alert";
+  const utilityPath = isHospitalRoute ? "/hospital/role-select" : "/instant-alert";
 
   return (
     <div className="flex h-full min-h-0 flex-col">

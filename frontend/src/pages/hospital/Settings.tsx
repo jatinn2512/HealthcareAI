@@ -6,6 +6,7 @@ import { Button } from "@/components/Button";
 import useTheme from "@/hooks/useTheme";
 import { defaultHospitalSettings, type HospitalSettingsData } from "@/data/hospitalData";
 import { useAuth } from "@/lib/authContext";
+import { clearHospitalRole } from "@/lib/hospitalRole";
 
 const STORAGE_KEY_PREFIX = "curasync-hospital-settings";
 
@@ -73,6 +74,7 @@ const Settings = () => {
   };
 
   const handleLogout = async () => {
+    clearHospitalRole();
     await logout();
     navigate("/");
   };

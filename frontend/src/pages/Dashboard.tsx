@@ -2,10 +2,13 @@ import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
   Activity,
+  Copy,
   Flame,
   Footprints,
   HeartPulse,
+  Link2,
   Moon,
+  QrCode,
   Sparkles,
   Stethoscope,
   UtensilsCrossed,
@@ -14,6 +17,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import AppLayout from "@/components/AppLayout";
 import { Button } from "@/components/Button";
+import { apiClient } from "@/lib/apiClient";
 import { useAuth } from "@/lib/authContext";
 
 const stats = [
@@ -61,8 +65,31 @@ const quickActions = [
   { label: "Check AQI", icon: Wind, path: "/aqi" },
 ] as const;
 
+type DoctorConnectTokenResponse = {
+  token_code: string;
+  qr_payload: string;
+  expires_at: string;
+  created_at: string;
+  patient: {
+    id: number;
+    full_name: string;
+    age: number;
+    gender: string | null;
+  };
+};
+
+const formatLocalDateTime = (isoValue: string): string => {
+  const parsed = new Date(isoValue);
+  if (Number.isNaN(parsed.getTime())) return isoValue;
+  return parsed.toLocaleString();
+};
+
 const Dashboard = () => {
   const [now, setNow] = useState<Date>(() => new Date());
+  const [doctorConnectToken, setDoctorConnectToken] = useState<DoctorConnectTokenResponse | null>(null);
+  const [isGeneratingDoctorToken, setIsGeneratingDoctorToken] = useState(false);
+  const [doctorConnectError, setDoctorConnectError] = useState("");
+  const [doctorConnectSuccess, setDoctorConnectSuccess] = useState("");
   const navigate = useNavigate();
   const { user } = useAuth();
   const maxSteps = Math.max(...weeklyData.map((row) => row.steps));
@@ -75,6 +102,36 @@ const Dashboard = () => {
     }, 60_000);
     return () => window.clearInterval(timer);
   }, []);
+
+  const handleGenerateDoctorConnectToken = async () => {
+    if (isGeneratingDoctorToken) return;
+    setDoctorConnectError("");
+    setDoctorConnectSuccess("");
+    setIsGeneratingDoctorToken(true);
+
+    try {
+      const response = await apiClient.post<DoctorConnectTokenResponse>("/doctor/share-token");
+      if (response.error || !response.data) {
+        throw new Error(response.error || "Unable to generate doctor connect token.");
+      }
+      setDoctorConnectToken(response.data);
+      setDoctorConnectSuccess("Doctor connect token generated. Share this QR/code with your doctor.");
+    } catch (err: unknown) {
+      setDoctorConnectError(err instanceof Error ? err.message : "Unable to generate doctor connect token.");
+    } finally {
+      setIsGeneratingDoctorToken(false);
+    }
+  };
+
+  const handleCopyDoctorConnectValue = async (value: string, label: string) => {
+    try {
+      await navigator.clipboard.writeText(value);
+      setDoctorConnectError("");
+      setDoctorConnectSuccess(`${label} copied.`);
+    } catch {
+      setDoctorConnectError(`Unable to copy ${label.toLowerCase()}.`);
+    }
+  };
 
   return (
     <AppLayout title={`Welcome back, ${resolvedName}`} subtitle="Here's your health overview for today." centerHeader>
@@ -105,6 +162,23 @@ const Dashboard = () => {
             </div>
           </motion.article>
         ))}
+      </section>
+
+      <section className="rounded-2xl border border-primary/30 bg-primary/10 p-4">
+        <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+          <div>
+            <p className="text-sm font-semibold text-foreground">Health Risk Report</p>
+            <p className="text-xs text-muted-foreground">See current risks, expected impact, and next recommended actions.</p>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="h-10 rounded-xl border-primary/50 bg-card/80 px-4 text-sm font-semibold"
+            onClick={() => navigate("/report")}
+          >
+            Open Report
+          </Button>
+        </div>
       </section>
 
       <section className="grid gap-6 lg:grid-cols-2">
@@ -174,6 +248,91 @@ const Dashboard = () => {
             </motion.div>
           ))}
         </div>
+      </section>
+
+      <section className="glass-card rounded-3xl border-border/50 p-4 sm:p-5">
+        <div className="mb-4 flex flex-wrap items-start justify-between gap-2">
+          <div>
+            <h2 className="flex items-center gap-2 text-xl font-semibold">
+              <QrCode className="h-5 w-5 text-primary" />
+              Doctor Connect QR
+            </h2>
+            <p className="mt-1 text-xs text-muted-foreground">
+              Generate a secure code so doctor can connect and view your reports.
+            </p>
+          </div>
+          <Button
+            type="button"
+            className="h-9 rounded-lg px-3 text-xs"
+            onClick={() => void handleGenerateDoctorConnectToken()}
+            disabled={isGeneratingDoctorToken}
+          >
+            <Link2 className="h-4 w-4" />
+            {isGeneratingDoctorToken ? "Generating..." : doctorConnectToken ? "Regenerate" : "Generate"}
+          </Button>
+        </div>
+
+        {doctorConnectError ? (
+          <div className="mb-3 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-500">{doctorConnectError}</div>
+        ) : null}
+        {doctorConnectSuccess ? (
+          <div className="mb-3 rounded-lg border border-green-500/30 bg-green-500/10 px-3 py-2 text-sm text-green-500">{doctorConnectSuccess}</div>
+        ) : null}
+
+        {doctorConnectToken ? (
+          <div className="grid gap-4 lg:grid-cols-[240px,1fr]">
+            <div className="rounded-2xl border border-border/60 bg-card/60 p-3">
+              <img
+                src={`https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(doctorConnectToken.qr_payload)}`}
+                alt="Doctor connect QR"
+                className="mx-auto h-[220px] w-[220px] rounded-xl border border-border/60 bg-white p-2"
+              />
+              <p className="mt-2 text-center text-[11px] text-muted-foreground">If QR does not load, share connect code manually.</p>
+            </div>
+
+            <div className="space-y-3">
+              <div className="rounded-xl border border-border/60 bg-card/55 p-3">
+                <p className="text-xs text-muted-foreground">Connect Code</p>
+                <p className="mt-1 font-mono text-base font-semibold">{doctorConnectToken.token_code}</p>
+                <div className="mt-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="h-8 rounded-lg px-3 text-xs"
+                    onClick={() => void handleCopyDoctorConnectValue(doctorConnectToken.token_code, "Connect code")}
+                  >
+                    <Copy className="h-3.5 w-3.5" />
+                    Copy Code
+                  </Button>
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-border/60 bg-card/55 p-3">
+                <p className="text-xs text-muted-foreground">QR Payload</p>
+                <p className="mt-1 break-all font-mono text-xs">{doctorConnectToken.qr_payload}</p>
+                <div className="mt-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="h-8 rounded-lg px-3 text-xs"
+                    onClick={() => void handleCopyDoctorConnectValue(doctorConnectToken.qr_payload, "QR payload")}
+                  >
+                    <Copy className="h-3.5 w-3.5" />
+                    Copy Payload
+                  </Button>
+                </div>
+              </div>
+
+              <p className="text-xs text-muted-foreground">
+                Expires: <span className="font-medium text-foreground">{formatLocalDateTime(doctorConnectToken.expires_at)}</span>
+              </p>
+            </div>
+          </div>
+        ) : (
+          <div className="rounded-xl border border-dashed border-border/70 bg-card/35 px-3 py-4 text-sm text-muted-foreground">
+            Generate once, then doctor can scan this QR or enter the code from their dashboard.
+          </div>
+        )}
       </section>
 
       <motion.article

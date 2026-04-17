@@ -15,8 +15,13 @@ import Pricing from "./pages/Pricing";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
 import InstantAlert from "./pages/InstantAlert";
+import Report from "./pages/Report";
 import HospitalLogin from "./pages/hospital/Login";
-import HospitalDashboard from "./pages/hospital/Dashboard";
+import HospitalRoleSelect from "./pages/hospital/RoleSelect";
+import HospitalAdmin from "./pages/hospital/Admin";
+import HospitalDoctor from "./pages/hospital/Doctor";
+import HospitalNurse from "./pages/hospital/Nurse";
+import HospitalStaffAccount from "./pages/hospital/StaffAccount";
 import Doctors from "./pages/hospital/Doctors";
 import Staff from "./pages/hospital/Staff";
 import Resources from "./pages/hospital/Resources";
@@ -26,6 +31,7 @@ import HospitalSettings from "./pages/hospital/Settings";
 import NotFound from "./pages/NotFound";
 import PageTransition from "./components/PageTransition";
 import ProtectedRoute from "./components/ProtectedRoute";
+import HospitalRoleRoute from "./components/HospitalRoleRoute";
 import { AuthProvider } from "./lib/authContext";
 
 const AnimatedRoutes = () => {
@@ -143,6 +149,16 @@ const AnimatedRoutes = () => {
           }
         />
         <Route
+          path="/report"
+          element={
+            <ProtectedRoute>
+              <PageTransition>
+                <Report />
+              </PageTransition>
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/community"
           element={
             <ProtectedRoute>
@@ -201,11 +217,12 @@ const AnimatedRoutes = () => {
         <Route path="/patient/food" element={<Navigate to="/food" replace />} />
         <Route path="/patient/aqi" element={<Navigate to="/aqi" replace />} />
         <Route path="/patient/analysis" element={<Navigate to="/analysis" replace />} />
+        <Route path="/patient/report" element={<Navigate to="/report" replace />} />
         <Route path="/patient/community" element={<Navigate to="/community" replace />} />
         <Route path="/patient/pricing" element={<Navigate to="/pricing" replace />} />
         <Route path="/patient/instant-alert" element={<Navigate to="/instant-alert" replace />} />
         <Route path="/hospital" element={<Navigate to="/hospital/login" replace />} />
-        <Route path="/doctor" element={<Navigate to="/hospital/doctors" replace />} />
+        <Route path="/doctor" element={<Navigate to="/hospital/doctor" replace />} />
         <Route path="/doctor/login" element={<Navigate to="/hospital/login" replace />} />
         <Route path="/hospital-login" element={<Navigate to="/hospital/login" replace />} />
         <Route
@@ -217,12 +234,61 @@ const AnimatedRoutes = () => {
           }
         />
         <Route
-          path="/hospital/dashboard"
+          path="/hospital/role-select"
           element={
             <ProtectedRoute>
               <PageTransition>
-                <HospitalDashboard />
+                <HospitalRoleSelect />
               </PageTransition>
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/hospital/dashboard" element={<Navigate to="/hospital/admin" replace />} />
+        <Route
+          path="/hospital/admin"
+          element={
+            <ProtectedRoute>
+              <HospitalRoleRoute allowedRoles={["admin"]}>
+                <PageTransition>
+                  <HospitalAdmin />
+                </PageTransition>
+              </HospitalRoleRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/hospital/doctor"
+          element={
+            <ProtectedRoute>
+              <HospitalRoleRoute allowedRoles={["doctor"]}>
+                <PageTransition>
+                  <HospitalDoctor />
+                </PageTransition>
+              </HospitalRoleRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/hospital/nurse"
+          element={
+            <ProtectedRoute>
+              <HospitalRoleRoute allowedRoles={["nurse"]}>
+                <PageTransition>
+                  <HospitalNurse />
+                </PageTransition>
+              </HospitalRoleRoute>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/hospital/staff-account"
+          element={
+            <ProtectedRoute>
+              <HospitalRoleRoute allowedRoles={["staff"]}>
+                <PageTransition>
+                  <HospitalStaffAccount />
+                </PageTransition>
+              </HospitalRoleRoute>
             </ProtectedRoute>
           }
         />
@@ -234,9 +300,11 @@ const AnimatedRoutes = () => {
           path="/hospital/doctors"
           element={
             <ProtectedRoute>
-              <PageTransition>
-                <Doctors />
-              </PageTransition>
+              <HospitalRoleRoute allowedRoles={["admin"]}>
+                <PageTransition>
+                  <Doctors />
+                </PageTransition>
+              </HospitalRoleRoute>
             </ProtectedRoute>
           }
         />
@@ -248,9 +316,11 @@ const AnimatedRoutes = () => {
           path="/hospital/staff"
           element={
             <ProtectedRoute>
-              <PageTransition>
-                <Staff />
-              </PageTransition>
+              <HospitalRoleRoute allowedRoles={["admin"]}>
+                <PageTransition>
+                  <Staff />
+                </PageTransition>
+              </HospitalRoleRoute>
             </ProtectedRoute>
           }
         />
@@ -262,9 +332,11 @@ const AnimatedRoutes = () => {
           path="/hospital/resources"
           element={
             <ProtectedRoute>
-              <PageTransition>
-                <Resources />
-              </PageTransition>
+              <HospitalRoleRoute>
+                <PageTransition>
+                  <Resources />
+                </PageTransition>
+              </HospitalRoleRoute>
             </ProtectedRoute>
           }
         />
@@ -276,9 +348,11 @@ const AnimatedRoutes = () => {
           path="/hospital/emergency"
           element={
             <ProtectedRoute>
-              <PageTransition>
-                <Emergency />
-              </PageTransition>
+              <HospitalRoleRoute>
+                <PageTransition>
+                  <Emergency />
+                </PageTransition>
+              </HospitalRoleRoute>
             </ProtectedRoute>
           }
         />
@@ -286,9 +360,11 @@ const AnimatedRoutes = () => {
           path="/hospital/profile"
           element={
             <ProtectedRoute>
-              <PageTransition>
-                <HospitalProfile />
-              </PageTransition>
+              <HospitalRoleRoute>
+                <PageTransition>
+                  <HospitalProfile />
+                </PageTransition>
+              </HospitalRoleRoute>
             </ProtectedRoute>
           }
         />
@@ -296,9 +372,11 @@ const AnimatedRoutes = () => {
           path="/hospital/settings"
           element={
             <ProtectedRoute>
-              <PageTransition>
-                <HospitalSettings />
-              </PageTransition>
+              <HospitalRoleRoute>
+                <PageTransition>
+                  <HospitalSettings />
+                </PageTransition>
+              </HospitalRoleRoute>
             </ProtectedRoute>
           }
         />

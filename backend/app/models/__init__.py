@@ -1,5 +1,6 @@
 from app.models.aqi_snapshot import AqiSnapshot
 from app.models.dish_nutrition import HydrationLog, MealLog, NutritionGoal, RestaurantInteraction
+from app.models.doctor_link import DoctorPatientLink, PatientShareToken
 from app.models.risk_assessment import ActivityLog, FeatureEvent, RiskAssessment, SleepLog, VitalsLog
 from app.models.user import AuthSession, PasswordResetToken, User
 from app.models.user_profile import UserProfile, UserSettings
@@ -11,6 +12,8 @@ __all__ = [
     "MealLog",
     "NutritionGoal",
     "RestaurantInteraction",
+    "DoctorPatientLink",
+    "PatientShareToken",
     "ActivityLog",
     "FeatureEvent",
     "RiskAssessment",

@@ -128,6 +128,7 @@ def init_db() -> None:
     from app.models import (  # noqa: F401
         aqi_snapshot,
         dish_nutrition,
+        doctor_link,
         risk_assessment,
         user,
         user_profile,
