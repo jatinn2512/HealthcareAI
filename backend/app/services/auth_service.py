@@ -187,6 +187,12 @@ def _issue_token_pair(db: Session, user: User, user_agent: str | None = None, ip
 
 
 def login_user(db: Session, payload: LoginRequest, user_agent: str | None = None, ip_address: str | None = None) -> TokenResponse:
+    normalized_email = payload.email.lower().strip()
+    if normalized_email == DEMO_USER_EMAIL:
+        ensure_demo_user_account(db)
+    elif normalized_email == DEMO_HOSPITAL_EMAIL:
+        ensure_demo_hospital_account(db)
+
     user = _get_user_by_email(db, payload.email)
     if not user or not verify_password(payload.password, user.hashed_password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password")
