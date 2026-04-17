@@ -110,6 +110,7 @@ class UserMeResponse(BaseModel):
     full_name: str
     phone: str
     email: str
+    role: str = "USER"
     age: int
     gender: str | None
     is_active: bool
