@@ -7,6 +7,7 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.core import roles
 from app.core.config import settings
 from app.core.security import (
     create_access_token,
@@ -71,6 +72,7 @@ def create_user(db: Session, payload: RegisterRequest) -> User:
         age=resolved_age,
         gender=payload.gender,
         hashed_password=hash_password(payload.password),
+        role=roles.USER,
     )
     db.add(user)
     db.flush()
@@ -80,6 +82,12 @@ def create_user(db: Session, payload: RegisterRequest) -> User:
     db.commit()
     db.refresh(user)
     return user
+
+
+def _demo_role_for_email(email: str) -> str:
+    if email.lower().strip() == DEMO_HOSPITAL_EMAIL.lower():
+        return roles.DOCTOR
+    return roles.USER
 
 
 def _ensure_demo_account(
@@ -92,27 +100,13 @@ def _ensure_demo_account(
     age: int,
     gender: str | None = None,
 ) -> User:
+    """Create bundled demo accounts on first run. Never mutates an existing row (avoids hijacking real signups)."""
     existing_user = _get_user_by_email(db, email)
     if existing_user:
-        existing_user.full_name = full_name
-        existing_user.is_active = True
-        existing_user.hashed_password = hash_password(password)
-        if not existing_user.phone:
-            fallback_phone = phone
-            if _get_user_by_phone(db, fallback_phone):
-                fallback_phone = _generate_placeholder_phone(db)
-            existing_user.phone = fallback_phone
-        if existing_user.age < 18:
-            existing_user.age = age
-        if gender is not None:
-            existing_user.gender = gender
-
         if existing_user.profile is None:
             db.add(UserProfile(user_id=existing_user.id, activity_level="moderate"))
         if existing_user.settings is None:
             db.add(UserSettings(user_id=existing_user.id))
-
-        db.add(existing_user)
         db.commit()
         db.refresh(existing_user)
         return existing_user
@@ -128,6 +122,7 @@ def _ensure_demo_account(
         age=age,
         gender=gender,
         hashed_password=hash_password(password),
+        role=_demo_role_for_email(email),
     )
     db.add(demo_user)
     db.flush()
@@ -163,10 +158,23 @@ def ensure_demo_hospital_account(db: Session) -> User:
     )
 
 
+def sync_demo_account_roles(db: Session) -> None:
+    """Align demo identities with RBAC after schema upgrades (additive ALTER defaults)."""
+    user = _get_user_by_email(db, DEMO_USER_EMAIL)
+    if user and user.role != roles.USER:
+        user.role = roles.USER
+        db.add(user)
+    hospital = _get_user_by_email(db, DEMO_HOSPITAL_EMAIL)
+    if hospital and hospital.role != roles.DOCTOR:
+        hospital.role = roles.DOCTOR
+        db.add(hospital)
+    db.commit()
+
+
 def _issue_token_pair(db: Session, user: User, user_agent: str | None = None, ip_address: str | None = None) -> TokenResponse:
     refresh_jti = uuid4().hex
-    access_token = create_access_token(str(user.id))
-    refresh_token = create_refresh_token(str(user.id), refresh_jti)
+    access_token = create_access_token(str(user.id), token_version=user.token_version, role=user.role)
+    refresh_token = create_refresh_token(str(user.id), refresh_jti, token_version=user.token_version, role=user.role)
 
     session = AuthSession(
         user_id=user.id,
@@ -187,12 +195,6 @@ def _issue_token_pair(db: Session, user: User, user_agent: str | None = None, ip
 
 
 def login_user(db: Session, payload: LoginRequest, user_agent: str | None = None, ip_address: str | None = None) -> TokenResponse:
-    normalized_email = payload.email.lower().strip()
-    if normalized_email == DEMO_USER_EMAIL:
-        ensure_demo_user_account(db)
-    elif normalized_email == DEMO_HOSPITAL_EMAIL:
-        ensure_demo_hospital_account(db)
-
     user = _get_user_by_email(db, payload.email)
     if not user or not verify_password(payload.password, user.hashed_password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password")
@@ -214,6 +216,22 @@ def refresh_login(db: Session, refresh_token: str, user_agent: str | None = None
     if token_type != "refresh" or not user_id or not jti:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid refresh token")
 
+    user = db.scalar(select(User).where(User.id == int(user_id), User.is_active.is_(True)))
+    if not user:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
+
+    token_tv_raw = payload.get("tv", 0)
+    try:
+        token_tv = int(token_tv_raw) if token_tv_raw is not None else 0
+    except (TypeError, ValueError):
+        token_tv = 0
+    if token_tv != user.token_version:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Session is no longer valid")
+
+    token_role = payload.get("role")
+    if token_role is not None and str(token_role).strip().upper() != str(user.role).strip().upper():
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication scope mismatch")
+
     session = db.scalar(
         select(AuthSession).where(
             AuthSession.refresh_jti == jti,
@@ -225,10 +243,6 @@ def refresh_login(db: Session, refresh_token: str, user_agent: str | None = None
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Refresh session expired")
 
     session.revoked_at = datetime.now(UTC)
-    user = db.scalar(select(User).where(User.id == int(user_id), User.is_active.is_(True)))
-    if not user:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
-
     return _issue_token_pair(db, user, user_agent, ip_address)
 
 
@@ -261,6 +275,18 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     user = db.scalar(select(User).where(User.id == int(user_id), User.is_active.is_(True)))
     if not user:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found")
+
+    token_tv_raw = payload.get("tv", 0)
+    try:
+        token_tv = int(token_tv_raw) if token_tv_raw is not None else 0
+    except (TypeError, ValueError):
+        token_tv = 0
+    if token_tv != user.token_version:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Session is no longer valid")
+
+    token_role = payload.get("role")
+    if token_role is not None and str(token_role).strip().upper() != str(user.role).strip().upper():
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Authentication scope mismatch")
 
     return user
 
