@@ -71,10 +71,8 @@ def get_tracking_db() -> Generator[Session, None, None]:
         db.close()
 
 
-def _apply_sqlite_schema_patches() -> None:
-    if not CORE_DB_URL.startswith("sqlite"):
-        return
-
+def _apply_core_users_schema_patches() -> None:
+    """Lightweight additive migrations for existing deployments (SQLite + MySQL)."""
     inspector = inspect(core_engine)
     table_names = inspector.get_table_names()
     if "users" not in table_names:
@@ -83,18 +81,29 @@ def _apply_sqlite_schema_patches() -> None:
     existing_columns = {column["name"] for column in inspector.get_columns("users")}
     statements: list[str] = []
 
-    if "token_version" not in existing_columns:
-        statements.append("ALTER TABLE users ADD COLUMN token_version INTEGER NOT NULL DEFAULT 0")
-    if "is_active" not in existing_columns:
-        statements.append("ALTER TABLE users ADD COLUMN is_active BOOLEAN NOT NULL DEFAULT 1")
-    if "last_login_at" not in existing_columns:
-        statements.append("ALTER TABLE users ADD COLUMN last_login_at DATETIME")
+    if "role" not in existing_columns:
+        statements.append("ALTER TABLE users ADD COLUMN role VARCHAR(20) NOT NULL DEFAULT 'USER'")
+
+    if CORE_DB_URL.startswith("sqlite"):
+        if "token_version" not in existing_columns:
+            statements.append("ALTER TABLE users ADD COLUMN token_version INTEGER NOT NULL DEFAULT 0")
+        if "is_active" not in existing_columns:
+            statements.append("ALTER TABLE users ADD COLUMN is_active BOOLEAN NOT NULL DEFAULT 1")
+        if "last_login_at" not in existing_columns:
+            statements.append("ALTER TABLE users ADD COLUMN last_login_at DATETIME")
 
     if statements:
         with core_engine.begin() as connection:
             for statement in statements:
                 connection.execute(text(statement))
 
+
+def _apply_sqlite_profile_schema_patches() -> None:
+    if not CORE_DB_URL.startswith("sqlite"):
+        return
+
+    inspector = inspect(core_engine)
+    table_names = inspector.get_table_names()
     if "user_profiles" not in table_names:
         return
 
@@ -136,5 +145,6 @@ def init_db() -> None:
     )
 
     CoreBase.metadata.create_all(bind=core_engine)
-    _apply_sqlite_schema_patches()
+    _apply_core_users_schema_patches()
+    _apply_sqlite_profile_schema_patches()
     TrackingBase.metadata.create_all(bind=tracking_engine)
