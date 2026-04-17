@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { apiClient, CurrentUserData } from './apiClient';
 import { clearAuthSession, isAuthenticated, saveAuthSession } from './auth';
 
@@ -23,6 +24,7 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const location = useLocation();
   const [user, setUser] = useState<CurrentUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -55,10 +57,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }, []);
 
-  // Initialize auth on mount
+  // Initialize auth on mount and when switching between patient vs hospital URL spaces
   useEffect(() => {
-    fetchCurrentUser();
-  }, [fetchCurrentUser]);
+    void fetchCurrentUser();
+  }, [fetchCurrentUser, location.pathname]);
 
   const register = useCallback(
     async (payload: { full_name: string; email: string; password: string }) => {

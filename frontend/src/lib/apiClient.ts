@@ -1,4 +1,4 @@
-import { getAccessToken, getApiBaseUrl, saveAuthSession, clearAuthSession, REFRESH_TOKEN_KEY } from './auth';
+import { getAccessToken, getApiBaseUrl, getRefreshToken, saveAuthSession, clearAuthSession } from './auth';
 
 export interface ApiResponse<T> {
   data?: T;
@@ -31,6 +31,7 @@ export interface CurrentUserData {
   full_name: string;
   email: string;
   phone: string;
+  role?: string;
   age: number;
   gender: string | null;
   is_active: boolean;
@@ -110,11 +111,7 @@ export class ApiClient {
   }
 
   private getStoredRefreshToken(): string | null {
-    try {
-      return window.localStorage.getItem(REFRESH_TOKEN_KEY);
-    } catch {
-      return null;
-    }
+    return getRefreshToken();
   }
 
   private parseErrorMessage(payload: unknown, fallback: string): string {
