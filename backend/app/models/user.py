@@ -32,6 +32,29 @@ class User(CoreBase):
     sessions: Mapped[list["AuthSession"]] = relationship(back_populates="user", cascade="all, delete-orphan")
     subscriptions: Mapped[list["UserSubscription"]] = relationship(back_populates="user", cascade="all, delete-orphan")
     password_resets: Mapped[list["PasswordResetToken"]] = relationship(back_populates="user", cascade="all, delete-orphan")
+    generated_share_tokens: Mapped[list["PatientShareToken"]] = relationship(
+        "PatientShareToken",
+        foreign_keys="PatientShareToken.patient_user_id",
+        back_populates="patient",
+        cascade="all, delete-orphan",
+    )
+    claimed_share_tokens: Mapped[list["PatientShareToken"]] = relationship(
+        "PatientShareToken",
+        foreign_keys="PatientShareToken.claimed_by_user_id",
+        back_populates="claimed_by",
+    )
+    doctor_patient_links: Mapped[list["DoctorPatientLink"]] = relationship(
+        "DoctorPatientLink",
+        foreign_keys="DoctorPatientLink.doctor_user_id",
+        back_populates="doctor",
+        cascade="all, delete-orphan",
+    )
+    patient_doctor_links: Mapped[list["DoctorPatientLink"]] = relationship(
+        "DoctorPatientLink",
+        foreign_keys="DoctorPatientLink.patient_user_id",
+        back_populates="patient",
+        cascade="all, delete-orphan",
+    )
 
 
 class AuthSession(CoreBase):
