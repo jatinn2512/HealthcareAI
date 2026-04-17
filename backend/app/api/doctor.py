@@ -1,8 +1,11 @@
 from typing import Literal
 
-from fastapi import APIRouter, Depends, Query, Response
+from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 from sqlalchemy.orm import Session
 
+from app.core import roles
+from app.core.config import settings
+from app.core.deps import require_roles
 from app.db.session import get_core_db, get_tracking_db
 from app.models.user import User
 from app.schemas.doctor import (
@@ -16,14 +19,14 @@ from app.schemas.doctor import (
     DoctorPatientReportResponse,
     DoctorRiskAssessmentItem,
 )
-from app.services import auth_service, doctor_service
+from app.services import doctor_service
 
 router = APIRouter(prefix="/doctor", tags=["Doctor Connect"])
 
 
 @router.post("/share-token", response_model=DoctorConnectTokenResponse)
 def create_share_token(
-    current_user: User = Depends(auth_service.get_current_user),
+    current_user: User = Depends(require_roles(roles.USER)),
     db: Session = Depends(get_core_db),
 ):
     token = doctor_service.create_patient_share_token(db, current_user)
@@ -40,7 +43,7 @@ def create_share_token(
 @router.post("/connect", response_model=DoctorConnectResponse)
 def connect_patient(
     payload: DoctorConnectRequest,
-    current_user: User = Depends(auth_service.get_current_user),
+    current_user: User = Depends(require_roles(roles.DOCTOR, roles.ADMIN)),
     db: Session = Depends(get_core_db),
 ):
     link, patient = doctor_service.connect_doctor_to_patient(db, current_user, payload.token_code)
@@ -54,9 +57,14 @@ def connect_patient(
 @router.post("/connect-by-id", response_model=DoctorConnectResponse)
 def connect_patient_by_id(
     payload: DoctorConnectByIdRequest,
-    current_user: User = Depends(auth_service.get_current_user),
+    current_user: User = Depends(require_roles(roles.DOCTOR, roles.ADMIN)),
     db: Session = Depends(get_core_db),
 ):
+    if settings.environment.strip().lower() != "development":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Connect-by-id is only available in development environments.",
+        )
     link, patient = doctor_service.connect_doctor_to_patient_by_id(db, current_user, payload.patient_id)
     return DoctorConnectResponse(
         message="Patient connected successfully.",
@@ -68,7 +76,7 @@ def connect_patient_by_id(
 @router.post("/disconnect", response_model=DoctorDisconnectResponse)
 def disconnect_patient(
     payload: DoctorConnectByIdRequest,
-    current_user: User = Depends(auth_service.get_current_user),
+    current_user: User = Depends(require_roles(roles.DOCTOR, roles.ADMIN)),
     db: Session = Depends(get_core_db),
 ):
     patient = doctor_service.disconnect_doctor_from_patient(db, current_user.id, payload.patient_id)
@@ -80,7 +88,7 @@ def disconnect_patient(
 
 @router.get("/patients", response_model=list[DoctorPatientCardResponse])
 def list_connected_patients(
-    current_user: User = Depends(auth_service.get_current_user),
+    current_user: User = Depends(require_roles(roles.DOCTOR, roles.ADMIN)),
     db: Session = Depends(get_core_db),
 ):
     rows = doctor_service.list_doctor_patients(db, current_user.id)
@@ -102,7 +110,7 @@ def list_connected_patients(
 @router.get("/patients/{patient_id}/report", response_model=DoctorPatientReportResponse)
 def get_connected_patient_report(
     patient_id: int,
-    current_user: User = Depends(auth_service.get_current_user),
+    current_user: User = Depends(require_roles(roles.DOCTOR, roles.ADMIN)),
     core_db: Session = Depends(get_core_db),
     tracking_db: Session = Depends(get_tracking_db),
 ):
@@ -128,7 +136,7 @@ def get_connected_patient_report(
 def export_connected_patient_pdf(
     patient_id: int,
     scope: Literal["complete", "weekly", "this_month"] = Query(default="complete"),
-    current_user: User = Depends(auth_service.get_current_user),
+    current_user: User = Depends(require_roles(roles.DOCTOR, roles.ADMIN)),
     core_db: Session = Depends(get_core_db),
     tracking_db: Session = Depends(get_tracking_db),
 ):
