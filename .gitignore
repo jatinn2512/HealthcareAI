@@ -1,0 +1,82 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Node / Frontend
+node_modules
+dist
+dist-ssr
+*.local
+
+# Python / Backend
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+*.egg-info/
+*.egg
+build/
+dist/
+.hypothesis/
+.tox/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Local databases / app runtime data
+backend/data/*.db
+backend/data/*.db-shm
+backend/data/*.db-wal
+backend/data/*.sqlite
+backend/data/*.sqlite3
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.tsbuildinfo
+
+# ML generated artifacts
+ai_ml/models/*.pkl
+ai_ml/models/**/*.pkl
+ai_ml/models/**/*.joblib
+
+# Local AI/ML datasets and seeded demo data (do not push)
+ai_ml/datasets/**/*.csv
+ai_ml/datasets/seed/**/*.json
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+Thumbs.db
+.AppleDouble
+.LSOverride

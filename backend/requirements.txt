@@ -1,0 +1,13 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+sqlalchemy
+pymysql
+alembic
+python-jose[cryptography]
+email-validator
+pydantic-settings
+scikit-learn
+joblib
+pandas
+numpy

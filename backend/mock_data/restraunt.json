@@ -1,0 +1,5413 @@
+{
+  "restaurants": [
+    {
+      "id": "2",
+      "name": "McDonald's",
+      "cuisine": "Fast Food",
+      "dish_count": 13,
+      "dishes": [
+        {
+          "id": "mcd_1",
+          "name": "McAloo Tikki",
+          "calories": 340,
+          "protein_g": 7,
+          "carbs_g": 48,
+          "fat_g": 13,
+          "sugar_g": 5,
+          "sodium_mg": 660,
+          "fiber_g": 3,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "mcd_2",
+          "name": "McVeggie Burger",
+          "calories": 380,
+          "protein_g": 9,
+          "carbs_g": 50,
+          "fat_g": 16,
+          "sugar_g": 6,
+          "sodium_mg": 720,
+          "fiber_g": 4,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "mcd_3",
+          "name": "McChicken Burger",
+          "calories": 430,
+          "protein_g": 18,
+          "carbs_g": 45,
+          "fat_g": 20,
+          "sugar_g": 6,
+          "sodium_mg": 890,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "mcd_4",
+          "name": "French Fries (Medium)",
+          "calories": 320,
+          "protein_g": 4,
+          "carbs_g": 44,
+          "fat_g": 15,
+          "sugar_g": 0,
+          "sodium_mg": 400,
+          "fiber_g": 3,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "mcd_5",
+          "name": "Grilled Chicken Wrap",
+          "calories": 290,
+          "protein_g": 24,
+          "carbs_g": 28,
+          "fat_g": 9,
+          "sugar_g": 3,
+          "sodium_mg": 480,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12",
+            "B6",
+            "C"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "mcd_6",
+          "name": "Fruit Bag",
+          "calories": 60,
+          "protein_g": 1,
+          "carbs_g": 14,
+          "fat_g": 0,
+          "sugar_g": 12,
+          "sodium_mg": 5,
+          "fiber_g": 2,
+          "vitamins": [
+            "A",
+            "C"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "mcd_7",
+          "name": "Coke (Large)",
+          "calories": 310,
+          "protein_g": 0,
+          "carbs_g": 80,
+          "fat_g": 0,
+          "sugar_g": 80,
+          "sodium_mg": 70,
+          "fiber_g": 0,
+          "vitamins": [],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "mcd_8",
+          "name": "Chocolate Shake",
+          "calories": 510,
+          "protein_g": 10,
+          "carbs_g": 86,
+          "fat_g": 14,
+          "sugar_g": 74,
+          "sodium_mg": 260,
+          "fiber_g": 1,
+          "vitamins": [
+            "D",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "mcd_9",
+          "name": "Egg McMuffin",
+          "calories": 300,
+          "protein_g": 17,
+          "carbs_g": 30,
+          "fat_g": 13,
+          "sugar_g": 3,
+          "sodium_mg": 760,
+          "fiber_g": 2,
+          "vitamins": [
+            "D",
+            "B12",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "mcd_10",
+          "name": "Chicken McNuggets (6pc)",
+          "calories": 280,
+          "protein_g": 16,
+          "carbs_g": 17,
+          "fat_g": 17,
+          "sugar_g": 0,
+          "sodium_mg": 540,
+          "fiber_g": 1,
+          "vitamins": [
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "mcd_11",
+          "name": "Garden Salad",
+          "calories": 140,
+          "protein_g": 8,
+          "carbs_g": 14,
+          "fat_g": 5,
+          "sugar_g": 6,
+          "sodium_mg": 180,
+          "fiber_g": 4,
+          "vitamins": [
+            "A",
+            "C",
+            "K"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "mcd_12",
+          "name": "Masala Grilled Chicken",
+          "calories": 210,
+          "protein_g": 30,
+          "carbs_g": 4,
+          "fat_g": 6,
+          "sugar_g": 1,
+          "sodium_mg": 340,
+          "fiber_g": 0,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "mcd_13",
+          "name": "Hash Brown",
+          "calories": 150,
+          "protein_g": 1,
+          "carbs_g": 16,
+          "fat_g": 9,
+          "sugar_g": 0,
+          "sodium_mg": 310,
+          "fiber_g": 1,
+          "vitamins": [
+            "B6",
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "name": "Domino's Pizza",
+      "cuisine": "Pizza",
+      "dish_count": 14,
+      "dishes": [
+        {
+          "id": "dom_1",
+          "name": "Margherita Pizza (Medium)",
+          "calories": 580,
+          "protein_g": 22,
+          "carbs_g": 82,
+          "fat_g": 18,
+          "sugar_g": 8,
+          "sodium_mg": 980,
+          "fiber_g": 4,
+          "vitamins": [
+            "A",
+            "C",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "dom_2",
+          "name": "Farmhouse Pizza (Medium)",
+          "calories": 680,
+          "protein_g": 26,
+          "carbs_g": 88,
+          "fat_g": 24,
+          "sugar_g": 10,
+          "sodium_mg": 1240,
+          "fiber_g": 5,
+          "vitamins": [
+            "A",
+            "C",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "dom_3",
+          "name": "Peppy Paneer Pizza (Medium)",
+          "calories": 620,
+          "protein_g": 24,
+          "carbs_g": 84,
+          "fat_g": 20,
+          "sugar_g": 9,
+          "sodium_mg": 1060,
+          "fiber_g": 4,
+          "vitamins": [
+            "A",
+            "C",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "dom_4",
+          "name": "Chicken Dominator Pizza (Medium)",
+          "calories": 760,
+          "protein_g": 34,
+          "carbs_g": 90,
+          "fat_g": 30,
+          "sugar_g": 10,
+          "sodium_mg": 1480,
+          "fiber_g": 4,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "dom_5",
+          "name": "Garlic Bread",
+          "calories": 280,
+          "protein_g": 7,
+          "carbs_g": 40,
+          "fat_g": 10,
+          "sugar_g": 3,
+          "sodium_mg": 560,
+          "fiber_g": 2,
+          "vitamins": [
+            "B1"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "dom_6",
+          "name": "Stuffed Garlic Bread with Cheese",
+          "calories": 420,
+          "protein_g": 14,
+          "carbs_g": 52,
+          "fat_g": 18,
+          "sugar_g": 4,
+          "sodium_mg": 880,
+          "fiber_g": 2,
+          "vitamins": [
+            "A",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "dom_7",
+          "name": "Veg Pasta in Arrabiata Sauce",
+          "calories": 420,
+          "protein_g": 14,
+          "carbs_g": 68,
+          "fat_g": 10,
+          "sugar_g": 8,
+          "sodium_mg": 680,
+          "fiber_g": 6,
+          "vitamins": [
+            "A",
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "dom_8",
+          "name": "Chicken Wings (8pc)",
+          "calories": 480,
+          "protein_g": 32,
+          "carbs_g": 14,
+          "fat_g": 28,
+          "sugar_g": 2,
+          "sodium_mg": 1020,
+          "fiber_g": 0,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "dom_9",
+          "name": "Mexican Green Wave Pizza (Medium)",
+          "calories": 600,
+          "protein_g": 20,
+          "carbs_g": 85,
+          "fat_g": 19,
+          "sugar_g": 9,
+          "sodium_mg": 1000,
+          "fiber_g": 5,
+          "vitamins": [
+            "A",
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "dom_10",
+          "name": "Choco Lava Cake",
+          "calories": 310,
+          "protein_g": 4,
+          "carbs_g": 44,
+          "fat_g": 14,
+          "sugar_g": 30,
+          "sodium_mg": 180,
+          "fiber_g": 1,
+          "vitamins": [
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "dom_11",
+          "name": "Cold Drink (Pepsi)",
+          "calories": 150,
+          "protein_g": 0,
+          "carbs_g": 40,
+          "fat_g": 0,
+          "sugar_g": 40,
+          "sodium_mg": 30,
+          "fiber_g": 0,
+          "vitamins": [],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "dom_12",
+          "name": "Taco Indiana (Veg)",
+          "calories": 240,
+          "protein_g": 8,
+          "carbs_g": 32,
+          "fat_g": 9,
+          "sugar_g": 4,
+          "sodium_mg": 480,
+          "fiber_g": 3,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "dom_13",
+          "name": "Thin Crust Veg Pizza (Small)",
+          "calories": 380,
+          "protein_g": 14,
+          "carbs_g": 54,
+          "fat_g": 12,
+          "sugar_g": 6,
+          "sodium_mg": 640,
+          "fiber_g": 4,
+          "vitamins": [
+            "A",
+            "C",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "dom_14",
+          "name": "Cheese Burst Pizza (Medium)",
+          "calories": 820,
+          "protein_g": 30,
+          "carbs_g": 96,
+          "fat_g": 36,
+          "sugar_g": 12,
+          "sodium_mg": 1600,
+          "fiber_g": 4,
+          "vitamins": [
+            "A",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "name": "Subway",
+      "cuisine": "Sandwich",
+      "dish_count": 12,
+      "dishes": [
+        {
+          "id": "sub_1",
+          "name": "Grilled Chicken Sub (6 inch)",
+          "calories": 310,
+          "protein_g": 26,
+          "carbs_g": 40,
+          "fat_g": 6,
+          "sugar_g": 5,
+          "sodium_mg": 680,
+          "fiber_g": 3,
+          "vitamins": [
+            "B12",
+            "B6",
+            "C"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "sub_2",
+          "name": "Veggie Delite (6 inch)",
+          "calories": 210,
+          "protein_g": 9,
+          "carbs_g": 38,
+          "fat_g": 3,
+          "sugar_g": 5,
+          "sodium_mg": 410,
+          "fiber_g": 4,
+          "vitamins": [
+            "A",
+            "C",
+            "K",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "sub_3",
+          "name": "Tuna Sub (6 inch)",
+          "calories": 370,
+          "protein_g": 24,
+          "carbs_g": 40,
+          "fat_g": 14,
+          "sugar_g": 5,
+          "sodium_mg": 790,
+          "fiber_g": 3,
+          "vitamins": [
+            "D",
+            "B12",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "sub_4",
+          "name": "Paneer Tikka Sub (6 inch)",
+          "calories": 350,
+          "protein_g": 18,
+          "carbs_g": 44,
+          "fat_g": 12,
+          "sugar_g": 5,
+          "sodium_mg": 720,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "sub_5",
+          "name": "Chicken Meatball Sub (6 inch)",
+          "calories": 420,
+          "protein_g": 22,
+          "carbs_g": 48,
+          "fat_g": 16,
+          "sugar_g": 8,
+          "sodium_mg": 960,
+          "fiber_g": 3,
+          "vitamins": [
+            "B12",
+            "C"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "sub_6",
+          "name": "Egg & Cheese Sub (6 inch)",
+          "calories": 330,
+          "protein_g": 18,
+          "carbs_g": 40,
+          "fat_g": 12,
+          "sugar_g": 5,
+          "sodium_mg": 740,
+          "fiber_g": 2,
+          "vitamins": [
+            "D",
+            "B12",
+            "A"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "sub_7",
+          "name": "Cookie (Chocolate Chip)",
+          "calories": 210,
+          "protein_g": 2,
+          "carbs_g": 28,
+          "fat_g": 10,
+          "sugar_g": 18,
+          "sodium_mg": 160,
+          "fiber_g": 1,
+          "vitamins": [],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "sub_8",
+          "name": "Fountain Drink (Medium)",
+          "calories": 180,
+          "protein_g": 0,
+          "carbs_g": 46,
+          "fat_g": 0,
+          "sugar_g": 46,
+          "sodium_mg": 40,
+          "fiber_g": 0,
+          "vitamins": [],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "sub_9",
+          "name": "Chicken Caesar Sub (6 inch)",
+          "calories": 390,
+          "protein_g": 28,
+          "carbs_g": 42,
+          "fat_g": 14,
+          "sugar_g": 4,
+          "sodium_mg": 840,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "B12",
+            "K"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "sub_10",
+          "name": "Roasted Chicken Sub (Footlong)",
+          "calories": 580,
+          "protein_g": 48,
+          "carbs_g": 76,
+          "fat_g": 10,
+          "sugar_g": 9,
+          "sodium_mg": 1240,
+          "fiber_g": 6,
+          "vitamins": [
+            "B12",
+            "B6",
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "sub_11",
+          "name": "Hash Brown Patty",
+          "calories": 140,
+          "protein_g": 1,
+          "carbs_g": 16,
+          "fat_g": 8,
+          "sugar_g": 0,
+          "sodium_mg": 290,
+          "fiber_g": 1,
+          "vitamins": [
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "sub_12",
+          "name": "Minestrone Soup",
+          "calories": 130,
+          "protein_g": 5,
+          "carbs_g": 24,
+          "fat_g": 2,
+          "sugar_g": 6,
+          "sodium_mg": 820,
+          "fiber_g": 4,
+          "vitamins": [
+            "A",
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "name": "Burger King",
+      "cuisine": "Fast Food",
+      "dish_count": 15,
+      "dishes": [
+        {
+          "id": "bk_1",
+          "name": "Whopper",
+          "calories": 660,
+          "protein_g": 28,
+          "carbs_g": 48,
+          "fat_g": 40,
+          "sugar_g": 11,
+          "sodium_mg": 980,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "bk_2",
+          "name": "Chicken Burger",
+          "calories": 450,
+          "protein_g": 22,
+          "carbs_g": 48,
+          "fat_g": 20,
+          "sugar_g": 8,
+          "sodium_mg": 860,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "bk_4",
+          "name": "Onion Rings (Medium)",
+          "calories": 320,
+          "protein_g": 4,
+          "carbs_g": 40,
+          "fat_g": 16,
+          "sugar_g": 4,
+          "sodium_mg": 560,
+          "fiber_g": 2,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bk_5",
+          "name": "Fries (Medium)",
+          "calories": 340,
+          "protein_g": 4,
+          "carbs_g": 46,
+          "fat_g": 16,
+          "sugar_g": 0,
+          "sodium_mg": 470,
+          "fiber_g": 3,
+          "vitamins": [
+            "B6",
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bk_6",
+          "name": "Grilled Chicken Sandwich",
+          "calories": 290,
+          "protein_g": 26,
+          "carbs_g": 30,
+          "fat_g": 8,
+          "sugar_g": 5,
+          "sodium_mg": 520,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "bk_7",
+          "name": "Choco Sundae",
+          "calories": 280,
+          "protein_g": 5,
+          "carbs_g": 48,
+          "fat_g": 8,
+          "sugar_g": 38,
+          "sodium_mg": 140,
+          "fiber_g": 0,
+          "vitamins": [
+            "D",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "bk_8",
+          "name": "Chicken Strips (4pc)",
+          "calories": 340,
+          "protein_g": 20,
+          "carbs_g": 30,
+          "fat_g": 16,
+          "sugar_g": 2,
+          "sodium_mg": 740,
+          "fiber_g": 1,
+          "vitamins": [
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bk_9",
+          "name": "Garden Salad - Burger King",
+          "calories": 120,
+          "protein_g": 6,
+          "carbs_g": 14,
+          "fat_g": 4,
+          "sugar_g": 6,
+          "sodium_mg": 160,
+          "fiber_g": 4,
+          "vitamins": [
+            "A",
+            "C",
+            "K"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "bk_10",
+          "name": "Paneer Tikka Burger",
+          "calories": 410,
+          "protein_g": 16,
+          "carbs_g": 48,
+          "fat_g": 18,
+          "sugar_g": 7,
+          "sodium_mg": 780,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bk_11",
+          "name": "Chocolate Shake - Burger King",
+          "calories": 520,
+          "protein_g": 10,
+          "carbs_g": 88,
+          "fat_g": 14,
+          "sugar_g": 76,
+          "sodium_mg": 280,
+          "fiber_g": 1,
+          "vitamins": [
+            "D",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "bk_12",
+          "name": "Crispy Veg Wrap",
+          "calories": 370,
+          "protein_g": 10,
+          "carbs_g": 52,
+          "fat_g": 14,
+          "sugar_g": 6,
+          "sodium_mg": 660,
+          "fiber_g": 4,
+          "vitamins": [
+            "A",
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bk_13",
+          "name": "Double Patty Burger",
+          "calories": 780,
+          "protein_g": 40,
+          "carbs_g": 52,
+          "fat_g": 46,
+          "sugar_g": 10,
+          "sodium_mg": 1340,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "bk_14",
+          "name": "Orange Juice",
+          "calories": 140,
+          "protein_g": 2,
+          "carbs_g": 34,
+          "fat_g": 0,
+          "sugar_g": 28,
+          "sodium_mg": 10,
+          "fiber_g": 0,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bk_3",
+          "name": "Veg Burger",
+          "calories": 360,
+          "protein_g": 9,
+          "carbs_g": 50,
+          "fat_g": 14,
+          "sugar_g": 7,
+          "sodium_mg": 680,
+          "fiber_g": 4,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bk_15",
+          "name": "Water Bottle",
+          "calories": 0,
+          "protein_g": 0,
+          "carbs_g": 0,
+          "fat_g": 0,
+          "sugar_g": 0,
+          "sodium_mg": 0,
+          "fiber_g": 0,
+          "vitamins": [],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "name": "Pizza Hut",
+      "cuisine": "Pizza",
+      "dish_count": 15,
+      "dishes": [
+        {
+          "id": "ph_1",
+          "name": "Veggie Supreme Pizza (Medium)",
+          "calories": 620,
+          "protein_g": 22,
+          "carbs_g": 86,
+          "fat_g": 20,
+          "sugar_g": 10,
+          "sodium_mg": 1040,
+          "fiber_g": 6,
+          "vitamins": [
+            "A",
+            "C",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "ph_2",
+          "name": "Chicken Tikka Pizza (Medium)",
+          "calories": 700,
+          "protein_g": 30,
+          "carbs_g": 88,
+          "fat_g": 26,
+          "sugar_g": 10,
+          "sodium_mg": 1260,
+          "fiber_g": 4,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "ph_3",
+          "name": "BBQ Chicken Wings (6pc)",
+          "calories": 460,
+          "protein_g": 30,
+          "carbs_g": 22,
+          "fat_g": 26,
+          "sugar_g": 14,
+          "sodium_mg": 1080,
+          "fiber_g": 0,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "ph_4",
+          "name": "Garlic Bread (4 slices)",
+          "calories": 300,
+          "protein_g": 8,
+          "carbs_g": 42,
+          "fat_g": 11,
+          "sugar_g": 3,
+          "sodium_mg": 600,
+          "fiber_g": 2,
+          "vitamins": [
+            "B1",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "ph_5",
+          "name": "Cheese Dip",
+          "calories": 90,
+          "protein_g": 4,
+          "carbs_g": 3,
+          "fat_g": 7,
+          "sugar_g": 1,
+          "sodium_mg": 380,
+          "fiber_g": 0,
+          "vitamins": [
+            "A",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "ph_6",
+          "name": "Tomato Pasta",
+          "calories": 450,
+          "protein_g": 14,
+          "carbs_g": 72,
+          "fat_g": 10,
+          "sugar_g": 8,
+          "sodium_mg": 720,
+          "fiber_g": 6,
+          "vitamins": [
+            "A",
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "ph_7",
+          "name": "Pepperoni Pizza (Medium)",
+          "calories": 780,
+          "protein_g": 32,
+          "carbs_g": 88,
+          "fat_g": 34,
+          "sugar_g": 10,
+          "sodium_mg": 1680,
+          "fiber_g": 4,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "ph_8",
+          "name": "Thin Crust Veg Pizza (Small) - Pizza Hut",
+          "calories": 360,
+          "protein_g": 14,
+          "carbs_g": 50,
+          "fat_g": 11,
+          "sugar_g": 7,
+          "sodium_mg": 620,
+          "fiber_g": 4,
+          "vitamins": [
+            "A",
+            "C",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "ph_9",
+          "name": "Chocolate Brownie",
+          "calories": 380,
+          "protein_g": 4,
+          "carbs_g": 52,
+          "fat_g": 18,
+          "sugar_g": 38,
+          "sodium_mg": 200,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "ph_10",
+          "name": "Lemon Iced Tea",
+          "calories": 120,
+          "protein_g": 0,
+          "carbs_g": 32,
+          "fat_g": 0,
+          "sugar_g": 28,
+          "sodium_mg": 20,
+          "fiber_g": 0,
+          "vitamins": [
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "ph_11",
+          "name": "Caesar Salad",
+          "calories": 180,
+          "protein_g": 8,
+          "carbs_g": 12,
+          "fat_g": 12,
+          "sugar_g": 3,
+          "sodium_mg": 480,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "K",
+            "C"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "ph_12",
+          "name": "Veg Loaded Pizza (Personal)",
+          "calories": 440,
+          "protein_g": 16,
+          "carbs_g": 62,
+          "fat_g": 14,
+          "sugar_g": 8,
+          "sodium_mg": 760,
+          "fiber_g": 5,
+          "vitamins": [
+            "A",
+            "C",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "ph_13",
+          "name": "Stuffed Crust Cheese Pizza (Medium)",
+          "calories": 860,
+          "protein_g": 34,
+          "carbs_g": 102,
+          "fat_g": 36,
+          "sugar_g": 12,
+          "sodium_mg": 1720,
+          "fiber_g": 4,
+          "vitamins": [
+            "A",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "ph_15",
+          "name": "Mushroom Pasta",
+          "calories": 420,
+          "protein_g": 12,
+          "carbs_g": 66,
+          "fat_g": 12,
+          "sugar_g": 6,
+          "sodium_mg": 640,
+          "fiber_g": 5,
+          "vitamins": [
+            "D",
+            "B6",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "ph_14",
+          "name": "Water Bottle",
+          "calories": 0,
+          "protein_g": 0,
+          "carbs_g": 0,
+          "fat_g": 0,
+          "sugar_g": 0,
+          "sodium_mg": 0,
+          "fiber_g": 0,
+          "vitamins": [],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "name": "Haldiram's",
+      "cuisine": "Indian Snacks",
+      "dish_count": 15,
+      "dishes": [
+        {
+          "id": "hal_1",
+          "name": "Aloo Tikki Chaat",
+          "calories": 280,
+          "protein_g": 6,
+          "carbs_g": 42,
+          "fat_g": 10,
+          "sugar_g": 8,
+          "sodium_mg": 520,
+          "fiber_g": 4,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "hal_2",
+          "name": "Pani Puri (6pc)",
+          "calories": 180,
+          "protein_g": 4,
+          "carbs_g": 30,
+          "fat_g": 5,
+          "sugar_g": 4,
+          "sodium_mg": 460,
+          "fiber_g": 3,
+          "vitamins": [
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "hal_3",
+          "name": "Samosa (2pc)",
+          "calories": 320,
+          "protein_g": 6,
+          "carbs_g": 36,
+          "fat_g": 18,
+          "sugar_g": 2,
+          "sodium_mg": 580,
+          "fiber_g": 3,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "hal_4",
+          "name": "Dahi Bhalla",
+          "calories": 240,
+          "protein_g": 10,
+          "carbs_g": 36,
+          "fat_g": 6,
+          "sugar_g": 10,
+          "sodium_mg": 380,
+          "fiber_g": 3,
+          "vitamins": [
+            "B12",
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "hal_5",
+          "name": "Bhel Puri",
+          "calories": 200,
+          "protein_g": 5,
+          "carbs_g": 32,
+          "fat_g": 6,
+          "sugar_g": 6,
+          "sodium_mg": 420,
+          "fiber_g": 3,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "hal_6",
+          "name": "Kachori (2pc)",
+          "calories": 380,
+          "protein_g": 8,
+          "carbs_g": 40,
+          "fat_g": 22,
+          "sugar_g": 2,
+          "sodium_mg": 640,
+          "fiber_g": 4,
+          "vitamins": [
+            "B1",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "hal_7",
+          "name": "Chole Bhature",
+          "calories": 620,
+          "protein_g": 18,
+          "carbs_g": 76,
+          "fat_g": 28,
+          "sugar_g": 4,
+          "sodium_mg": 980,
+          "fiber_g": 8,
+          "vitamins": [
+            "C",
+            "B6",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "hal_10",
+          "name": "Rasgulla (2pc)",
+          "calories": 180,
+          "protein_g": 4,
+          "carbs_g": 38,
+          "fat_g": 2,
+          "sugar_g": 34,
+          "sodium_mg": 60,
+          "fiber_g": 0,
+          "vitamins": [
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "hal_11",
+          "name": "Poha",
+          "calories": 250,
+          "protein_g": 5,
+          "carbs_g": 40,
+          "fat_g": 8,
+          "sugar_g": 3,
+          "sodium_mg": 360,
+          "fiber_g": 3,
+          "vitamins": [
+            "C",
+            "B1",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "hal_12",
+          "name": "Upma",
+          "calories": 220,
+          "protein_g": 6,
+          "carbs_g": 34,
+          "fat_g": 7,
+          "sugar_g": 2,
+          "sodium_mg": 400,
+          "fiber_g": 3,
+          "vitamins": [
+            "B1",
+            "B6",
+            "C"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "hal_13",
+          "name": "Jalebi (4pc)",
+          "calories": 340,
+          "protein_g": 3,
+          "carbs_g": 52,
+          "fat_g": 14,
+          "sugar_g": 44,
+          "sodium_mg": 80,
+          "fiber_g": 0,
+          "vitamins": [],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "hal_14",
+          "name": "Mixed Namkeen (small pack)",
+          "calories": 180,
+          "protein_g": 4,
+          "carbs_g": 20,
+          "fat_g": 10,
+          "sugar_g": 1,
+          "sodium_mg": 480,
+          "fiber_g": 2,
+          "vitamins": [
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "hal_15",
+          "name": "Masala Chai",
+          "calories": 80,
+          "protein_g": 3,
+          "carbs_g": 12,
+          "fat_g": 3,
+          "sugar_g": 8,
+          "sodium_mg": 40,
+          "fiber_g": 0,
+          "vitamins": [
+            "B2"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "hal_8",
+          "name": "Lassi (Sweet)",
+          "calories": 220,
+          "protein_g": 8,
+          "carbs_g": 34,
+          "fat_g": 6,
+          "sugar_g": 28,
+          "sodium_mg": 120,
+          "fiber_g": 0,
+          "vitamins": [
+            "B12",
+            "D"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "hal_9",
+          "name": "Lassi (Salted)",
+          "calories": 140,
+          "protein_g": 8,
+          "carbs_g": 14,
+          "fat_g": 6,
+          "sugar_g": 6,
+          "sodium_mg": 320,
+          "fiber_g": 0,
+          "vitamins": [
+            "B12",
+            "D"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "name": "Barbeque Nation",
+      "cuisine": "Grill / Buffet",
+      "dish_count": 17,
+      "dishes": [
+        {
+          "id": "bbq_1",
+          "name": "Tandoori Chicken",
+          "calories": 260,
+          "protein_g": 34,
+          "carbs_g": 4,
+          "fat_g": 10,
+          "sugar_g": 2,
+          "sodium_mg": 560,
+          "fiber_g": 0,
+          "vitamins": [
+            "B12",
+            "B6",
+            "D"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "bbq_2",
+          "name": "Veg Seekh Kebab",
+          "calories": 210,
+          "protein_g": 8,
+          "carbs_g": 24,
+          "fat_g": 10,
+          "sugar_g": 3,
+          "sodium_mg": 480,
+          "fiber_g": 4,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "bbq_3",
+          "name": "Chicken Reshmi Kebab",
+          "calories": 290,
+          "protein_g": 30,
+          "carbs_g": 4,
+          "fat_g": 16,
+          "sugar_g": 1,
+          "sodium_mg": 520,
+          "fiber_g": 0,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "bbq_4",
+          "name": "Mutton Seekh Kebab",
+          "calories": 340,
+          "protein_g": 26,
+          "carbs_g": 4,
+          "fat_g": 22,
+          "sugar_g": 1,
+          "sodium_mg": 640,
+          "fiber_g": 0,
+          "vitamins": [
+            "B12",
+            "B6",
+            "Iron"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bbq_5",
+          "name": "Paneer Tikka",
+          "calories": 280,
+          "protein_g": 16,
+          "carbs_g": 10,
+          "fat_g": 18,
+          "sugar_g": 3,
+          "sodium_mg": 480,
+          "fiber_g": 1,
+          "vitamins": [
+            "A",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bbq_6",
+          "name": "Fish Tikka",
+          "calories": 220,
+          "protein_g": 28,
+          "carbs_g": 6,
+          "fat_g": 8,
+          "sugar_g": 1,
+          "sodium_mg": 420,
+          "fiber_g": 0,
+          "vitamins": [
+            "D",
+            "B12",
+            "Omega3"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "bbq_9",
+          "name": "Veg Biryani",
+          "calories": 480,
+          "protein_g": 10,
+          "carbs_g": 76,
+          "fat_g": 14,
+          "sugar_g": 4,
+          "sodium_mg": 780,
+          "fiber_g": 5,
+          "vitamins": [
+            "B6",
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bbq_10",
+          "name": "Chicken Biryani",
+          "calories": 560,
+          "protein_g": 26,
+          "carbs_g": 74,
+          "fat_g": 18,
+          "sugar_g": 4,
+          "sodium_mg": 900,
+          "fiber_g": 4,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "bbq_11",
+          "name": "Gulab Jamun (2pc)",
+          "calories": 280,
+          "protein_g": 4,
+          "carbs_g": 50,
+          "fat_g": 8,
+          "sugar_g": 42,
+          "sodium_mg": 100,
+          "fiber_g": 0,
+          "vitamins": [
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "bbq_13",
+          "name": "Phulka Roti",
+          "calories": 70,
+          "protein_g": 3,
+          "carbs_g": 14,
+          "fat_g": 1,
+          "sugar_g": 0,
+          "sodium_mg": 80,
+          "fiber_g": 2,
+          "vitamins": [
+            "B1"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "bbq_14",
+          "name": "Masala Papad (2pc)",
+          "calories": 120,
+          "protein_g": 4,
+          "carbs_g": 16,
+          "fat_g": 4,
+          "sugar_g": 1,
+          "sodium_mg": 440,
+          "fiber_g": 2,
+          "vitamins": [
+            "B1",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bbq_15",
+          "name": "Kulfi (1 stick)",
+          "calories": 180,
+          "protein_g": 4,
+          "carbs_g": 24,
+          "fat_g": 8,
+          "sugar_g": 18,
+          "sodium_mg": 80,
+          "fiber_g": 0,
+          "vitamins": [
+            "D",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bbq_16",
+          "name": "Prawn Koliwada",
+          "calories": 240,
+          "protein_g": 24,
+          "carbs_g": 10,
+          "fat_g": 12,
+          "sugar_g": 1,
+          "sodium_mg": 520,
+          "fiber_g": 0,
+          "vitamins": [
+            "B12",
+            "D",
+            "Omega3"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "bbq_17",
+          "name": "Chicken Lollipop (4pc)",
+          "calories": 320,
+          "protein_g": 20,
+          "carbs_g": 16,
+          "fat_g": 18,
+          "sugar_g": 4,
+          "sodium_mg": 680,
+          "fiber_g": 0,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bbq_7",
+          "name": "Butter Naan",
+          "calories": 280,
+          "protein_g": 7,
+          "carbs_g": 44,
+          "fat_g": 8,
+          "sugar_g": 3,
+          "sodium_mg": 420,
+          "fiber_g": 2,
+          "vitamins": [
+            "B1"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bbq_8",
+          "name": "Dal Makhani",
+          "calories": 320,
+          "protein_g": 12,
+          "carbs_g": 38,
+          "fat_g": 14,
+          "sugar_g": 4,
+          "sodium_mg": 580,
+          "fiber_g": 8,
+          "vitamins": [
+            "B6",
+            "Iron"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bbq_12",
+          "name": "Raita",
+          "calories": 80,
+          "protein_g": 4,
+          "carbs_g": 10,
+          "fat_g": 3,
+          "sugar_g": 6,
+          "sodium_mg": 180,
+          "fiber_g": 1,
+          "vitamins": [
+            "B12",
+            "C"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "name": "Saravana Bhavan",
+      "cuisine": "South Indian",
+      "dish_count": 12,
+      "dishes": [
+        {
+          "id": "sb_1",
+          "name": "Masala Dosa",
+          "calories": 340,
+          "protein_g": 8,
+          "carbs_g": 56,
+          "fat_g": 10,
+          "sugar_g": 2,
+          "sodium_mg": 480,
+          "fiber_g": 4,
+          "vitamins": [
+            "C",
+            "B1",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "sb_2",
+          "name": "Plain Dosa",
+          "calories": 260,
+          "protein_g": 6,
+          "carbs_g": 44,
+          "fat_g": 6,
+          "sugar_g": 2,
+          "sodium_mg": 380,
+          "fiber_g": 3,
+          "vitamins": [
+            "B1",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "sb_3",
+          "name": "Idli (3pc) + Sambar",
+          "calories": 220,
+          "protein_g": 8,
+          "carbs_g": 44,
+          "fat_g": 2,
+          "sugar_g": 2,
+          "sodium_mg": 420,
+          "fiber_g": 5,
+          "vitamins": [
+            "C",
+            "B1",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "sb_4",
+          "name": "Vada (2pc)",
+          "calories": 280,
+          "protein_g": 8,
+          "carbs_g": 32,
+          "fat_g": 14,
+          "sugar_g": 1,
+          "sodium_mg": 520,
+          "fiber_g": 3,
+          "vitamins": [
+            "B1"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "sb_5",
+          "name": "Uttapam (Veg)",
+          "calories": 300,
+          "protein_g": 8,
+          "carbs_g": 48,
+          "fat_g": 8,
+          "sugar_g": 3,
+          "sodium_mg": 460,
+          "fiber_g": 4,
+          "vitamins": [
+            "C",
+            "A",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "sb_6",
+          "name": "Coconut Chutney",
+          "calories": 80,
+          "protein_g": 1,
+          "carbs_g": 6,
+          "fat_g": 6,
+          "sugar_g": 2,
+          "sodium_mg": 140,
+          "fiber_g": 2,
+          "vitamins": [
+            "C"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "sb_7",
+          "name": "Filter Coffee (with sugar)",
+          "calories": 90,
+          "protein_g": 3,
+          "carbs_g": 14,
+          "fat_g": 3,
+          "sugar_g": 10,
+          "sodium_mg": 50,
+          "fiber_g": 0,
+          "vitamins": [
+            "B2"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "sb_8",
+          "name": "Rasam",
+          "calories": 60,
+          "protein_g": 2,
+          "carbs_g": 10,
+          "fat_g": 2,
+          "sugar_g": 2,
+          "sodium_mg": 380,
+          "fiber_g": 2,
+          "vitamins": [
+            "C",
+            "A"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "sb_9",
+          "name": "Vegetable Kurma + Parotta",
+          "calories": 580,
+          "protein_g": 14,
+          "carbs_g": 82,
+          "fat_g": 22,
+          "sugar_g": 6,
+          "sodium_mg": 760,
+          "fiber_g": 6,
+          "vitamins": [
+            "A",
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "sb_10",
+          "name": "Sambar Rice",
+          "calories": 320,
+          "protein_g": 10,
+          "carbs_g": 62,
+          "fat_g": 4,
+          "sugar_g": 3,
+          "sodium_mg": 480,
+          "fiber_g": 6,
+          "vitamins": [
+            "C",
+            "B6",
+            "Iron"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "sb_11",
+          "name": "Pongal",
+          "calories": 280,
+          "protein_g": 8,
+          "carbs_g": 44,
+          "fat_g": 8,
+          "sugar_g": 1,
+          "sodium_mg": 360,
+          "fiber_g": 3,
+          "vitamins": [
+            "B1",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "sb_12",
+          "name": "Sweet Pongal",
+          "calories": 360,
+          "protein_g": 7,
+          "carbs_g": 60,
+          "fat_g": 10,
+          "sugar_g": 28,
+          "sodium_mg": 120,
+          "fiber_g": 2,
+          "vitamins": [
+            "B1"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "name": "Chinese Wok",
+      "cuisine": "Chinese",
+      "dish_count": 12,
+      "dishes": [
+        {
+          "id": "cw_1",
+          "name": "Veg Fried Rice",
+          "calories": 420,
+          "protein_g": 10,
+          "carbs_g": 66,
+          "fat_g": 12,
+          "sugar_g": 4,
+          "sodium_mg": 920,
+          "fiber_g": 4,
+          "vitamins": [
+            "A",
+            "C",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "cw_2",
+          "name": "Chicken Fried Rice",
+          "calories": 520,
+          "protein_g": 24,
+          "carbs_g": 68,
+          "fat_g": 16,
+          "sugar_g": 4,
+          "sodium_mg": 1080,
+          "fiber_g": 3,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "cw_3",
+          "name": "Veg Hakka Noodles",
+          "calories": 380,
+          "protein_g": 9,
+          "carbs_g": 62,
+          "fat_g": 10,
+          "sugar_g": 5,
+          "sodium_mg": 860,
+          "fiber_g": 4,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "cw_4",
+          "name": "Chicken Manchurian (Dry)",
+          "calories": 340,
+          "protein_g": 22,
+          "carbs_g": 32,
+          "fat_g": 14,
+          "sugar_g": 10,
+          "sodium_mg": 1100,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "cw_5",
+          "name": "Veg Spring Rolls (4pc)",
+          "calories": 280,
+          "protein_g": 6,
+          "carbs_g": 38,
+          "fat_g": 12,
+          "sugar_g": 4,
+          "sodium_mg": 680,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "cw_6",
+          "name": "Veg Dim Sum (Steamed, 4pc)",
+          "calories": 180,
+          "protein_g": 6,
+          "carbs_g": 28,
+          "fat_g": 4,
+          "sugar_g": 2,
+          "sodium_mg": 480,
+          "fiber_g": 3,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "cw_7",
+          "name": "Hot and Sour Soup",
+          "calories": 120,
+          "protein_g": 6,
+          "carbs_g": 18,
+          "fat_g": 3,
+          "sugar_g": 4,
+          "sodium_mg": 860,
+          "fiber_g": 2,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "cw_8",
+          "name": "Sweet Corn Soup",
+          "calories": 100,
+          "protein_g": 4,
+          "carbs_g": 18,
+          "fat_g": 2,
+          "sugar_g": 6,
+          "sodium_mg": 540,
+          "fiber_g": 2,
+          "vitamins": [
+            "C",
+            "B1"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "cw_9",
+          "name": "Chilli Paneer (Dry)",
+          "calories": 320,
+          "protein_g": 16,
+          "carbs_g": 28,
+          "fat_g": 16,
+          "sugar_g": 8,
+          "sodium_mg": 980,
+          "fiber_g": 2,
+          "vitamins": [
+            "A",
+            "C",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "cw_10",
+          "name": "Kung Pao Chicken",
+          "calories": 360,
+          "protein_g": 28,
+          "carbs_g": 24,
+          "fat_g": 16,
+          "sugar_g": 8,
+          "sodium_mg": 980,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12",
+            "B6",
+            "C"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "cw_11",
+          "name": "Tofu Stir Fry",
+          "calories": 240,
+          "protein_g": 18,
+          "carbs_g": 18,
+          "fat_g": 10,
+          "sugar_g": 4,
+          "sodium_mg": 560,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "C",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "cw_12",
+          "name": "Fortune Cookie (2pc)",
+          "calories": 60,
+          "protein_g": 1,
+          "carbs_g": 12,
+          "fat_g": 1,
+          "sugar_g": 6,
+          "sodium_mg": 40,
+          "fiber_g": 0,
+          "vitamins": [],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "name": "Starbucks",
+      "cuisine": "Cafe",
+      "dish_count": 15,
+      "dishes": [
+        {
+          "id": "sb2_1",
+          "name": "Cappuccino (Medium, Whole Milk)",
+          "calories": 120,
+          "protein_g": 6,
+          "carbs_g": 12,
+          "fat_g": 5,
+          "sugar_g": 10,
+          "sodium_mg": 80,
+          "fiber_g": 0,
+          "vitamins": [
+            "D",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "sb2_2",
+          "name": "Caramel Frappuccino (Medium)",
+          "calories": 420,
+          "protein_g": 5,
+          "carbs_g": 68,
+          "fat_g": 14,
+          "sugar_g": 62,
+          "sodium_mg": 220,
+          "fiber_g": 0,
+          "vitamins": [
+            "D",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "sb2_3",
+          "name": "Black Coffee (Americano)",
+          "calories": 15,
+          "protein_g": 1,
+          "carbs_g": 2,
+          "fat_g": 0,
+          "sugar_g": 0,
+          "sodium_mg": 10,
+          "fiber_g": 0,
+          "vitamins": [],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "sb2_4",
+          "name": "Green Tea (Unsweetened)",
+          "calories": 5,
+          "protein_g": 0,
+          "carbs_g": 1,
+          "fat_g": 0,
+          "sugar_g": 0,
+          "sodium_mg": 10,
+          "fiber_g": 0,
+          "vitamins": [
+            "C"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "sb2_5",
+          "name": "Blueberry Muffin",
+          "calories": 380,
+          "protein_g": 6,
+          "carbs_g": 58,
+          "fat_g": 14,
+          "sugar_g": 32,
+          "sodium_mg": 340,
+          "fiber_g": 2,
+          "vitamins": [
+            "B1",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "sb2_6",
+          "name": "Banana Bread",
+          "calories": 420,
+          "protein_g": 6,
+          "carbs_g": 62,
+          "fat_g": 18,
+          "sugar_g": 36,
+          "sodium_mg": 300,
+          "fiber_g": 2,
+          "vitamins": [
+            "B6",
+            "C"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "sb2_7",
+          "name": "Chicken Caesar Wrap",
+          "calories": 320,
+          "protein_g": 26,
+          "carbs_g": 32,
+          "fat_g": 10,
+          "sugar_g": 3,
+          "sodium_mg": 680,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "K",
+            "B12"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "sb2_8",
+          "name": "Oatmeal (Plain)",
+          "calories": 160,
+          "protein_g": 5,
+          "carbs_g": 28,
+          "fat_g": 3,
+          "sugar_g": 1,
+          "sodium_mg": 125,
+          "fiber_g": 4,
+          "vitamins": [
+            "B1",
+            "B6",
+            "Iron"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "sb2_9",
+          "name": "Chocolate Cake Slice",
+          "calories": 480,
+          "protein_g": 6,
+          "carbs_g": 68,
+          "fat_g": 22,
+          "sugar_g": 52,
+          "sodium_mg": 380,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "sb2_10",
+          "name": "Latte (Medium, Skim Milk, No Sugar)",
+          "calories": 100,
+          "protein_g": 10,
+          "carbs_g": 14,
+          "fat_g": 1,
+          "sugar_g": 12,
+          "sodium_mg": 120,
+          "fiber_g": 0,
+          "vitamins": [
+            "D",
+            "B12"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "sb2_11",
+          "name": "Cheese Sandwich (Toasted)",
+          "calories": 340,
+          "protein_g": 14,
+          "carbs_g": 40,
+          "fat_g": 14,
+          "sugar_g": 4,
+          "sodium_mg": 640,
+          "fiber_g": 2,
+          "vitamins": [
+            "A",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "sb2_12",
+          "name": "Fruit Salad Bowl",
+          "calories": 110,
+          "protein_g": 2,
+          "carbs_g": 26,
+          "fat_g": 0,
+          "sugar_g": 20,
+          "sodium_mg": 20,
+          "fiber_g": 4,
+          "vitamins": [
+            "A",
+            "C",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "sb2_14",
+          "name": "Matcha Latte (Medium, Oat Milk)",
+          "calories": 200,
+          "protein_g": 4,
+          "carbs_g": 34,
+          "fat_g": 5,
+          "sugar_g": 18,
+          "sodium_mg": 100,
+          "fiber_g": 2,
+          "vitamins": [
+            "C",
+            "K"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "sb2_15",
+          "name": "Protein Box (Eggs + Cheese)",
+          "calories": 270,
+          "protein_g": 18,
+          "carbs_g": 18,
+          "fat_g": 14,
+          "sugar_g": 3,
+          "sodium_mg": 520,
+          "fiber_g": 2,
+          "vitamins": [
+            "D",
+            "B12",
+            "A"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "sb2_13",
+          "name": "Sparkling Water",
+          "calories": 0,
+          "protein_g": 0,
+          "carbs_g": 0,
+          "fat_g": 0,
+          "sugar_g": 0,
+          "sodium_mg": 30,
+          "fiber_g": 0,
+          "vitamins": [],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "name": "Punjabi Dhaba",
+      "cuisine": "North Indian",
+      "dish_count": 15,
+      "dishes": [
+        {
+          "id": "pd_2",
+          "name": "Dal Tadka",
+          "calories": 240,
+          "protein_g": 12,
+          "carbs_g": 32,
+          "fat_g": 8,
+          "sugar_g": 3,
+          "sodium_mg": 420,
+          "fiber_g": 8,
+          "vitamins": [
+            "B6",
+            "Iron",
+            "Folate"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "pd_3",
+          "name": "Butter Chicken",
+          "calories": 420,
+          "protein_g": 28,
+          "carbs_g": 20,
+          "fat_g": 24,
+          "sugar_g": 8,
+          "sodium_mg": 780,
+          "fiber_g": 2,
+          "vitamins": [
+            "A",
+            "B12",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "pd_4",
+          "name": "Tandoori Roti",
+          "calories": 120,
+          "protein_g": 4,
+          "carbs_g": 22,
+          "fat_g": 2,
+          "sugar_g": 1,
+          "sodium_mg": 180,
+          "fiber_g": 3,
+          "vitamins": [
+            "B1"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "pd_6",
+          "name": "Palak Paneer",
+          "calories": 320,
+          "protein_g": 16,
+          "carbs_g": 18,
+          "fat_g": 20,
+          "sugar_g": 4,
+          "sodium_mg": 520,
+          "fiber_g": 5,
+          "vitamins": [
+            "A",
+            "C",
+            "K",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "pd_7",
+          "name": "Paneer Tikka Masala",
+          "calories": 380,
+          "protein_g": 18,
+          "carbs_g": 22,
+          "fat_g": 24,
+          "sugar_g": 6,
+          "sodium_mg": 640,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "pd_8",
+          "name": "Chicken Tikka",
+          "calories": 260,
+          "protein_g": 34,
+          "carbs_g": 6,
+          "fat_g": 10,
+          "sugar_g": 2,
+          "sodium_mg": 500,
+          "fiber_g": 0,
+          "vitamins": [
+            "B12",
+            "B6",
+            "D"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "pd_9",
+          "name": "Rajma Chawal",
+          "calories": 480,
+          "protein_g": 18,
+          "carbs_g": 84,
+          "fat_g": 8,
+          "sugar_g": 4,
+          "sodium_mg": 620,
+          "fiber_g": 12,
+          "vitamins": [
+            "Iron",
+            "Folate",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "pd_10",
+          "name": "Aloo Paratha (1pc) + Curd",
+          "calories": 380,
+          "protein_g": 9,
+          "carbs_g": 56,
+          "fat_g": 14,
+          "sugar_g": 4,
+          "sodium_mg": 480,
+          "fiber_g": 4,
+          "vitamins": [
+            "C",
+            "B6",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "pd_13",
+          "name": "Sarson da Saag + Makki Roti",
+          "calories": 420,
+          "protein_g": 14,
+          "carbs_g": 58,
+          "fat_g": 16,
+          "sugar_g": 4,
+          "sodium_mg": 480,
+          "fiber_g": 10,
+          "vitamins": [
+            "A",
+            "C",
+            "K",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "pd_14",
+          "name": "Gajar Halwa (1 serving)",
+          "calories": 320,
+          "protein_g": 4,
+          "carbs_g": 46,
+          "fat_g": 14,
+          "sugar_g": 36,
+          "sodium_mg": 120,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "pd_15",
+          "name": "Nimbu Pani (Without Sugar)",
+          "calories": 20,
+          "protein_g": 0,
+          "carbs_g": 5,
+          "fat_g": 0,
+          "sugar_g": 1,
+          "sodium_mg": 20,
+          "fiber_g": 0,
+          "vitamins": [
+            "C"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "pd_1",
+          "name": "Dal Makhani",
+          "calories": 340,
+          "protein_g": 14,
+          "carbs_g": 38,
+          "fat_g": 16,
+          "sugar_g": 4,
+          "sodium_mg": 560,
+          "fiber_g": 9,
+          "vitamins": [
+            "B6",
+            "Iron",
+            "Folate"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "pd_5",
+          "name": "Butter Naan",
+          "calories": 300,
+          "protein_g": 8,
+          "carbs_g": 46,
+          "fat_g": 10,
+          "sugar_g": 3,
+          "sodium_mg": 440,
+          "fiber_g": 2,
+          "vitamins": [
+            "B1"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "pd_11",
+          "name": "Lassi (Sweet)",
+          "calories": 240,
+          "protein_g": 8,
+          "carbs_g": 38,
+          "fat_g": 6,
+          "sugar_g": 30,
+          "sodium_mg": 140,
+          "fiber_g": 0,
+          "vitamins": [
+            "D",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "pd_12",
+          "name": "Raita",
+          "calories": 80,
+          "protein_g": 4,
+          "carbs_g": 10,
+          "fat_g": 3,
+          "sugar_g": 6,
+          "sodium_mg": 160,
+          "fiber_g": 1,
+          "vitamins": [
+            "B12",
+            "C"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "name": "Naturals Ice Cream",
+      "cuisine": "Dessert",
+      "dish_count": 12,
+      "dishes": [
+        {
+          "id": "nat_1",
+          "name": "Sitaphal Ice Cream (1 scoop)",
+          "calories": 220,
+          "protein_g": 3,
+          "carbs_g": 36,
+          "fat_g": 8,
+          "sugar_g": 28,
+          "sodium_mg": 80,
+          "fiber_g": 1,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "nat_2",
+          "name": "Mango Ice Cream (1 scoop)",
+          "calories": 200,
+          "protein_g": 3,
+          "carbs_g": 34,
+          "fat_g": 7,
+          "sugar_g": 26,
+          "sodium_mg": 60,
+          "fiber_g": 0,
+          "vitamins": [
+            "A",
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "nat_3",
+          "name": "Tender Coconut Ice Cream (1 scoop)",
+          "calories": 180,
+          "protein_g": 2,
+          "carbs_g": 26,
+          "fat_g": 8,
+          "sugar_g": 20,
+          "sodium_mg": 50,
+          "fiber_g": 1,
+          "vitamins": [
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "nat_4",
+          "name": "Chocolate Ice Cream (1 scoop)",
+          "calories": 240,
+          "protein_g": 4,
+          "carbs_g": 36,
+          "fat_g": 10,
+          "sugar_g": 30,
+          "sodium_mg": 90,
+          "fiber_g": 1,
+          "vitamins": [
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "nat_5",
+          "name": "Strawberry Ice Cream (1 scoop)",
+          "calories": 190,
+          "protein_g": 3,
+          "carbs_g": 30,
+          "fat_g": 7,
+          "sugar_g": 24,
+          "sodium_mg": 60,
+          "fiber_g": 0,
+          "vitamins": [
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "nat_6",
+          "name": "Kesar Pista Ice Cream (1 scoop)",
+          "calories": 250,
+          "protein_g": 5,
+          "carbs_g": 32,
+          "fat_g": 12,
+          "sugar_g": 26,
+          "sodium_mg": 80,
+          "fiber_g": 1,
+          "vitamins": [
+            "B12",
+            "E"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "nat_7",
+          "name": "Fresh Lime Sorbet (1 scoop)",
+          "calories": 120,
+          "protein_g": 0,
+          "carbs_g": 30,
+          "fat_g": 0,
+          "sugar_g": 24,
+          "sodium_mg": 20,
+          "fiber_g": 0,
+          "vitamins": [
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "nat_8",
+          "name": "Mixed Fruit Cup (no ice cream)",
+          "calories": 80,
+          "protein_g": 1,
+          "carbs_g": 20,
+          "fat_g": 0,
+          "sugar_g": 16,
+          "sodium_mg": 10,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "C",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "nat_9",
+          "name": "Double Scoop Combo",
+          "calories": 440,
+          "protein_g": 6,
+          "carbs_g": 66,
+          "fat_g": 18,
+          "sugar_g": 54,
+          "sodium_mg": 140,
+          "fiber_g": 1,
+          "vitamins": [
+            "A",
+            "C",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "nat_10",
+          "name": "Chikoo Ice Cream (1 scoop)",
+          "calories": 210,
+          "protein_g": 2,
+          "carbs_g": 34,
+          "fat_g": 8,
+          "sugar_g": 26,
+          "sodium_mg": 60,
+          "fiber_g": 1,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "nat_11",
+          "name": "Anjeer (Fig) Ice Cream (1 scoop)",
+          "calories": 200,
+          "protein_g": 3,
+          "carbs_g": 32,
+          "fat_g": 7,
+          "sugar_g": 24,
+          "sodium_mg": 60,
+          "fiber_g": 2,
+          "vitamins": [
+            "B6",
+            "Iron"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "nat_12",
+          "name": "Watermelon Sorbet (1 scoop)",
+          "calories": 100,
+          "protein_g": 0,
+          "carbs_g": 26,
+          "fat_g": 0,
+          "sugar_g": 22,
+          "sodium_mg": 15,
+          "fiber_g": 0,
+          "vitamins": [
+            "A",
+            "C"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "name": "Fassos",
+      "cuisine": "Wraps / Fast Casual",
+      "dish_count": 14,
+      "dishes": [
+        {
+          "id": "fas_1",
+          "name": "Chicken Frankie",
+          "calories": 380,
+          "protein_g": 22,
+          "carbs_g": 44,
+          "fat_g": 14,
+          "sugar_g": 4,
+          "sodium_mg": 720,
+          "fiber_g": 3,
+          "vitamins": [
+            "B12",
+            "B6",
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "fas_2",
+          "name": "Paneer Frankie",
+          "calories": 360,
+          "protein_g": 16,
+          "carbs_g": 44,
+          "fat_g": 14,
+          "sugar_g": 4,
+          "sodium_mg": 660,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "B12",
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "fas_3",
+          "name": "Egg Bhurji Roll",
+          "calories": 340,
+          "protein_g": 18,
+          "carbs_g": 38,
+          "fat_g": 14,
+          "sugar_g": 3,
+          "sodium_mg": 620,
+          "fiber_g": 2,
+          "vitamins": [
+            "D",
+            "B12",
+            "A"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "fas_4",
+          "name": "Veg Frankie",
+          "calories": 290,
+          "protein_g": 8,
+          "carbs_g": 44,
+          "fat_g": 10,
+          "sugar_g": 4,
+          "sodium_mg": 560,
+          "fiber_g": 4,
+          "vitamins": [
+            "C",
+            "A",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "fas_5",
+          "name": "Cheese Burst Frankie",
+          "calories": 480,
+          "protein_g": 18,
+          "carbs_g": 52,
+          "fat_g": 22,
+          "sugar_g": 5,
+          "sodium_mg": 980,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "fas_6",
+          "name": "Manchurian Frankie",
+          "calories": 400,
+          "protein_g": 10,
+          "carbs_g": 58,
+          "fat_g": 14,
+          "sugar_g": 8,
+          "sodium_mg": 1020,
+          "fiber_g": 3,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "fas_7",
+          "name": "Keema Roll",
+          "calories": 420,
+          "protein_g": 26,
+          "carbs_g": 42,
+          "fat_g": 18,
+          "sugar_g": 3,
+          "sodium_mg": 760,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12",
+            "B6",
+            "Iron"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "fas_8",
+          "name": "Sweet Lassi",
+          "calories": 200,
+          "protein_g": 6,
+          "carbs_g": 36,
+          "fat_g": 4,
+          "sugar_g": 28,
+          "sodium_mg": 100,
+          "fiber_g": 0,
+          "vitamins": [
+            "D",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "fas_9",
+          "name": "Salted Lassi",
+          "calories": 120,
+          "protein_g": 6,
+          "carbs_g": 14,
+          "fat_g": 4,
+          "sugar_g": 6,
+          "sodium_mg": 280,
+          "fiber_g": 0,
+          "vitamins": [
+            "D",
+            "B12"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "fas_10",
+          "name": "Veg Biryani Box",
+          "calories": 460,
+          "protein_g": 10,
+          "carbs_g": 76,
+          "fat_g": 12,
+          "sugar_g": 4,
+          "sodium_mg": 780,
+          "fiber_g": 5,
+          "vitamins": [
+            "B6",
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "fas_11",
+          "name": "Chicken Biryani Box",
+          "calories": 540,
+          "protein_g": 28,
+          "carbs_g": 74,
+          "fat_g": 16,
+          "sugar_g": 4,
+          "sodium_mg": 880,
+          "fiber_g": 4,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "fas_12",
+          "name": "Tandoori Chicken Roll",
+          "calories": 340,
+          "protein_g": 28,
+          "carbs_g": 36,
+          "fat_g": 10,
+          "sugar_g": 3,
+          "sodium_mg": 580,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12",
+            "B6",
+            "D"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "fas_13",
+          "name": "Paneer Tikka Roll",
+          "calories": 360,
+          "protein_g": 16,
+          "carbs_g": 44,
+          "fat_g": 14,
+          "sugar_g": 4,
+          "sodium_mg": 640,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "B12",
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "fas_14",
+          "name": "Achari Chicken Frankie",
+          "calories": 390,
+          "protein_g": 24,
+          "carbs_g": 44,
+          "fat_g": 14,
+          "sugar_g": 4,
+          "sodium_mg": 780,
+          "fiber_g": 3,
+          "vitamins": [
+            "B12",
+            "B6",
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "name": "Mainland China",
+      "cuisine": "Chinese Fine Dine",
+      "dish_count": 18,
+      "dishes": [
+        {
+          "id": "mc_1",
+          "name": "Dimsums (Steamed Veg, 4pc)",
+          "calories": 160,
+          "protein_g": 6,
+          "carbs_g": 26,
+          "fat_g": 3,
+          "sugar_g": 2,
+          "sodium_mg": 420,
+          "fiber_g": 3,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "mc_2",
+          "name": "Prawn Dimsums (Steamed, 4pc)",
+          "calories": 180,
+          "protein_g": 14,
+          "carbs_g": 22,
+          "fat_g": 4,
+          "sugar_g": 1,
+          "sodium_mg": 480,
+          "fiber_g": 1,
+          "vitamins": [
+            "B12",
+            "D"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "mc_3",
+          "name": "Peking Duck",
+          "calories": 540,
+          "protein_g": 28,
+          "carbs_g": 28,
+          "fat_g": 34,
+          "sugar_g": 8,
+          "sodium_mg": 960,
+          "fiber_g": 0,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "mc_4",
+          "name": "Hot and Sour Soup - Mainland China",
+          "calories": 130,
+          "protein_g": 7,
+          "carbs_g": 20,
+          "fat_g": 3,
+          "sugar_g": 5,
+          "sodium_mg": 880,
+          "fiber_g": 2,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "mc_5",
+          "name": "Veg in Black Bean Sauce",
+          "calories": 240,
+          "protein_g": 8,
+          "carbs_g": 34,
+          "fat_g": 8,
+          "sugar_g": 6,
+          "sodium_mg": 820,
+          "fiber_g": 5,
+          "vitamins": [
+            "A",
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "mc_6",
+          "name": "Tofu in Chilli Garlic",
+          "calories": 260,
+          "protein_g": 16,
+          "carbs_g": 26,
+          "fat_g": 10,
+          "sugar_g": 6,
+          "sodium_mg": 760,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "mc_7",
+          "name": "Steamed Rice",
+          "calories": 200,
+          "protein_g": 4,
+          "carbs_g": 44,
+          "fat_g": 0,
+          "sugar_g": 0,
+          "sodium_mg": 10,
+          "fiber_g": 1,
+          "vitamins": [
+            "B1"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "mc_8",
+          "name": "Stir Fried Vegetables",
+          "calories": 160,
+          "protein_g": 5,
+          "carbs_g": 22,
+          "fat_g": 6,
+          "sugar_g": 6,
+          "sodium_mg": 440,
+          "fiber_g": 6,
+          "vitamins": [
+            "A",
+            "C",
+            "K",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "mc_9",
+          "name": "Honey Chilli Potato",
+          "calories": 380,
+          "protein_g": 5,
+          "carbs_g": 60,
+          "fat_g": 14,
+          "sugar_g": 18,
+          "sodium_mg": 640,
+          "fiber_g": 3,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "mc_10",
+          "name": "Chicken in Oyster Sauce",
+          "calories": 320,
+          "protein_g": 28,
+          "carbs_g": 22,
+          "fat_g": 12,
+          "sugar_g": 6,
+          "sodium_mg": 920,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "mc_11",
+          "name": "Kung Pao Tofu",
+          "calories": 280,
+          "protein_g": 18,
+          "carbs_g": 24,
+          "fat_g": 12,
+          "sugar_g": 6,
+          "sodium_mg": 700,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "mc_12",
+          "name": "Toffee Banana",
+          "calories": 320,
+          "protein_g": 2,
+          "carbs_g": 56,
+          "fat_g": 10,
+          "sugar_g": 42,
+          "sodium_mg": 80,
+          "fiber_g": 2,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "mc_13",
+          "name": "Jasmine Tea",
+          "calories": 5,
+          "protein_g": 0,
+          "carbs_g": 1,
+          "fat_g": 0,
+          "sugar_g": 0,
+          "sodium_mg": 5,
+          "fiber_g": 0,
+          "vitamins": [],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "mc_14",
+          "name": "Lychee Mocktail",
+          "calories": 140,
+          "protein_g": 0,
+          "carbs_g": 36,
+          "fat_g": 0,
+          "sugar_g": 32,
+          "sodium_mg": 20,
+          "fiber_g": 0,
+          "vitamins": [
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "mc_15",
+          "name": "Veg Fried Rice (Brown)",
+          "calories": 360,
+          "protein_g": 8,
+          "carbs_g": 62,
+          "fat_g": 8,
+          "sugar_g": 3,
+          "sodium_mg": 640,
+          "fiber_g": 5,
+          "vitamins": [
+            "B1",
+            "B6",
+            "A"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "mc_16",
+          "name": "Chilli Garlic Noodles",
+          "calories": 400,
+          "protein_g": 10,
+          "carbs_g": 62,
+          "fat_g": 12,
+          "sugar_g": 4,
+          "sodium_mg": 980,
+          "fiber_g": 3,
+          "vitamins": [
+            "B6",
+            "C"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "mc_17",
+          "name": "Veg Manchow Soup",
+          "calories": 110,
+          "protein_g": 4,
+          "carbs_g": 18,
+          "fat_g": 3,
+          "sugar_g": 4,
+          "sodium_mg": 760,
+          "fiber_g": 3,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "mc_18",
+          "name": "Chicken Fried Rice (Brown)",
+          "calories": 440,
+          "protein_g": 24,
+          "carbs_g": 64,
+          "fat_g": 10,
+          "sugar_g": 3,
+          "sodium_mg": 820,
+          "fiber_g": 4,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        }
+      ]
+    },
+    {
+      "id": "16",
+      "name": "Wow! Momo",
+      "cuisine": "Momo / Dumplings",
+      "dish_count": 12,
+      "dishes": [
+        {
+          "id": "wm_1",
+          "name": "Steamed Veg Momo (8pc)",
+          "calories": 240,
+          "protein_g": 8,
+          "carbs_g": 42,
+          "fat_g": 4,
+          "sugar_g": 2,
+          "sodium_mg": 480,
+          "fiber_g": 4,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "wm_2",
+          "name": "Steamed Chicken Momo (8pc)",
+          "calories": 280,
+          "protein_g": 18,
+          "carbs_g": 38,
+          "fat_g": 6,
+          "sugar_g": 2,
+          "sodium_mg": 520,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "wm_3",
+          "name": "Fried Veg Momo (8pc)",
+          "calories": 380,
+          "protein_g": 8,
+          "carbs_g": 50,
+          "fat_g": 16,
+          "sugar_g": 2,
+          "sodium_mg": 620,
+          "fiber_g": 4,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "wm_4",
+          "name": "Fried Chicken Momo (8pc)",
+          "calories": 420,
+          "protein_g": 18,
+          "carbs_g": 46,
+          "fat_g": 18,
+          "sugar_g": 2,
+          "sodium_mg": 680,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "wm_5",
+          "name": "Paneer Momo (Steamed, 8pc)",
+          "calories": 320,
+          "protein_g": 14,
+          "carbs_g": 42,
+          "fat_g": 10,
+          "sugar_g": 2,
+          "sodium_mg": 520,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "B12"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "wm_6",
+          "name": "Schezwan Momo (Sauce)",
+          "calories": 360,
+          "protein_g": 10,
+          "carbs_g": 52,
+          "fat_g": 12,
+          "sugar_g": 6,
+          "sodium_mg": 880,
+          "fiber_g": 3,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "wm_7",
+          "name": "Momo Soup (Veg)",
+          "calories": 180,
+          "protein_g": 7,
+          "carbs_g": 32,
+          "fat_g": 3,
+          "sugar_g": 2,
+          "sodium_mg": 560,
+          "fiber_g": 4,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "wm_8",
+          "name": "Tandoori Momo (6pc)",
+          "calories": 300,
+          "protein_g": 12,
+          "carbs_g": 44,
+          "fat_g": 8,
+          "sugar_g": 3,
+          "sodium_mg": 640,
+          "fiber_g": 3,
+          "vitamins": [
+            "C",
+            "B6",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "wm_9",
+          "name": "Cheese Momo (Fried, 8pc)",
+          "calories": 480,
+          "protein_g": 16,
+          "carbs_g": 52,
+          "fat_g": 22,
+          "sugar_g": 3,
+          "sodium_mg": 940,
+          "fiber_g": 2,
+          "vitamins": [
+            "A",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "wm_10",
+          "name": "Corn Cheese Momo (Steamed, 8pc)",
+          "calories": 360,
+          "protein_g": 14,
+          "carbs_g": 48,
+          "fat_g": 12,
+          "sugar_g": 4,
+          "sodium_mg": 620,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "B12",
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "wm_11",
+          "name": "Chocolate Momo (4pc)",
+          "calories": 320,
+          "protein_g": 5,
+          "carbs_g": 50,
+          "fat_g": 12,
+          "sugar_g": 36,
+          "sodium_mg": 120,
+          "fiber_g": 1,
+          "vitamins": [
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "wm_12",
+          "name": "Fresh Lime Water",
+          "calories": 15,
+          "protein_g": 0,
+          "carbs_g": 4,
+          "fat_g": 0,
+          "sugar_g": 1,
+          "sodium_mg": 10,
+          "fiber_g": 0,
+          "vitamins": [
+            "C"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        }
+      ]
+    },
+    {
+      "id": "17",
+      "name": "Barista",
+      "cuisine": "Cafe",
+      "dish_count": 13,
+      "dishes": [
+        {
+          "id": "bar_1",
+          "name": "Espresso",
+          "calories": 10,
+          "protein_g": 1,
+          "carbs_g": 2,
+          "fat_g": 0,
+          "sugar_g": 0,
+          "sodium_mg": 5,
+          "fiber_g": 0,
+          "vitamins": [],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "bar_2",
+          "name": "Mocha (Medium)",
+          "calories": 380,
+          "protein_g": 8,
+          "carbs_g": 60,
+          "fat_g": 12,
+          "sugar_g": 48,
+          "sodium_mg": 140,
+          "fiber_g": 1,
+          "vitamins": [
+            "D",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "bar_3",
+          "name": "Vanilla Latte (Medium)",
+          "calories": 280,
+          "protein_g": 9,
+          "carbs_g": 42,
+          "fat_g": 8,
+          "sugar_g": 34,
+          "sodium_mg": 120,
+          "fiber_g": 0,
+          "vitamins": [
+            "D",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "bar_4",
+          "name": "Cold Brew (Unsweetened)",
+          "calories": 20,
+          "protein_g": 1,
+          "carbs_g": 3,
+          "fat_g": 0,
+          "sugar_g": 0,
+          "sodium_mg": 10,
+          "fiber_g": 0,
+          "vitamins": [],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "bar_5",
+          "name": "Chocolate Croissant",
+          "calories": 420,
+          "protein_g": 7,
+          "carbs_g": 52,
+          "fat_g": 22,
+          "sugar_g": 26,
+          "sodium_mg": 340,
+          "fiber_g": 2,
+          "vitamins": [
+            "B1",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "bar_6",
+          "name": "Veg Sandwich (Multigrain)",
+          "calories": 280,
+          "protein_g": 12,
+          "carbs_g": 40,
+          "fat_g": 8,
+          "sugar_g": 4,
+          "sodium_mg": 480,
+          "fiber_g": 6,
+          "vitamins": [
+            "A",
+            "C",
+            "B6"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "bar_7",
+          "name": "Egg Sandwich",
+          "calories": 320,
+          "protein_g": 18,
+          "carbs_g": 36,
+          "fat_g": 12,
+          "sugar_g": 3,
+          "sodium_mg": 520,
+          "fiber_g": 3,
+          "vitamins": [
+            "D",
+            "B12",
+            "A"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bar_8",
+          "name": "Fruit Smoothie",
+          "calories": 180,
+          "protein_g": 4,
+          "carbs_g": 38,
+          "fat_g": 2,
+          "sugar_g": 28,
+          "sodium_mg": 60,
+          "fiber_g": 4,
+          "vitamins": [
+            "A",
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bar_9",
+          "name": "Cheesecake Slice",
+          "calories": 440,
+          "protein_g": 7,
+          "carbs_g": 46,
+          "fat_g": 26,
+          "sugar_g": 36,
+          "sodium_mg": 320,
+          "fiber_g": 0,
+          "vitamins": [
+            "A",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "bar_10",
+          "name": "Herbal Tea (Unsweetened)",
+          "calories": 5,
+          "protein_g": 0,
+          "carbs_g": 1,
+          "fat_g": 0,
+          "sugar_g": 0,
+          "sodium_mg": 5,
+          "fiber_g": 0,
+          "vitamins": [
+            "C"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "bar_11",
+          "name": "Brownie",
+          "calories": 360,
+          "protein_g": 4,
+          "carbs_g": 48,
+          "fat_g": 18,
+          "sugar_g": 38,
+          "sodium_mg": 180,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "bar_12",
+          "name": "Granola Bar",
+          "calories": 200,
+          "protein_g": 5,
+          "carbs_g": 32,
+          "fat_g": 7,
+          "sugar_g": 14,
+          "sodium_mg": 120,
+          "fiber_g": 3,
+          "vitamins": [
+            "B1",
+            "B6",
+            "Iron"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "bar_13",
+          "name": "Avocado Toast",
+          "calories": 260,
+          "protein_g": 8,
+          "carbs_g": 28,
+          "fat_g": 14,
+          "sugar_g": 2,
+          "sodium_mg": 360,
+          "fiber_g": 7,
+          "vitamins": [
+            "C",
+            "K",
+            "B6",
+            "Folate"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        }
+      ]
+    },
+    {
+      "id": "18",
+      "name": "Social",
+      "cuisine": "Bar / Casual Dine",
+      "dish_count": 12,
+      "dishes": [
+        {
+          "id": "soc_1",
+          "name": "Nachos with Salsa",
+          "calories": 420,
+          "protein_g": 8,
+          "carbs_g": 54,
+          "fat_g": 20,
+          "sugar_g": 4,
+          "sodium_mg": 780,
+          "fiber_g": 4,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "soc_2",
+          "name": "Loaded Fries",
+          "calories": 580,
+          "protein_g": 14,
+          "carbs_g": 66,
+          "fat_g": 30,
+          "sugar_g": 4,
+          "sodium_mg": 1080,
+          "fiber_g": 4,
+          "vitamins": [
+            "A",
+            "B6",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "soc_3",
+          "name": "Grilled Chicken Salad",
+          "calories": 280,
+          "protein_g": 28,
+          "carbs_g": 18,
+          "fat_g": 10,
+          "sugar_g": 6,
+          "sodium_mg": 480,
+          "fiber_g": 5,
+          "vitamins": [
+            "A",
+            "C",
+            "K",
+            "B12"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "soc_4",
+          "name": "Mushroom Bruschetta",
+          "calories": 240,
+          "protein_g": 7,
+          "carbs_g": 32,
+          "fat_g": 10,
+          "sugar_g": 3,
+          "sodium_mg": 420,
+          "fiber_g": 3,
+          "vitamins": [
+            "D",
+            "B6",
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "soc_6",
+          "name": "Fish and Chips",
+          "calories": 680,
+          "protein_g": 28,
+          "carbs_g": 68,
+          "fat_g": 34,
+          "sugar_g": 2,
+          "sodium_mg": 980,
+          "fiber_g": 3,
+          "vitamins": [
+            "D",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "soc_8",
+          "name": "Fresh Lime Soda (Without Sugar)",
+          "calories": 25,
+          "protein_g": 0,
+          "carbs_g": 6,
+          "fat_g": 0,
+          "sugar_g": 1,
+          "sodium_mg": 60,
+          "fiber_g": 0,
+          "vitamins": [
+            "C"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "soc_9",
+          "name": "Quinoa Salad Bowl",
+          "calories": 320,
+          "protein_g": 14,
+          "carbs_g": 44,
+          "fat_g": 10,
+          "sugar_g": 5,
+          "sodium_mg": 380,
+          "fiber_g": 8,
+          "vitamins": [
+            "A",
+            "C",
+            "Iron",
+            "Folate"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "soc_10",
+          "name": "Chocolate Lava Cake",
+          "calories": 440,
+          "protein_g": 6,
+          "carbs_g": 58,
+          "fat_g": 22,
+          "sugar_g": 44,
+          "sodium_mg": 220,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "soc_11",
+          "name": "BBQ Chicken Pizza (Small)",
+          "calories": 560,
+          "protein_g": 26,
+          "carbs_g": 72,
+          "fat_g": 20,
+          "sugar_g": 12,
+          "sodium_mg": 1080,
+          "fiber_g": 3,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "soc_12",
+          "name": "Hummus with Pita",
+          "calories": 320,
+          "protein_g": 12,
+          "carbs_g": 44,
+          "fat_g": 12,
+          "sugar_g": 3,
+          "sodium_mg": 480,
+          "fiber_g": 7,
+          "vitamins": [
+            "B6",
+            "Iron",
+            "Folate"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "soc_5",
+          "name": "Veg Burger",
+          "calories": 440,
+          "protein_g": 12,
+          "carbs_g": 58,
+          "fat_g": 18,
+          "sugar_g": 8,
+          "sodium_mg": 780,
+          "fiber_g": 5,
+          "vitamins": [
+            "C",
+            "A",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "soc_7",
+          "name": "Sparkling Water",
+          "calories": 0,
+          "protein_g": 0,
+          "carbs_g": 0,
+          "fat_g": 0,
+          "sugar_g": 0,
+          "sodium_mg": 30,
+          "fiber_g": 0,
+          "vitamins": [],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        }
+      ]
+    },
+    {
+      "id": "19",
+      "name": "Theobroma",
+      "cuisine": "Bakery / Desserts",
+      "dish_count": 12,
+      "dishes": [
+        {
+          "id": "theo_1",
+          "name": "Chocolate Truffle Cake (Slice)",
+          "calories": 480,
+          "protein_g": 6,
+          "carbs_g": 60,
+          "fat_g": 26,
+          "sugar_g": 48,
+          "sodium_mg": 200,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "theo_2",
+          "name": "Banana Walnut Loaf (Slice)",
+          "calories": 340,
+          "protein_g": 6,
+          "carbs_g": 50,
+          "fat_g": 14,
+          "sugar_g": 28,
+          "sodium_mg": 220,
+          "fiber_g": 3,
+          "vitamins": [
+            "B6",
+            "E",
+            "B1"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "theo_3",
+          "name": "Brownie - Theobroma",
+          "calories": 380,
+          "protein_g": 5,
+          "carbs_g": 48,
+          "fat_g": 20,
+          "sugar_g": 38,
+          "sodium_mg": 180,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "theo_4",
+          "name": "Croissant (Plain)",
+          "calories": 300,
+          "protein_g": 6,
+          "carbs_g": 34,
+          "fat_g": 16,
+          "sugar_g": 4,
+          "sodium_mg": 360,
+          "fiber_g": 1,
+          "vitamins": [
+            "B1",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "theo_5",
+          "name": "Chicken Sandwich",
+          "calories": 360,
+          "protein_g": 22,
+          "carbs_g": 38,
+          "fat_g": 14,
+          "sugar_g": 4,
+          "sodium_mg": 620,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "theo_6",
+          "name": "Fruit Tart",
+          "calories": 280,
+          "protein_g": 4,
+          "carbs_g": 40,
+          "fat_g": 12,
+          "sugar_g": 22,
+          "sodium_mg": 140,
+          "fiber_g": 2,
+          "vitamins": [
+            "A",
+            "C",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "theo_7",
+          "name": "Red Velvet Cake (Slice)",
+          "calories": 460,
+          "protein_g": 5,
+          "carbs_g": 62,
+          "fat_g": 22,
+          "sugar_g": 50,
+          "sodium_mg": 280,
+          "fiber_g": 1,
+          "vitamins": [
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "theo_8",
+          "name": "Multigrain Bread (2 slices)",
+          "calories": 160,
+          "protein_g": 6,
+          "carbs_g": 30,
+          "fat_g": 2,
+          "sugar_g": 2,
+          "sodium_mg": 280,
+          "fiber_g": 5,
+          "vitamins": [
+            "B1",
+            "B6",
+            "Iron"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "theo_9",
+          "name": "Cookies (2pc)",
+          "calories": 220,
+          "protein_g": 3,
+          "carbs_g": 32,
+          "fat_g": 10,
+          "sugar_g": 20,
+          "sodium_mg": 160,
+          "fiber_g": 1,
+          "vitamins": [],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "theo_10",
+          "name": "Iced Tea (Unsweetened)",
+          "calories": 10,
+          "protein_g": 0,
+          "carbs_g": 2,
+          "fat_g": 0,
+          "sugar_g": 0,
+          "sodium_mg": 10,
+          "fiber_g": 0,
+          "vitamins": [
+            "C"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "theo_11",
+          "name": "Mango Cheesecake (Slice)",
+          "calories": 440,
+          "protein_g": 7,
+          "carbs_g": 52,
+          "fat_g": 24,
+          "sugar_g": 40,
+          "sodium_mg": 260,
+          "fiber_g": 1,
+          "vitamins": [
+            "A",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "theo_12",
+          "name": "Pain au Chocolat",
+          "calories": 380,
+          "protein_g": 6,
+          "carbs_g": 46,
+          "fat_g": 20,
+          "sugar_g": 22,
+          "sodium_mg": 320,
+          "fiber_g": 2,
+          "vitamins": [
+            "B12",
+            "B1"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        }
+      ]
+    },
+    {
+      "id": "20",
+      "name": "Ammi's Biryani",
+      "cuisine": "Biryani",
+      "dish_count": 15,
+      "dishes": [
+        {
+          "id": "amb_1",
+          "name": "Chicken Dum Biryani (Half)",
+          "calories": 520,
+          "protein_g": 28,
+          "carbs_g": 66,
+          "fat_g": 18,
+          "sugar_g": 4,
+          "sodium_mg": 880,
+          "fiber_g": 3,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "amb_2",
+          "name": "Mutton Dum Biryani (Half)",
+          "calories": 620,
+          "protein_g": 30,
+          "carbs_g": 66,
+          "fat_g": 28,
+          "sugar_g": 4,
+          "sodium_mg": 980,
+          "fiber_g": 3,
+          "vitamins": [
+            "B12",
+            "B6",
+            "Iron"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "amb_3",
+          "name": "Veg Biryani (Half)",
+          "calories": 420,
+          "protein_g": 9,
+          "carbs_g": 70,
+          "fat_g": 12,
+          "sugar_g": 4,
+          "sodium_mg": 720,
+          "fiber_g": 5,
+          "vitamins": [
+            "A",
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "amb_4",
+          "name": "Prawn Biryani (Half)",
+          "calories": 480,
+          "protein_g": 26,
+          "carbs_g": 64,
+          "fat_g": 14,
+          "sugar_g": 3,
+          "sodium_mg": 840,
+          "fiber_g": 3,
+          "vitamins": [
+            "B12",
+            "D",
+            "Omega3"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "amb_5",
+          "name": "Egg Biryani (Half)",
+          "calories": 460,
+          "protein_g": 18,
+          "carbs_g": 66,
+          "fat_g": 14,
+          "sugar_g": 4,
+          "sodium_mg": 760,
+          "fiber_g": 3,
+          "vitamins": [
+            "D",
+            "B12",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "amb_6",
+          "name": "Mirchi ka Salan",
+          "calories": 120,
+          "protein_g": 3,
+          "carbs_g": 12,
+          "fat_g": 8,
+          "sugar_g": 4,
+          "sodium_mg": 380,
+          "fiber_g": 3,
+          "vitamins": [
+            "C",
+            "A"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "amb_8",
+          "name": "Shahi Tukda",
+          "calories": 380,
+          "protein_g": 8,
+          "carbs_g": 54,
+          "fat_g": 16,
+          "sugar_g": 42,
+          "sodium_mg": 160,
+          "fiber_g": 1,
+          "vitamins": [
+            "A",
+            "B12",
+            "D"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "amb_9",
+          "name": "Seviyan Kheer",
+          "calories": 280,
+          "protein_g": 7,
+          "carbs_g": 46,
+          "fat_g": 8,
+          "sugar_g": 36,
+          "sodium_mg": 100,
+          "fiber_g": 1,
+          "vitamins": [
+            "B12",
+            "D"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "amb_11",
+          "name": "Chicken 65",
+          "calories": 360,
+          "protein_g": 24,
+          "carbs_g": 18,
+          "fat_g": 20,
+          "sugar_g": 3,
+          "sodium_mg": 780,
+          "fiber_g": 1,
+          "vitamins": [
+            "B12",
+            "B6",
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "amb_12",
+          "name": "Dal Fry",
+          "calories": 220,
+          "protein_g": 11,
+          "carbs_g": 30,
+          "fat_g": 7,
+          "sugar_g": 3,
+          "sodium_mg": 400,
+          "fiber_g": 7,
+          "vitamins": [
+            "B6",
+            "Iron",
+            "Folate"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "amb_14",
+          "name": "Phirni",
+          "calories": 200,
+          "protein_g": 5,
+          "carbs_g": 34,
+          "fat_g": 6,
+          "sugar_g": 26,
+          "sodium_mg": 80,
+          "fiber_g": 0,
+          "vitamins": [
+            "D",
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "amb_15",
+          "name": "Nimbu Pani (No Sugar)",
+          "calories": 15,
+          "protein_g": 0,
+          "carbs_g": 4,
+          "fat_g": 0,
+          "sugar_g": 1,
+          "sodium_mg": 15,
+          "fiber_g": 0,
+          "vitamins": [
+            "C"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "amb_7",
+          "name": "Raita",
+          "calories": 80,
+          "protein_g": 4,
+          "carbs_g": 10,
+          "fat_g": 3,
+          "sugar_g": 6,
+          "sodium_mg": 160,
+          "fiber_g": 1,
+          "vitamins": [
+            "B12",
+            "C"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "amb_10",
+          "name": "Lassi (Salted)",
+          "calories": 120,
+          "protein_g": 6,
+          "carbs_g": 14,
+          "fat_g": 4,
+          "sugar_g": 6,
+          "sodium_mg": 300,
+          "fiber_g": 0,
+          "vitamins": [
+            "D",
+            "B12"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "amb_13",
+          "name": "Butter Naan",
+          "calories": 300,
+          "protein_g": 8,
+          "carbs_g": 46,
+          "fat_g": 10,
+          "sugar_g": 3,
+          "sodium_mg": 440,
+          "fiber_g": 2,
+          "vitamins": [
+            "B1"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "name": "KFC",
+      "cuisine": "Fast Food",
+      "dish_count": 12,
+      "dishes": [
+        {
+          "id": "kfc_1",
+          "name": "Fried Chicken (2pc)",
+          "calories": 420,
+          "protein_g": 28,
+          "carbs_g": 18,
+          "fat_g": 26,
+          "sugar_g": 1,
+          "sodium_mg": 1010,
+          "fiber_g": 0,
+          "vitamins": [
+            "B12",
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "kfc_2",
+          "name": "Grilled Chicken (2pc)",
+          "calories": 220,
+          "protein_g": 32,
+          "carbs_g": 2,
+          "fat_g": 7,
+          "sugar_g": 0,
+          "sodium_mg": 320,
+          "fiber_g": 0,
+          "vitamins": [
+            "B12",
+            "B6",
+            "D"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "kfc_3",
+          "name": "Zinger Burger",
+          "calories": 510,
+          "protein_g": 22,
+          "carbs_g": 48,
+          "fat_g": 28,
+          "sugar_g": 6,
+          "sodium_mg": 1200,
+          "fiber_g": 2,
+          "vitamins": [
+            "B6"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "kfc_4",
+          "name": "Coleslaw",
+          "calories": 140,
+          "protein_g": 1,
+          "carbs_g": 16,
+          "fat_g": 8,
+          "sugar_g": 12,
+          "sodium_mg": 200,
+          "fiber_g": 2,
+          "vitamins": [
+            "C",
+            "K"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "kfc_5",
+          "name": "Corn on the Cob",
+          "calories": 70,
+          "protein_g": 2,
+          "carbs_g": 14,
+          "fat_g": 1,
+          "sugar_g": 5,
+          "sodium_mg": 5,
+          "fiber_g": 2,
+          "vitamins": [
+            "C",
+            "B1"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        },
+        {
+          "id": "kfc_6",
+          "name": "Chicken Popcorn",
+          "calories": 380,
+          "protein_g": 18,
+          "carbs_g": 28,
+          "fat_g": 22,
+          "sugar_g": 1,
+          "sodium_mg": 860,
+          "fiber_g": 1,
+          "vitamins": [
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "kfc_7",
+          "name": "Pepsi (Large)",
+          "calories": 300,
+          "protein_g": 0,
+          "carbs_g": 78,
+          "fat_g": 0,
+          "sugar_g": 78,
+          "sodium_mg": 60,
+          "fiber_g": 0,
+          "vitamins": [],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "kfc_8",
+          "name": "Lemonade",
+          "calories": 90,
+          "protein_g": 0,
+          "carbs_g": 22,
+          "fat_g": 0,
+          "sugar_g": 20,
+          "sodium_mg": 10,
+          "fiber_g": 0,
+          "vitamins": [
+            "C"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "kfc_9",
+          "name": "Chicken Rice Bowl",
+          "calories": 480,
+          "protein_g": 26,
+          "carbs_g": 60,
+          "fat_g": 14,
+          "sugar_g": 2,
+          "sodium_mg": 780,
+          "fiber_g": 2,
+          "vitamins": [
+            "B6",
+            "B12"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "kfc_10",
+          "name": "Hot Wings (6pc)",
+          "calories": 460,
+          "protein_g": 24,
+          "carbs_g": 20,
+          "fat_g": 30,
+          "sugar_g": 2,
+          "sodium_mg": 1100,
+          "fiber_g": 0,
+          "vitamins": [
+            "B12"
+          ],
+          "alert": "red",
+          "alert_message": "This can affect your health goals if eaten often.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "It may affect your health goals. Prefer a lighter option next time."
+        },
+        {
+          "id": "kfc_11",
+          "name": "Veg Strips",
+          "calories": 260,
+          "protein_g": 6,
+          "carbs_g": 32,
+          "fat_g": 12,
+          "sugar_g": 2,
+          "sodium_mg": 480,
+          "fiber_g": 3,
+          "vitamins": [
+            "C",
+            "B6"
+          ],
+          "alert": "yellow",
+          "alert_message": "You can eat this now, but keep it to once a week.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "You can eat it this time. Please do not repeat more than once a week."
+        },
+        {
+          "id": "kfc_12",
+          "name": "Chicken Salad",
+          "calories": 180,
+          "protein_g": 22,
+          "carbs_g": 8,
+          "fat_g": 6,
+          "sugar_g": 3,
+          "sodium_mg": 280,
+          "fiber_g": 3,
+          "vitamins": [
+            "A",
+            "C",
+            "K"
+          ],
+          "alert": "green",
+          "alert_message": "This choice supports your current health plan.",
+          "choose_button_label": "Choose",
+          "choose_feedback": "Confirmed. Good choice for today."
+        }
+      ]
+    }
+  ],
+  "common_dishes_kept": [
+    "butter naan",
+    "raita",
+    "dal makhani",
+    "lassi (sweet)",
+    "lassi (salted)",
+    "veg burger",
+    "water bottle",
+    "sparkling water"
+  ],
+  "common_dishes_detected": [
+    "butter naan",
+    "dal makhani",
+    "lassi (salted)",
+    "lassi (sweet)",
+    "raita",
+    "sparkling water",
+    "veg burger",
+    "water bottle"
+  ]
+}

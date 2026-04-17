@@ -1,0 +1,2488 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "Tony Stark",
+      "email": "tony@gmail.com",
+      "password": "12345678",
+      "overall_risk": "High",
+      "risk": {
+        "diabetes": {
+          "level": "Medium",
+          "probability": 0.61,
+          "reasons": [
+            "Borderline glucose",
+            "Overweight"
+          ]
+        },
+        "heart": {
+          "level": "High",
+          "probability": 0.84,
+          "reasons": [
+            "Smoking",
+            "Family history",
+            "High cholesterol"
+          ]
+        },
+        "hypertension": {
+          "level": "High",
+          "score": 8,
+          "reasons": [
+            "BP near 140",
+            "High stress",
+            "Low activity"
+          ]
+        },
+        "obesity": {
+          "level": "Medium",
+          "bmi": 28.7
+        },
+        "aqi_risk": {
+          "level": "High",
+          "aqi": 210,
+          "advice": "Avoid outdoor activity, wear mask"
+        }
+      },
+      "daily_checkins": [
+        {
+          "date": "2026-03-06",
+          "sleep_hours": 5.7,
+          "steps": 1856,
+          "fasting_sugar": 117,
+          "systolic_bp": 141,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-07",
+          "sleep_hours": 5.5,
+          "steps": 2315,
+          "fasting_sugar": 111,
+          "systolic_bp": 139,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-08",
+          "sleep_hours": 5.4,
+          "steps": 1902,
+          "fasting_sugar": 125,
+          "systolic_bp": 142,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-09",
+          "sleep_hours": 5.1,
+          "steps": 2534,
+          "fasting_sugar": 115,
+          "systolic_bp": 141,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-10",
+          "sleep_hours": 5.3,
+          "steps": 2475,
+          "fasting_sugar": 112,
+          "systolic_bp": 138,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-11",
+          "sleep_hours": 5.6,
+          "steps": 1710,
+          "fasting_sugar": 121,
+          "systolic_bp": 136,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-12",
+          "sleep_hours": 5.8,
+          "steps": 2318,
+          "fasting_sugar": 111,
+          "systolic_bp": 133,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-13",
+          "sleep_hours": 4.9,
+          "steps": 2503,
+          "fasting_sugar": 127,
+          "systolic_bp": 142,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-14",
+          "sleep_hours": 4.7,
+          "steps": 1833,
+          "fasting_sugar": 116,
+          "systolic_bp": 140,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-15",
+          "sleep_hours": 5.7,
+          "steps": 2782,
+          "fasting_sugar": 115,
+          "systolic_bp": 141,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-16",
+          "sleep_hours": 6.2,
+          "steps": 2278,
+          "fasting_sugar": 112,
+          "systolic_bp": 142,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-17",
+          "sleep_hours": 4.8,
+          "steps": 2275,
+          "fasting_sugar": 122,
+          "systolic_bp": 143,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-18",
+          "sleep_hours": 5.0,
+          "steps": 2790,
+          "fasting_sugar": 127,
+          "systolic_bp": 137,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-19",
+          "sleep_hours": 5.8,
+          "steps": 1748,
+          "fasting_sugar": 126,
+          "systolic_bp": 144,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-20",
+          "sleep_hours": 5.8,
+          "steps": 2542,
+          "fasting_sugar": 127,
+          "systolic_bp": 142,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-21",
+          "sleep_hours": 5.3,
+          "steps": 2567,
+          "fasting_sugar": 114,
+          "systolic_bp": 139,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-22",
+          "sleep_hours": 5.6,
+          "steps": 1850,
+          "fasting_sugar": 121,
+          "systolic_bp": 136,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-23",
+          "sleep_hours": 5.9,
+          "steps": 2337,
+          "fasting_sugar": 121,
+          "systolic_bp": 137,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-24",
+          "sleep_hours": 5.3,
+          "steps": 2778,
+          "fasting_sugar": 122,
+          "systolic_bp": 136,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-25",
+          "sleep_hours": 5.3,
+          "steps": 1758,
+          "fasting_sugar": 120,
+          "systolic_bp": 140,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-26",
+          "sleep_hours": 6.0,
+          "steps": 2204,
+          "fasting_sugar": 120,
+          "systolic_bp": 137,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-27",
+          "sleep_hours": 6.3,
+          "steps": 1999,
+          "fasting_sugar": 126,
+          "systolic_bp": 137,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-28",
+          "sleep_hours": 5.5,
+          "steps": 2622,
+          "fasting_sugar": 120,
+          "systolic_bp": 142,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-29",
+          "sleep_hours": 5.6,
+          "steps": 2351,
+          "fasting_sugar": 117,
+          "systolic_bp": 143,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-30",
+          "sleep_hours": 5.7,
+          "steps": 1876,
+          "fasting_sugar": 123,
+          "systolic_bp": 138,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-31",
+          "sleep_hours": 5.1,
+          "steps": 2454,
+          "fasting_sugar": 119,
+          "systolic_bp": 139,
+          "stress": "high"
+        },
+        {
+          "date": "2026-04-01",
+          "sleep_hours": 5.2,
+          "steps": 2430,
+          "fasting_sugar": 124,
+          "systolic_bp": 143,
+          "stress": "high"
+        },
+        {
+          "date": "2026-04-02",
+          "sleep_hours": 5.7,
+          "steps": 2168,
+          "fasting_sugar": 122,
+          "systolic_bp": 145,
+          "stress": "high"
+        },
+        {
+          "date": "2026-04-03",
+          "sleep_hours": 6.2,
+          "steps": 2717,
+          "fasting_sugar": 118,
+          "systolic_bp": 139,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-04-04",
+          "sleep_hours": 5.4,
+          "steps": 1814,
+          "fasting_sugar": 124,
+          "systolic_bp": 136,
+          "stress": "high"
+        }
+      ],
+      "food_log": [
+        {
+          "date": "2026-03-06",
+          "restaurant": "KFC",
+          "dish": "Fried Chicken",
+          "status": "Avoid",
+          "reason": "High fat + sodium, bad for heart"
+        },
+        {
+          "date": "2026-03-07",
+          "restaurant": "KFC",
+          "dish": "Fried Chicken",
+          "status": "Avoid",
+          "reason": "High fat + sodium, bad for heart"
+        },
+        {
+          "date": "2026-03-08",
+          "restaurant": "Dominos",
+          "dish": "Farmhouse Pizza",
+          "status": "Avoid",
+          "reason": "High sodium + carbs"
+        },
+        {
+          "date": "2026-03-09",
+          "restaurant": "McDonald's",
+          "dish": "McAloo Tikki",
+          "status": "Moderate",
+          "reason": "High carbs but okay occasionally"
+        },
+        {
+          "date": "2026-03-10",
+          "restaurant": "Dominos",
+          "dish": "Farmhouse Pizza",
+          "status": "Avoid",
+          "reason": "High sodium + carbs"
+        },
+        {
+          "date": "2026-03-11",
+          "restaurant": "Dominos",
+          "dish": "Farmhouse Pizza",
+          "status": "Avoid",
+          "reason": "High sodium + carbs"
+        },
+        {
+          "date": "2026-03-12",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Moderate",
+          "reason": "Watch sodium"
+        },
+        {
+          "date": "2026-03-13",
+          "restaurant": "Local",
+          "dish": "Dal Tadka + Roti",
+          "status": "Good",
+          "reason": "Balanced, low fat"
+        },
+        {
+          "date": "2026-03-14",
+          "restaurant": "Dominos",
+          "dish": "Farmhouse Pizza",
+          "status": "Avoid",
+          "reason": "High sodium + carbs"
+        },
+        {
+          "date": "2026-03-15",
+          "restaurant": "Dominos",
+          "dish": "Farmhouse Pizza",
+          "status": "Avoid",
+          "reason": "High sodium + carbs"
+        },
+        {
+          "date": "2026-03-16",
+          "restaurant": "McDonald's",
+          "dish": "McAloo Tikki",
+          "status": "Moderate",
+          "reason": "High carbs but okay occasionally"
+        },
+        {
+          "date": "2026-03-17",
+          "restaurant": "McDonald's",
+          "dish": "McAloo Tikki",
+          "status": "Moderate",
+          "reason": "High carbs but okay occasionally"
+        },
+        {
+          "date": "2026-03-18",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Moderate",
+          "reason": "Watch sodium"
+        },
+        {
+          "date": "2026-03-19",
+          "restaurant": "KFC",
+          "dish": "Fried Chicken",
+          "status": "Avoid",
+          "reason": "High fat + sodium, bad for heart"
+        },
+        {
+          "date": "2026-03-20",
+          "restaurant": "Local",
+          "dish": "Dal Tadka + Roti",
+          "status": "Good",
+          "reason": "Balanced, low fat"
+        },
+        {
+          "date": "2026-03-21",
+          "restaurant": "McDonald's",
+          "dish": "McAloo Tikki",
+          "status": "Moderate",
+          "reason": "High carbs but okay occasionally"
+        },
+        {
+          "date": "2026-03-22",
+          "restaurant": "Local",
+          "dish": "Dal Tadka + Roti",
+          "status": "Good",
+          "reason": "Balanced, low fat"
+        },
+        {
+          "date": "2026-03-23",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Moderate",
+          "reason": "Watch sodium"
+        },
+        {
+          "date": "2026-03-24",
+          "restaurant": "Local",
+          "dish": "Dal Tadka + Roti",
+          "status": "Good",
+          "reason": "Balanced, low fat"
+        },
+        {
+          "date": "2026-03-25",
+          "restaurant": "McDonald's",
+          "dish": "McAloo Tikki",
+          "status": "Moderate",
+          "reason": "High carbs but okay occasionally"
+        },
+        {
+          "date": "2026-03-26",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Moderate",
+          "reason": "Watch sodium"
+        },
+        {
+          "date": "2026-03-27",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Moderate",
+          "reason": "Watch sodium"
+        },
+        {
+          "date": "2026-03-28",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Moderate",
+          "reason": "Watch sodium"
+        },
+        {
+          "date": "2026-03-29",
+          "restaurant": "McDonald's",
+          "dish": "McAloo Tikki",
+          "status": "Moderate",
+          "reason": "High carbs but okay occasionally"
+        },
+        {
+          "date": "2026-03-30",
+          "restaurant": "McDonald's",
+          "dish": "McAloo Tikki",
+          "status": "Moderate",
+          "reason": "High carbs but okay occasionally"
+        },
+        {
+          "date": "2026-03-31",
+          "restaurant": "Dominos",
+          "dish": "Farmhouse Pizza",
+          "status": "Avoid",
+          "reason": "High sodium + carbs"
+        },
+        {
+          "date": "2026-04-01",
+          "restaurant": "KFC",
+          "dish": "Fried Chicken",
+          "status": "Avoid",
+          "reason": "High fat + sodium, bad for heart"
+        },
+        {
+          "date": "2026-04-02",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Moderate",
+          "reason": "Watch sodium"
+        },
+        {
+          "date": "2026-04-03",
+          "restaurant": "KFC",
+          "dish": "Fried Chicken",
+          "status": "Avoid",
+          "reason": "High fat + sodium, bad for heart"
+        },
+        {
+          "date": "2026-04-04",
+          "restaurant": "Local",
+          "dish": "Dal Tadka + Roti",
+          "status": "Good",
+          "reason": "Balanced, low fat"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Steve Rogers",
+      "email": "steve@gmail.com",
+      "password": "12345678",
+      "overall_risk": "Low",
+      "risk": {
+        "diabetes": {
+          "level": "Low",
+          "probability": 0.12,
+          "reasons": [
+            "Normal glucose",
+            "Active lifestyle"
+          ]
+        },
+        "heart": {
+          "level": "Low",
+          "probability": 0.1,
+          "reasons": [
+            "No smoking",
+            "Good cholesterol"
+          ]
+        },
+        "hypertension": {
+          "level": "Low",
+          "score": 1,
+          "reasons": [
+            "Normal BP",
+            "Low stress"
+          ]
+        },
+        "obesity": {
+          "level": "Low",
+          "bmi": 24.7
+        },
+        "aqi_risk": {
+          "level": "Low",
+          "aqi": 75,
+          "advice": "Air quality good, outdoor activity safe"
+        }
+      },
+      "daily_checkins": [
+        {
+          "date": "2026-03-06",
+          "sleep_hours": 7.6,
+          "steps": 10888,
+          "fasting_sugar": 87,
+          "systolic_bp": 108,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-07",
+          "sleep_hours": 7.9,
+          "steps": 12309,
+          "fasting_sugar": 87,
+          "systolic_bp": 112,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-08",
+          "sleep_hours": 7.9,
+          "steps": 12036,
+          "fasting_sugar": 91,
+          "systolic_bp": 112,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-09",
+          "sleep_hours": 7.8,
+          "steps": 11361,
+          "fasting_sugar": 87,
+          "systolic_bp": 113,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-10",
+          "sleep_hours": 7.6,
+          "steps": 10824,
+          "fasting_sugar": 87,
+          "systolic_bp": 107,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-11",
+          "sleep_hours": 8.2,
+          "steps": 11443,
+          "fasting_sugar": 90,
+          "systolic_bp": 115,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-12",
+          "sleep_hours": 7.7,
+          "steps": 10964,
+          "fasting_sugar": 90,
+          "systolic_bp": 111,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-13",
+          "sleep_hours": 7.7,
+          "steps": 11639,
+          "fasting_sugar": 91,
+          "systolic_bp": 111,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-14",
+          "sleep_hours": 7.7,
+          "steps": 12493,
+          "fasting_sugar": 86,
+          "systolic_bp": 107,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-15",
+          "sleep_hours": 8.1,
+          "steps": 11112,
+          "fasting_sugar": 87,
+          "systolic_bp": 108,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-16",
+          "sleep_hours": 7.8,
+          "steps": 11863,
+          "fasting_sugar": 88,
+          "systolic_bp": 107,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-17",
+          "sleep_hours": 8.0,
+          "steps": 12447,
+          "fasting_sugar": 86,
+          "systolic_bp": 113,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-18",
+          "sleep_hours": 8.2,
+          "steps": 11299,
+          "fasting_sugar": 86,
+          "systolic_bp": 110,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-19",
+          "sleep_hours": 7.9,
+          "steps": 10602,
+          "fasting_sugar": 84,
+          "systolic_bp": 110,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-20",
+          "sleep_hours": 8.2,
+          "steps": 10421,
+          "fasting_sugar": 87,
+          "systolic_bp": 107,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-21",
+          "sleep_hours": 8.1,
+          "steps": 11295,
+          "fasting_sugar": 91,
+          "systolic_bp": 112,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-22",
+          "sleep_hours": 7.5,
+          "steps": 12212,
+          "fasting_sugar": 85,
+          "systolic_bp": 109,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-23",
+          "sleep_hours": 7.8,
+          "steps": 10046,
+          "fasting_sugar": 85,
+          "systolic_bp": 109,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-24",
+          "sleep_hours": 8.0,
+          "steps": 12820,
+          "fasting_sugar": 87,
+          "systolic_bp": 107,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-25",
+          "sleep_hours": 7.5,
+          "steps": 11365,
+          "fasting_sugar": 89,
+          "systolic_bp": 108,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-26",
+          "sleep_hours": 8.3,
+          "steps": 10422,
+          "fasting_sugar": 91,
+          "systolic_bp": 110,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-27",
+          "sleep_hours": 8.1,
+          "steps": 10797,
+          "fasting_sugar": 87,
+          "systolic_bp": 108,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-28",
+          "sleep_hours": 7.9,
+          "steps": 12649,
+          "fasting_sugar": 90,
+          "systolic_bp": 112,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-29",
+          "sleep_hours": 8.1,
+          "steps": 11644,
+          "fasting_sugar": 89,
+          "systolic_bp": 114,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-30",
+          "sleep_hours": 7.9,
+          "steps": 12151,
+          "fasting_sugar": 84,
+          "systolic_bp": 109,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-31",
+          "sleep_hours": 8.1,
+          "steps": 10801,
+          "fasting_sugar": 83,
+          "systolic_bp": 113,
+          "stress": "low"
+        },
+        {
+          "date": "2026-04-01",
+          "sleep_hours": 7.6,
+          "steps": 12831,
+          "fasting_sugar": 91,
+          "systolic_bp": 108,
+          "stress": "low"
+        },
+        {
+          "date": "2026-04-02",
+          "sleep_hours": 7.7,
+          "steps": 11686,
+          "fasting_sugar": 83,
+          "systolic_bp": 115,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-04-03",
+          "sleep_hours": 7.7,
+          "steps": 10270,
+          "fasting_sugar": 84,
+          "systolic_bp": 112,
+          "stress": "low"
+        },
+        {
+          "date": "2026-04-04",
+          "sleep_hours": 7.8,
+          "steps": 10080,
+          "fasting_sugar": 91,
+          "systolic_bp": 115,
+          "stress": "low"
+        }
+      ],
+      "food_log": [
+        {
+          "date": "2026-03-06",
+          "restaurant": "Local",
+          "dish": "Paneer Tikka",
+          "status": "Good",
+          "reason": "Good protein"
+        },
+        {
+          "date": "2026-03-07",
+          "restaurant": "Local",
+          "dish": "Dal Tadka + Roti",
+          "status": "Good",
+          "reason": "Balanced nutrition"
+        },
+        {
+          "date": "2026-03-08",
+          "restaurant": "Local",
+          "dish": "Grilled Fish + Salad",
+          "status": "Good",
+          "reason": "Excellent nutrition"
+        },
+        {
+          "date": "2026-03-09",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Good",
+          "reason": "High protein, low fat"
+        },
+        {
+          "date": "2026-03-10",
+          "restaurant": "Local",
+          "dish": "Paneer Tikka",
+          "status": "Good",
+          "reason": "Good protein"
+        },
+        {
+          "date": "2026-03-11",
+          "restaurant": "Local",
+          "dish": "Grilled Fish + Salad",
+          "status": "Good",
+          "reason": "Excellent nutrition"
+        },
+        {
+          "date": "2026-03-12",
+          "restaurant": "Local",
+          "dish": "Grilled Fish + Salad",
+          "status": "Good",
+          "reason": "Excellent nutrition"
+        },
+        {
+          "date": "2026-03-13",
+          "restaurant": "Local",
+          "dish": "Dal Tadka + Roti",
+          "status": "Good",
+          "reason": "Balanced nutrition"
+        },
+        {
+          "date": "2026-03-14",
+          "restaurant": "McDonald's",
+          "dish": "McVeggie",
+          "status": "Moderate",
+          "reason": "OK occasionally"
+        },
+        {
+          "date": "2026-03-15",
+          "restaurant": "Local",
+          "dish": "Dal Tadka + Roti",
+          "status": "Good",
+          "reason": "Balanced nutrition"
+        },
+        {
+          "date": "2026-03-16",
+          "restaurant": "Local",
+          "dish": "Dal Tadka + Roti",
+          "status": "Good",
+          "reason": "Balanced nutrition"
+        },
+        {
+          "date": "2026-03-17",
+          "restaurant": "McDonald's",
+          "dish": "McVeggie",
+          "status": "Moderate",
+          "reason": "OK occasionally"
+        },
+        {
+          "date": "2026-03-18",
+          "restaurant": "Local",
+          "dish": "Grilled Fish + Salad",
+          "status": "Good",
+          "reason": "Excellent nutrition"
+        },
+        {
+          "date": "2026-03-19",
+          "restaurant": "Local",
+          "dish": "Dal Tadka + Roti",
+          "status": "Good",
+          "reason": "Balanced nutrition"
+        },
+        {
+          "date": "2026-03-20",
+          "restaurant": "Local",
+          "dish": "Grilled Fish + Salad",
+          "status": "Good",
+          "reason": "Excellent nutrition"
+        },
+        {
+          "date": "2026-03-21",
+          "restaurant": "Local",
+          "dish": "Grilled Fish + Salad",
+          "status": "Good",
+          "reason": "Excellent nutrition"
+        },
+        {
+          "date": "2026-03-22",
+          "restaurant": "Local",
+          "dish": "Dal Tadka + Roti",
+          "status": "Good",
+          "reason": "Balanced nutrition"
+        },
+        {
+          "date": "2026-03-23",
+          "restaurant": "Local",
+          "dish": "Grilled Fish + Salad",
+          "status": "Good",
+          "reason": "Excellent nutrition"
+        },
+        {
+          "date": "2026-03-24",
+          "restaurant": "Local",
+          "dish": "Grilled Fish + Salad",
+          "status": "Good",
+          "reason": "Excellent nutrition"
+        },
+        {
+          "date": "2026-03-25",
+          "restaurant": "Local",
+          "dish": "Paneer Tikka",
+          "status": "Good",
+          "reason": "Good protein"
+        },
+        {
+          "date": "2026-03-26",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Good",
+          "reason": "High protein, low fat"
+        },
+        {
+          "date": "2026-03-27",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Good",
+          "reason": "High protein, low fat"
+        },
+        {
+          "date": "2026-03-28",
+          "restaurant": "Local",
+          "dish": "Grilled Fish + Salad",
+          "status": "Good",
+          "reason": "Excellent nutrition"
+        },
+        {
+          "date": "2026-03-29",
+          "restaurant": "Local",
+          "dish": "Dal Tadka + Roti",
+          "status": "Good",
+          "reason": "Balanced nutrition"
+        },
+        {
+          "date": "2026-03-30",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Good",
+          "reason": "High protein, low fat"
+        },
+        {
+          "date": "2026-03-31",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Good",
+          "reason": "High protein, low fat"
+        },
+        {
+          "date": "2026-04-01",
+          "restaurant": "McDonald's",
+          "dish": "McVeggie",
+          "status": "Moderate",
+          "reason": "OK occasionally"
+        },
+        {
+          "date": "2026-04-02",
+          "restaurant": "Local",
+          "dish": "Paneer Tikka",
+          "status": "Good",
+          "reason": "Good protein"
+        },
+        {
+          "date": "2026-04-03",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Good",
+          "reason": "High protein, low fat"
+        },
+        {
+          "date": "2026-04-04",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Good",
+          "reason": "High protein, low fat"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Peter Parker",
+      "email": "peter@gmail.com",
+      "password": "12345678",
+      "overall_risk": "Medium",
+      "risk": {
+        "diabetes": {
+          "level": "Medium",
+          "probability": 0.48,
+          "reasons": [
+            "Family history",
+            "High stress"
+          ]
+        },
+        "heart": {
+          "level": "Low",
+          "probability": 0.18,
+          "reasons": [
+            "Young age",
+            "No smoking"
+          ]
+        },
+        "hypertension": {
+          "level": "Medium",
+          "score": 4,
+          "reasons": [
+            "High stress",
+            "Borderline BP"
+          ]
+        },
+        "obesity": {
+          "level": "Low",
+          "bmi": 23.5
+        },
+        "aqi_risk": {
+          "level": "Medium",
+          "aqi": 155,
+          "advice": "Limit prolonged outdoor exposure"
+        }
+      },
+      "daily_checkins": [
+        {
+          "date": "2026-03-06",
+          "sleep_hours": 6.1,
+          "steps": 5271,
+          "fasting_sugar": 91,
+          "systolic_bp": 124,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-07",
+          "sleep_hours": 6.8,
+          "steps": 6110,
+          "fasting_sugar": 95,
+          "systolic_bp": 118,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-08",
+          "sleep_hours": 5.6,
+          "steps": 5396,
+          "fasting_sugar": 92,
+          "systolic_bp": 118,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-09",
+          "sleep_hours": 6.9,
+          "steps": 6536,
+          "fasting_sugar": 95,
+          "systolic_bp": 120,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-10",
+          "sleep_hours": 5.9,
+          "steps": 6230,
+          "fasting_sugar": 90,
+          "systolic_bp": 118,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-11",
+          "sleep_hours": 5.5,
+          "steps": 5101,
+          "fasting_sugar": 92,
+          "systolic_bp": 119,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-12",
+          "sleep_hours": 6.7,
+          "steps": 5193,
+          "fasting_sugar": 90,
+          "systolic_bp": 123,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-13",
+          "sleep_hours": 6.5,
+          "steps": 6385,
+          "fasting_sugar": 96,
+          "systolic_bp": 120,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-14",
+          "sleep_hours": 5.3,
+          "steps": 6501,
+          "fasting_sugar": 91,
+          "systolic_bp": 114,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-15",
+          "sleep_hours": 5.6,
+          "steps": 5047,
+          "fasting_sugar": 100,
+          "systolic_bp": 119,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-16",
+          "sleep_hours": 5.9,
+          "steps": 6572,
+          "fasting_sugar": 101,
+          "systolic_bp": 115,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-17",
+          "sleep_hours": 6.0,
+          "steps": 5277,
+          "fasting_sugar": 101,
+          "systolic_bp": 121,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-18",
+          "sleep_hours": 6.9,
+          "steps": 6942,
+          "fasting_sugar": 99,
+          "systolic_bp": 120,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-19",
+          "sleep_hours": 5.7,
+          "steps": 6051,
+          "fasting_sugar": 97,
+          "systolic_bp": 117,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-20",
+          "sleep_hours": 5.2,
+          "steps": 5222,
+          "fasting_sugar": 91,
+          "systolic_bp": 119,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-21",
+          "sleep_hours": 6.9,
+          "steps": 6207,
+          "fasting_sugar": 102,
+          "systolic_bp": 123,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-22",
+          "sleep_hours": 6.6,
+          "steps": 5403,
+          "fasting_sugar": 99,
+          "systolic_bp": 116,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-23",
+          "sleep_hours": 5.8,
+          "steps": 5462,
+          "fasting_sugar": 96,
+          "systolic_bp": 117,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-24",
+          "sleep_hours": 6.9,
+          "steps": 5639,
+          "fasting_sugar": 96,
+          "systolic_bp": 123,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-25",
+          "sleep_hours": 5.2,
+          "steps": 5580,
+          "fasting_sugar": 94,
+          "systolic_bp": 115,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-26",
+          "sleep_hours": 6.9,
+          "steps": 6770,
+          "fasting_sugar": 98,
+          "systolic_bp": 120,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-27",
+          "sleep_hours": 6.3,
+          "steps": 5491,
+          "fasting_sugar": 93,
+          "systolic_bp": 123,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-28",
+          "sleep_hours": 5.2,
+          "steps": 6996,
+          "fasting_sugar": 95,
+          "systolic_bp": 119,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-29",
+          "sleep_hours": 5.5,
+          "steps": 6683,
+          "fasting_sugar": 96,
+          "systolic_bp": 122,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-30",
+          "sleep_hours": 5.3,
+          "steps": 5784,
+          "fasting_sugar": 98,
+          "systolic_bp": 120,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-31",
+          "sleep_hours": 5.1,
+          "steps": 5213,
+          "fasting_sugar": 96,
+          "systolic_bp": 120,
+          "stress": "high"
+        },
+        {
+          "date": "2026-04-01",
+          "sleep_hours": 5.1,
+          "steps": 6382,
+          "fasting_sugar": 99,
+          "systolic_bp": 120,
+          "stress": "high"
+        },
+        {
+          "date": "2026-04-02",
+          "sleep_hours": 6.8,
+          "steps": 5428,
+          "fasting_sugar": 97,
+          "systolic_bp": 116,
+          "stress": "high"
+        },
+        {
+          "date": "2026-04-03",
+          "sleep_hours": 6.6,
+          "steps": 6588,
+          "fasting_sugar": 97,
+          "systolic_bp": 116,
+          "stress": "high"
+        },
+        {
+          "date": "2026-04-04",
+          "sleep_hours": 6.4,
+          "steps": 6060,
+          "fasting_sugar": 92,
+          "systolic_bp": 122,
+          "stress": "medium"
+        }
+      ],
+      "food_log": [
+        {
+          "date": "2026-03-06",
+          "restaurant": "KFC",
+          "dish": "Grilled Chicken",
+          "status": "Good",
+          "reason": "Low fat, good protein"
+        },
+        {
+          "date": "2026-03-07",
+          "restaurant": "Local",
+          "dish": "Chole Bhature",
+          "status": "Avoid",
+          "reason": "High carbs + fat, risky with family history"
+        },
+        {
+          "date": "2026-03-08",
+          "restaurant": "Dominos",
+          "dish": "Margherita Pizza",
+          "status": "Moderate",
+          "reason": "Watch sugar due to family history"
+        },
+        {
+          "date": "2026-03-09",
+          "restaurant": "Dominos",
+          "dish": "Margherita Pizza",
+          "status": "Moderate",
+          "reason": "Watch sugar due to family history"
+        },
+        {
+          "date": "2026-03-10",
+          "restaurant": "Local",
+          "dish": "Chole Bhature",
+          "status": "Avoid",
+          "reason": "High carbs + fat, risky with family history"
+        },
+        {
+          "date": "2026-03-11",
+          "restaurant": "KFC",
+          "dish": "Grilled Chicken",
+          "status": "Good",
+          "reason": "Low fat, good protein"
+        },
+        {
+          "date": "2026-03-12",
+          "restaurant": "Local",
+          "dish": "Chole Bhature",
+          "status": "Avoid",
+          "reason": "High carbs + fat, risky with family history"
+        },
+        {
+          "date": "2026-03-13",
+          "restaurant": "Local",
+          "dish": "Idli Sambar",
+          "status": "Good",
+          "reason": "Low fat, low sugar"
+        },
+        {
+          "date": "2026-03-14",
+          "restaurant": "Subway",
+          "dish": "Veggie Delite",
+          "status": "Good",
+          "reason": "Low calorie, low sugar"
+        },
+        {
+          "date": "2026-03-15",
+          "restaurant": "Local",
+          "dish": "Idli Sambar",
+          "status": "Good",
+          "reason": "Low fat, low sugar"
+        },
+        {
+          "date": "2026-03-16",
+          "restaurant": "KFC",
+          "dish": "Grilled Chicken",
+          "status": "Good",
+          "reason": "Low fat, good protein"
+        },
+        {
+          "date": "2026-03-17",
+          "restaurant": "Subway",
+          "dish": "Veggie Delite",
+          "status": "Good",
+          "reason": "Low calorie, low sugar"
+        },
+        {
+          "date": "2026-03-18",
+          "restaurant": "Subway",
+          "dish": "Veggie Delite",
+          "status": "Good",
+          "reason": "Low calorie, low sugar"
+        },
+        {
+          "date": "2026-03-19",
+          "restaurant": "Dominos",
+          "dish": "Margherita Pizza",
+          "status": "Moderate",
+          "reason": "Watch sugar due to family history"
+        },
+        {
+          "date": "2026-03-20",
+          "restaurant": "Dominos",
+          "dish": "Margherita Pizza",
+          "status": "Moderate",
+          "reason": "Watch sugar due to family history"
+        },
+        {
+          "date": "2026-03-21",
+          "restaurant": "KFC",
+          "dish": "Grilled Chicken",
+          "status": "Good",
+          "reason": "Low fat, good protein"
+        },
+        {
+          "date": "2026-03-22",
+          "restaurant": "Subway",
+          "dish": "Veggie Delite",
+          "status": "Good",
+          "reason": "Low calorie, low sugar"
+        },
+        {
+          "date": "2026-03-23",
+          "restaurant": "Subway",
+          "dish": "Veggie Delite",
+          "status": "Good",
+          "reason": "Low calorie, low sugar"
+        },
+        {
+          "date": "2026-03-24",
+          "restaurant": "Subway",
+          "dish": "Veggie Delite",
+          "status": "Good",
+          "reason": "Low calorie, low sugar"
+        },
+        {
+          "date": "2026-03-25",
+          "restaurant": "Subway",
+          "dish": "Veggie Delite",
+          "status": "Good",
+          "reason": "Low calorie, low sugar"
+        },
+        {
+          "date": "2026-03-26",
+          "restaurant": "Local",
+          "dish": "Idli Sambar",
+          "status": "Good",
+          "reason": "Low fat, low sugar"
+        },
+        {
+          "date": "2026-03-27",
+          "restaurant": "Local",
+          "dish": "Idli Sambar",
+          "status": "Good",
+          "reason": "Low fat, low sugar"
+        },
+        {
+          "date": "2026-03-28",
+          "restaurant": "Local",
+          "dish": "Idli Sambar",
+          "status": "Good",
+          "reason": "Low fat, low sugar"
+        },
+        {
+          "date": "2026-03-29",
+          "restaurant": "Local",
+          "dish": "Idli Sambar",
+          "status": "Good",
+          "reason": "Low fat, low sugar"
+        },
+        {
+          "date": "2026-03-30",
+          "restaurant": "KFC",
+          "dish": "Grilled Chicken",
+          "status": "Good",
+          "reason": "Low fat, good protein"
+        },
+        {
+          "date": "2026-03-31",
+          "restaurant": "Dominos",
+          "dish": "Margherita Pizza",
+          "status": "Moderate",
+          "reason": "Watch sugar due to family history"
+        },
+        {
+          "date": "2026-04-01",
+          "restaurant": "Subway",
+          "dish": "Veggie Delite",
+          "status": "Good",
+          "reason": "Low calorie, low sugar"
+        },
+        {
+          "date": "2026-04-02",
+          "restaurant": "Local",
+          "dish": "Idli Sambar",
+          "status": "Good",
+          "reason": "Low fat, low sugar"
+        },
+        {
+          "date": "2026-04-03",
+          "restaurant": "Subway",
+          "dish": "Veggie Delite",
+          "status": "Good",
+          "reason": "Low calorie, low sugar"
+        },
+        {
+          "date": "2026-04-04",
+          "restaurant": "Local",
+          "dish": "Chole Bhature",
+          "status": "Avoid",
+          "reason": "High carbs + fat, risky with family history"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Bruce Banner",
+      "email": "bruce@gmail.com",
+      "password": "12345678",
+      "overall_risk": "High",
+      "risk": {
+        "diabetes": {
+          "level": "High",
+          "probability": 0.91,
+          "reasons": [
+            "Very high glucose",
+            "Obese",
+            "Family history"
+          ]
+        },
+        "heart": {
+          "level": "High",
+          "probability": 0.88,
+          "reasons": [
+            "Very high cholesterol",
+            "High BP",
+            "Family history"
+          ]
+        },
+        "hypertension": {
+          "level": "High",
+          "score": 10,
+          "reasons": [
+            "BP 155 critical",
+            "Obese",
+            "High stress"
+          ]
+        },
+        "obesity": {
+          "level": "High",
+          "bmi": 34.7
+        },
+        "aqi_risk": {
+          "level": "High",
+          "aqi": 195,
+          "advice": "Stay indoors, high risk user"
+        }
+      },
+      "daily_checkins": [
+        {
+          "date": "2026-03-06",
+          "sleep_hours": 5.2,
+          "steps": 1363,
+          "fasting_sugar": 157,
+          "systolic_bp": 164,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-07",
+          "sleep_hours": 4.5,
+          "steps": 1181,
+          "fasting_sugar": 150,
+          "systolic_bp": 159,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-08",
+          "sleep_hours": 4.5,
+          "steps": 1295,
+          "fasting_sugar": 156,
+          "systolic_bp": 165,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-09",
+          "sleep_hours": 5.1,
+          "steps": 781,
+          "fasting_sugar": 163,
+          "systolic_bp": 157,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-10",
+          "sleep_hours": 5.7,
+          "steps": 1049,
+          "fasting_sugar": 158,
+          "systolic_bp": 150,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-11",
+          "sleep_hours": 4.4,
+          "steps": 1365,
+          "fasting_sugar": 162,
+          "systolic_bp": 151,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-12",
+          "sleep_hours": 4.5,
+          "steps": 952,
+          "fasting_sugar": 150,
+          "systolic_bp": 164,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-13",
+          "sleep_hours": 5.4,
+          "steps": 1079,
+          "fasting_sugar": 160,
+          "systolic_bp": 157,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-14",
+          "sleep_hours": 5.3,
+          "steps": 1285,
+          "fasting_sugar": 161,
+          "systolic_bp": 159,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-15",
+          "sleep_hours": 5.3,
+          "steps": 1271,
+          "fasting_sugar": 155,
+          "systolic_bp": 159,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-16",
+          "sleep_hours": 4.3,
+          "steps": 1055,
+          "fasting_sugar": 161,
+          "systolic_bp": 150,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-17",
+          "sleep_hours": 5.6,
+          "steps": 995,
+          "fasting_sugar": 145,
+          "systolic_bp": 163,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-18",
+          "sleep_hours": 5.2,
+          "steps": 1100,
+          "fasting_sugar": 156,
+          "systolic_bp": 152,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-19",
+          "sleep_hours": 4.4,
+          "steps": 1044,
+          "fasting_sugar": 158,
+          "systolic_bp": 161,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-20",
+          "sleep_hours": 5.4,
+          "steps": 1308,
+          "fasting_sugar": 144,
+          "systolic_bp": 158,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-21",
+          "sleep_hours": 5.2,
+          "steps": 763,
+          "fasting_sugar": 160,
+          "systolic_bp": 161,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-22",
+          "sleep_hours": 5.2,
+          "steps": 1037,
+          "fasting_sugar": 162,
+          "systolic_bp": 163,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-23",
+          "sleep_hours": 5.4,
+          "steps": 1453,
+          "fasting_sugar": 162,
+          "systolic_bp": 155,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-24",
+          "sleep_hours": 5.2,
+          "steps": 1062,
+          "fasting_sugar": 148,
+          "systolic_bp": 151,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-25",
+          "sleep_hours": 4.4,
+          "steps": 919,
+          "fasting_sugar": 156,
+          "systolic_bp": 157,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-26",
+          "sleep_hours": 4.4,
+          "steps": 1311,
+          "fasting_sugar": 154,
+          "systolic_bp": 164,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-27",
+          "sleep_hours": 5.6,
+          "steps": 1436,
+          "fasting_sugar": 150,
+          "systolic_bp": 152,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-28",
+          "sleep_hours": 4.9,
+          "steps": 1051,
+          "fasting_sugar": 147,
+          "systolic_bp": 156,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-29",
+          "sleep_hours": 4.5,
+          "steps": 1056,
+          "fasting_sugar": 158,
+          "systolic_bp": 166,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-30",
+          "sleep_hours": 4.6,
+          "steps": 1380,
+          "fasting_sugar": 146,
+          "systolic_bp": 164,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-31",
+          "sleep_hours": 4.7,
+          "steps": 820,
+          "fasting_sugar": 155,
+          "systolic_bp": 165,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-04-01",
+          "sleep_hours": 5.0,
+          "steps": 1118,
+          "fasting_sugar": 161,
+          "systolic_bp": 165,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-04-02",
+          "sleep_hours": 4.5,
+          "steps": 878,
+          "fasting_sugar": 155,
+          "systolic_bp": 154,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-04-03",
+          "sleep_hours": 4.7,
+          "steps": 928,
+          "fasting_sugar": 163,
+          "systolic_bp": 164,
+          "stress": "high"
+        },
+        {
+          "date": "2026-04-04",
+          "sleep_hours": 4.8,
+          "steps": 972,
+          "fasting_sugar": 162,
+          "systolic_bp": 154,
+          "stress": "medium"
+        }
+      ],
+      "food_log": [
+        {
+          "date": "2026-03-06",
+          "restaurant": "Local",
+          "dish": "Dal Tadka",
+          "status": "Moderate",
+          "reason": "Better but watch portion"
+        },
+        {
+          "date": "2026-03-07",
+          "restaurant": "KFC",
+          "dish": "Fried Chicken",
+          "status": "Avoid",
+          "reason": "High fat extremely dangerous"
+        },
+        {
+          "date": "2026-03-08",
+          "restaurant": "Local",
+          "dish": "Steamed Rice + Sabzi",
+          "status": "Moderate",
+          "reason": "Control portion size"
+        },
+        {
+          "date": "2026-03-09",
+          "restaurant": "Subway",
+          "dish": "Veggie Delite",
+          "status": "Good",
+          "reason": "Best option for his risk level"
+        },
+        {
+          "date": "2026-03-10",
+          "restaurant": "KFC",
+          "dish": "Fried Chicken",
+          "status": "Avoid",
+          "reason": "High fat extremely dangerous"
+        },
+        {
+          "date": "2026-03-11",
+          "restaurant": "Local",
+          "dish": "Biryani",
+          "status": "Avoid",
+          "reason": "Very high carbs + sodium, critical risk"
+        },
+        {
+          "date": "2026-03-12",
+          "restaurant": "KFC",
+          "dish": "Fried Chicken",
+          "status": "Avoid",
+          "reason": "High fat extremely dangerous"
+        },
+        {
+          "date": "2026-03-13",
+          "restaurant": "KFC",
+          "dish": "Fried Chicken",
+          "status": "Avoid",
+          "reason": "High fat extremely dangerous"
+        },
+        {
+          "date": "2026-03-14",
+          "restaurant": "Local",
+          "dish": "Steamed Rice + Sabzi",
+          "status": "Moderate",
+          "reason": "Control portion size"
+        },
+        {
+          "date": "2026-03-15",
+          "restaurant": "Subway",
+          "dish": "Veggie Delite",
+          "status": "Good",
+          "reason": "Best option for his risk level"
+        },
+        {
+          "date": "2026-03-16",
+          "restaurant": "KFC",
+          "dish": "Fried Chicken",
+          "status": "Avoid",
+          "reason": "High fat extremely dangerous"
+        },
+        {
+          "date": "2026-03-17",
+          "restaurant": "Local",
+          "dish": "Dal Tadka",
+          "status": "Moderate",
+          "reason": "Better but watch portion"
+        },
+        {
+          "date": "2026-03-18",
+          "restaurant": "Subway",
+          "dish": "Veggie Delite",
+          "status": "Good",
+          "reason": "Best option for his risk level"
+        },
+        {
+          "date": "2026-03-19",
+          "restaurant": "Local",
+          "dish": "Dal Tadka",
+          "status": "Moderate",
+          "reason": "Better but watch portion"
+        },
+        {
+          "date": "2026-03-20",
+          "restaurant": "Local",
+          "dish": "Steamed Rice + Sabzi",
+          "status": "Moderate",
+          "reason": "Control portion size"
+        },
+        {
+          "date": "2026-03-21",
+          "restaurant": "Local",
+          "dish": "Biryani",
+          "status": "Avoid",
+          "reason": "Very high carbs + sodium, critical risk"
+        },
+        {
+          "date": "2026-03-22",
+          "restaurant": "Local",
+          "dish": "Biryani",
+          "status": "Avoid",
+          "reason": "Very high carbs + sodium, critical risk"
+        },
+        {
+          "date": "2026-03-23",
+          "restaurant": "Local",
+          "dish": "Dal Tadka",
+          "status": "Moderate",
+          "reason": "Better but watch portion"
+        },
+        {
+          "date": "2026-03-24",
+          "restaurant": "KFC",
+          "dish": "Fried Chicken",
+          "status": "Avoid",
+          "reason": "High fat extremely dangerous"
+        },
+        {
+          "date": "2026-03-25",
+          "restaurant": "KFC",
+          "dish": "Fried Chicken",
+          "status": "Avoid",
+          "reason": "High fat extremely dangerous"
+        },
+        {
+          "date": "2026-03-26",
+          "restaurant": "Local",
+          "dish": "Biryani",
+          "status": "Avoid",
+          "reason": "Very high carbs + sodium, critical risk"
+        },
+        {
+          "date": "2026-03-27",
+          "restaurant": "Local",
+          "dish": "Biryani",
+          "status": "Avoid",
+          "reason": "Very high carbs + sodium, critical risk"
+        },
+        {
+          "date": "2026-03-28",
+          "restaurant": "Subway",
+          "dish": "Veggie Delite",
+          "status": "Good",
+          "reason": "Best option for his risk level"
+        },
+        {
+          "date": "2026-03-29",
+          "restaurant": "KFC",
+          "dish": "Fried Chicken",
+          "status": "Avoid",
+          "reason": "High fat extremely dangerous"
+        },
+        {
+          "date": "2026-03-30",
+          "restaurant": "Local",
+          "dish": "Steamed Rice + Sabzi",
+          "status": "Moderate",
+          "reason": "Control portion size"
+        },
+        {
+          "date": "2026-03-31",
+          "restaurant": "Subway",
+          "dish": "Veggie Delite",
+          "status": "Good",
+          "reason": "Best option for his risk level"
+        },
+        {
+          "date": "2026-04-01",
+          "restaurant": "KFC",
+          "dish": "Fried Chicken",
+          "status": "Avoid",
+          "reason": "High fat extremely dangerous"
+        },
+        {
+          "date": "2026-04-02",
+          "restaurant": "Local",
+          "dish": "Steamed Rice + Sabzi",
+          "status": "Moderate",
+          "reason": "Control portion size"
+        },
+        {
+          "date": "2026-04-03",
+          "restaurant": "Local",
+          "dish": "Dal Tadka",
+          "status": "Moderate",
+          "reason": "Better but watch portion"
+        },
+        {
+          "date": "2026-04-04",
+          "restaurant": "Local",
+          "dish": "Biryani",
+          "status": "Avoid",
+          "reason": "Very high carbs + sodium, critical risk"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Sam Wilson",
+      "email": "sam@gmail.com",
+      "password": "12345678",
+      "overall_risk": "Medium",
+      "risk": {
+        "diabetes": {
+          "level": "Low",
+          "probability": 0.28,
+          "reasons": [
+            "Slightly high glucose but manageable"
+          ]
+        },
+        "heart": {
+          "level": "Medium",
+          "probability": 0.52,
+          "reasons": [
+            "Family history",
+            "Borderline cholesterol"
+          ]
+        },
+        "hypertension": {
+          "level": "Medium",
+          "score": 5,
+          "reasons": [
+            "BP 128 elevated",
+            "Medium stress"
+          ]
+        },
+        "obesity": {
+          "level": "Low",
+          "bmi": 24.6
+        },
+        "aqi_risk": {
+          "level": "Medium",
+          "aqi": 145,
+          "advice": "Limit morning outdoor runs"
+        }
+      },
+      "daily_checkins": [
+        {
+          "date": "2026-03-06",
+          "sleep_hours": 7.0,
+          "steps": 8976,
+          "fasting_sugar": 98,
+          "systolic_bp": 125,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-07",
+          "sleep_hours": 6.3,
+          "steps": 8215,
+          "fasting_sugar": 102,
+          "systolic_bp": 124,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-08",
+          "sleep_hours": 7.5,
+          "steps": 8555,
+          "fasting_sugar": 97,
+          "systolic_bp": 133,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-09",
+          "sleep_hours": 6.3,
+          "steps": 9105,
+          "fasting_sugar": 103,
+          "systolic_bp": 125,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-10",
+          "sleep_hours": 7.2,
+          "steps": 7975,
+          "fasting_sugar": 101,
+          "systolic_bp": 127,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-11",
+          "sleep_hours": 6.4,
+          "steps": 8420,
+          "fasting_sugar": 97,
+          "systolic_bp": 133,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-12",
+          "sleep_hours": 7.7,
+          "steps": 6893,
+          "fasting_sugar": 104,
+          "systolic_bp": 130,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-13",
+          "sleep_hours": 6.9,
+          "steps": 6812,
+          "fasting_sugar": 98,
+          "systolic_bp": 125,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-14",
+          "sleep_hours": 7.0,
+          "steps": 8114,
+          "fasting_sugar": 100,
+          "systolic_bp": 128,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-15",
+          "sleep_hours": 7.7,
+          "steps": 7943,
+          "fasting_sugar": 102,
+          "systolic_bp": 128,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-16",
+          "sleep_hours": 6.9,
+          "steps": 7182,
+          "fasting_sugar": 97,
+          "systolic_bp": 133,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-17",
+          "sleep_hours": 7.6,
+          "steps": 6928,
+          "fasting_sugar": 100,
+          "systolic_bp": 127,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-18",
+          "sleep_hours": 6.3,
+          "steps": 9084,
+          "fasting_sugar": 99,
+          "systolic_bp": 126,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-19",
+          "sleep_hours": 6.4,
+          "steps": 7708,
+          "fasting_sugar": 107,
+          "systolic_bp": 131,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-20",
+          "sleep_hours": 7.5,
+          "steps": 8206,
+          "fasting_sugar": 107,
+          "systolic_bp": 130,
+          "stress": "high"
+        },
+        {
+          "date": "2026-03-21",
+          "sleep_hours": 6.7,
+          "steps": 8390,
+          "fasting_sugar": 99,
+          "systolic_bp": 131,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-22",
+          "sleep_hours": 6.5,
+          "steps": 7330,
+          "fasting_sugar": 104,
+          "systolic_bp": 133,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-23",
+          "sleep_hours": 7.3,
+          "steps": 7287,
+          "fasting_sugar": 103,
+          "systolic_bp": 133,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-24",
+          "sleep_hours": 6.8,
+          "steps": 7888,
+          "fasting_sugar": 107,
+          "systolic_bp": 128,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-25",
+          "sleep_hours": 6.6,
+          "steps": 8298,
+          "fasting_sugar": 103,
+          "systolic_bp": 127,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-26",
+          "sleep_hours": 6.3,
+          "steps": 7069,
+          "fasting_sugar": 102,
+          "systolic_bp": 130,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-27",
+          "sleep_hours": 7.5,
+          "steps": 7669,
+          "fasting_sugar": 104,
+          "systolic_bp": 133,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-28",
+          "sleep_hours": 6.3,
+          "steps": 7558,
+          "fasting_sugar": 104,
+          "systolic_bp": 129,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-29",
+          "sleep_hours": 6.6,
+          "steps": 6906,
+          "fasting_sugar": 106,
+          "systolic_bp": 129,
+          "stress": "low"
+        },
+        {
+          "date": "2026-03-30",
+          "sleep_hours": 6.2,
+          "steps": 7030,
+          "fasting_sugar": 107,
+          "systolic_bp": 125,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-03-31",
+          "sleep_hours": 7.7,
+          "steps": 7700,
+          "fasting_sugar": 105,
+          "systolic_bp": 133,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-04-01",
+          "sleep_hours": 7.8,
+          "steps": 7158,
+          "fasting_sugar": 101,
+          "systolic_bp": 127,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-04-02",
+          "sleep_hours": 7.1,
+          "steps": 7868,
+          "fasting_sugar": 102,
+          "systolic_bp": 133,
+          "stress": "high"
+        },
+        {
+          "date": "2026-04-03",
+          "sleep_hours": 7.6,
+          "steps": 9132,
+          "fasting_sugar": 107,
+          "systolic_bp": 132,
+          "stress": "medium"
+        },
+        {
+          "date": "2026-04-04",
+          "sleep_hours": 7.8,
+          "steps": 7592,
+          "fasting_sugar": 103,
+          "systolic_bp": 128,
+          "stress": "medium"
+        }
+      ],
+      "food_log": [
+        {
+          "date": "2026-03-06",
+          "restaurant": "McDonald's",
+          "dish": "McVeggie",
+          "status": "Moderate",
+          "reason": "Occasional is fine"
+        },
+        {
+          "date": "2026-03-07",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Good",
+          "reason": "Good for heart, low fat"
+        },
+        {
+          "date": "2026-03-08",
+          "restaurant": "Local",
+          "dish": "Grilled Fish + Salad",
+          "status": "Good",
+          "reason": "Omega-3 great for heart risk"
+        },
+        {
+          "date": "2026-03-09",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Good",
+          "reason": "Good for heart, low fat"
+        },
+        {
+          "date": "2026-03-10",
+          "restaurant": "Local",
+          "dish": "Grilled Fish + Salad",
+          "status": "Good",
+          "reason": "Omega-3 great for heart risk"
+        },
+        {
+          "date": "2026-03-11",
+          "restaurant": "McDonald's",
+          "dish": "McVeggie",
+          "status": "Moderate",
+          "reason": "Occasional is fine"
+        },
+        {
+          "date": "2026-03-12",
+          "restaurant": "McDonald's",
+          "dish": "McVeggie",
+          "status": "Moderate",
+          "reason": "Occasional is fine"
+        },
+        {
+          "date": "2026-03-13",
+          "restaurant": "Dominos",
+          "dish": "Farmhouse Pizza",
+          "status": "Avoid",
+          "reason": "High sodium bad for BP + heart history"
+        },
+        {
+          "date": "2026-03-14",
+          "restaurant": "Local",
+          "dish": "Grilled Fish + Salad",
+          "status": "Good",
+          "reason": "Omega-3 great for heart risk"
+        },
+        {
+          "date": "2026-03-15",
+          "restaurant": "Dominos",
+          "dish": "Farmhouse Pizza",
+          "status": "Avoid",
+          "reason": "High sodium bad for BP + heart history"
+        },
+        {
+          "date": "2026-03-16",
+          "restaurant": "Local",
+          "dish": "Grilled Fish + Salad",
+          "status": "Good",
+          "reason": "Omega-3 great for heart risk"
+        },
+        {
+          "date": "2026-03-17",
+          "restaurant": "Local",
+          "dish": "Grilled Fish + Salad",
+          "status": "Good",
+          "reason": "Omega-3 great for heart risk"
+        },
+        {
+          "date": "2026-03-18",
+          "restaurant": "McDonald's",
+          "dish": "McVeggie",
+          "status": "Moderate",
+          "reason": "Occasional is fine"
+        },
+        {
+          "date": "2026-03-19",
+          "restaurant": "Local",
+          "dish": "Grilled Fish + Salad",
+          "status": "Good",
+          "reason": "Omega-3 great for heart risk"
+        },
+        {
+          "date": "2026-03-20",
+          "restaurant": "Local",
+          "dish": "Grilled Fish + Salad",
+          "status": "Good",
+          "reason": "Omega-3 great for heart risk"
+        },
+        {
+          "date": "2026-03-21",
+          "restaurant": "Dominos",
+          "dish": "Farmhouse Pizza",
+          "status": "Avoid",
+          "reason": "High sodium bad for BP + heart history"
+        },
+        {
+          "date": "2026-03-22",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Good",
+          "reason": "Good for heart, low fat"
+        },
+        {
+          "date": "2026-03-23",
+          "restaurant": "Dominos",
+          "dish": "Farmhouse Pizza",
+          "status": "Avoid",
+          "reason": "High sodium bad for BP + heart history"
+        },
+        {
+          "date": "2026-03-24",
+          "restaurant": "McDonald's",
+          "dish": "McVeggie",
+          "status": "Moderate",
+          "reason": "Occasional is fine"
+        },
+        {
+          "date": "2026-03-25",
+          "restaurant": "Local",
+          "dish": "Paneer Bhurji + Roti",
+          "status": "Moderate",
+          "reason": "Moderate fat, watch portion"
+        },
+        {
+          "date": "2026-03-26",
+          "restaurant": "Local",
+          "dish": "Paneer Bhurji + Roti",
+          "status": "Moderate",
+          "reason": "Moderate fat, watch portion"
+        },
+        {
+          "date": "2026-03-27",
+          "restaurant": "Dominos",
+          "dish": "Farmhouse Pizza",
+          "status": "Avoid",
+          "reason": "High sodium bad for BP + heart history"
+        },
+        {
+          "date": "2026-03-28",
+          "restaurant": "Local",
+          "dish": "Paneer Bhurji + Roti",
+          "status": "Moderate",
+          "reason": "Moderate fat, watch portion"
+        },
+        {
+          "date": "2026-03-29",
+          "restaurant": "McDonald's",
+          "dish": "McVeggie",
+          "status": "Moderate",
+          "reason": "Occasional is fine"
+        },
+        {
+          "date": "2026-03-30",
+          "restaurant": "McDonald's",
+          "dish": "McVeggie",
+          "status": "Moderate",
+          "reason": "Occasional is fine"
+        },
+        {
+          "date": "2026-03-31",
+          "restaurant": "McDonald's",
+          "dish": "McVeggie",
+          "status": "Moderate",
+          "reason": "Occasional is fine"
+        },
+        {
+          "date": "2026-04-01",
+          "restaurant": "Local",
+          "dish": "Grilled Fish + Salad",
+          "status": "Good",
+          "reason": "Omega-3 great for heart risk"
+        },
+        {
+          "date": "2026-04-02",
+          "restaurant": "Local",
+          "dish": "Paneer Bhurji + Roti",
+          "status": "Moderate",
+          "reason": "Moderate fat, watch portion"
+        },
+        {
+          "date": "2026-04-03",
+          "restaurant": "Subway",
+          "dish": "Grilled Chicken Sub",
+          "status": "Good",
+          "reason": "Good for heart, low fat"
+        },
+        {
+          "date": "2026-04-04",
+          "restaurant": "McDonald's",
+          "dish": "McVeggie",
+          "status": "Moderate",
+          "reason": "Occasional is fine"
+        }
+      ]
+    }
+  ]
+}
