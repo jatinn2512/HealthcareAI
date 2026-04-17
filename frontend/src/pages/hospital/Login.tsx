@@ -3,6 +3,7 @@ import { Activity, Building2, Eye, EyeOff, Lock, Mail, UserRound, X } from "luci
 import { useLocation, useNavigate } from "react-router-dom";
 import { Button } from "@/components/Button";
 import { useAuth } from "@/lib/authContext";
+import { clearHospitalRole } from "@/lib/hospitalRole";
 
 const heroImg = "/assets/hero-health-ai.png";
 const defaultHospitalEmail = "hospital@gmail.com";
@@ -27,7 +28,7 @@ const Login = () => {
     const requestedPath = state?.from?.trim();
     const isProtectedReturn = Boolean(requestedPath) && requestedPath !== "/hospital/login";
     if (!requestedPath || requestedPath === "/hospital/login") {
-      return { redirectTo: "/hospital/doctors", shouldAutoRedirect: false };
+      return { redirectTo: "/hospital/role-select", shouldAutoRedirect: false };
     }
     return { redirectTo: requestedPath, shouldAutoRedirect: isProtectedReturn };
   }, [location.state]);
@@ -60,7 +61,11 @@ const Login = () => {
 
     try {
       await login(normalizedEmail, password);
-      navigate(redirectTo, { replace: true });
+      clearHospitalRole();
+      navigate("/hospital/role-select", {
+        replace: true,
+        state: redirectTo !== "/hospital/role-select" ? { from: redirectTo } : undefined,
+      });
     } catch (error) {
       const resolvedError = error instanceof Error ? error.message : "Invalid email or password.";
       setErrorMessage(resolvedError);
@@ -69,7 +74,7 @@ const Login = () => {
     }
   };
 
-  const onQuickDoctorLogin = async () => {
+  const onQuickHospitalLogin = async () => {
     if (isSigningIn || authLoading) return;
 
     setSelectedPortal("hospital");
@@ -80,7 +85,11 @@ const Login = () => {
 
     try {
       await login(defaultHospitalEmail, defaultHospitalPassword);
-      navigate(redirectTo, { replace: true });
+      clearHospitalRole();
+      navigate("/hospital/role-select", {
+        replace: true,
+        state: redirectTo !== "/hospital/role-select" ? { from: redirectTo } : undefined,
+      });
     } catch (error) {
       const resolvedError = error instanceof Error ? error.message : "Invalid email or password.";
       setErrorMessage(resolvedError);
@@ -240,10 +249,10 @@ const Login = () => {
                 type="button"
                 variant="outline"
                 className="h-11 w-full rounded-full border-emerald-700/50 text-sm font-semibold text-foreground"
-                onClick={() => void onQuickDoctorLogin()}
+                onClick={() => void onQuickHospitalLogin()}
                 disabled={isSigningIn || authLoading}
               >
-                Instant Doctor Login
+                Instant Hospital Login
               </Button>
             </div>
           </div>
