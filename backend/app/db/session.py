@@ -133,6 +133,44 @@ def _apply_sqlite_profile_schema_patches() -> None:
             connection.execute(text(statement))
 
 
+def _apply_tracking_schema_patches() -> None:
+    """Additive columns for multi-source monitoring (SQLite + MySQL)."""
+    inspector = inspect(tracking_engine)
+    table_names = inspector.get_table_names()
+
+    def patch_table(table: str, column_sql: list[tuple[str, str]]) -> None:
+        if table not in table_names:
+            return
+        for col_name, ddl in column_sql:
+            fresh = inspect(tracking_engine)
+            existing = {c["name"] for c in fresh.get_columns(table)}
+            if col_name in existing:
+                continue
+            with tracking_engine.begin() as connection:
+                connection.execute(text(ddl))
+
+    vitals_cols = [
+        ("source_type", "ALTER TABLE vitals_logs ADD COLUMN source_type VARCHAR(32) NOT NULL DEFAULT 'wearable'"),
+        ("recorded_at", "ALTER TABLE vitals_logs ADD COLUMN recorded_at DATETIME"),
+        ("source_device", "ALTER TABLE vitals_logs ADD COLUMN source_device VARCHAR(120)"),
+        ("blood_glucose_mg_dl", "ALTER TABLE vitals_logs ADD COLUMN blood_glucose_mg_dl FLOAT"),
+    ]
+    activity_cols = [
+        ("source_type", "ALTER TABLE activity_logs ADD COLUMN source_type VARCHAR(32) NOT NULL DEFAULT 'wearable'"),
+        ("recorded_at", "ALTER TABLE activity_logs ADD COLUMN recorded_at DATETIME"),
+        ("source_device", "ALTER TABLE activity_logs ADD COLUMN source_device VARCHAR(120)"),
+    ]
+    sleep_cols = [
+        ("source_type", "ALTER TABLE sleep_logs ADD COLUMN source_type VARCHAR(32) NOT NULL DEFAULT 'wearable'"),
+        ("recorded_at", "ALTER TABLE sleep_logs ADD COLUMN recorded_at DATETIME"),
+        ("source_device", "ALTER TABLE sleep_logs ADD COLUMN source_device VARCHAR(120)"),
+    ]
+
+    patch_table("vitals_logs", vitals_cols)
+    patch_table("activity_logs", activity_cols)
+    patch_table("sleep_logs", sleep_cols)
+
+
 def init_db() -> None:
     from app.models import (  # noqa: F401
         aqi_snapshot,
@@ -148,3 +186,4 @@ def init_db() -> None:
     _apply_core_users_schema_patches()
     _apply_sqlite_profile_schema_patches()
     TrackingBase.metadata.create_all(bind=tracking_engine)
+    _apply_tracking_schema_patches()

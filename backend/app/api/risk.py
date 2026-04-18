@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends
-from sqlalchemy.orm import Session
+from sqlalchemy import select
+from sqlalchemy.orm import Session, selectinload
 
-from app.db.session import get_tracking_db
+from app.db.session import get_core_db, get_tracking_db
 from app.models.user import User
 from app.schemas.risk import (
     ActivityLogCreate,
@@ -10,6 +11,8 @@ from app.schemas.risk import (
     InstantAlertCreate,
     InstantAlertHistoryResponse,
     InstantAlertResponse,
+    LabReportIngestRequest,
+    LabReportIngestResponse,
     RiskAssessmentCreate,
     SleepLogCreate,
     SleepLogOut,
@@ -73,9 +76,28 @@ def add_risk_assessment(
 @router.get("/overview")
 def get_latest_overview(
     current_user: User = Depends(auth_service.get_current_user),
+    core_db: Session = Depends(get_core_db),
     db: Session = Depends(get_tracking_db),
 ):
-    return risk_service.latest_overview(db, current_user.id)
+    user = core_db.scalar(select(User).where(User.id == current_user.id).options(selectinload(User.profile)))
+    profile = user.profile if user else None
+    height_cm = float(profile.height_cm) if profile and profile.height_cm is not None else None
+    weight_kg = float(profile.weight_kg) if profile and profile.weight_kg is not None else None
+    return risk_service.latest_overview(db, current_user.id, height_cm=height_cm, weight_kg=weight_kg)
+
+
+@router.post("/lab-report/ingest", response_model=LabReportIngestResponse, status_code=201)
+def ingest_lab_report(
+    payload: LabReportIngestRequest,
+    current_user: User = Depends(auth_service.get_current_user),
+    db: Session = Depends(get_tracking_db),
+):
+    return risk_service.ingest_lab_report_text(
+        db,
+        current_user.id,
+        text=payload.text,
+        recorded_at=payload.recorded_at,
+    )
 
 
 @router.post("/instant-alert", response_model=InstantAlertResponse)

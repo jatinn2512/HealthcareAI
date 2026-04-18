@@ -68,7 +68,19 @@ type DoctorPatientReportResponse = {
       spo2?: number | null;
       temperature_c?: number | null;
       logged_at?: string | null;
+      source_type?: string | null;
     } | null;
+    monitoring?: {
+      bp?: string | null;
+      bp_source?: string | null;
+      bp_source_label?: string | null;
+      hr?: number | null;
+      hr_source?: string | null;
+      hr_source_label?: string | null;
+      last_updated?: string | null;
+    } | null;
+    rule_based_risk?: { heart_risk: string; diabetes_risk: string; reason: string } | null;
+    data_quality?: { message?: string } | null;
     food?: {
       latest_item?: string | null;
       latest_alert?: string | null;
@@ -410,16 +422,35 @@ const Doctor = () => {
   const activityOverview = patientReport?.overview.activity ?? null;
   const vitalsOverview = patientReport?.overview.vitals ?? null;
   const foodOverview = patientReport?.overview.food ?? null;
+  const monitoring = patientReport?.overview.monitoring;
+  const parseMonitoringBp = (): [number | undefined, number | undefined] => {
+    const raw = monitoring?.bp;
+    if (!raw || !raw.includes("/")) {
+      return [undefined, undefined];
+    }
+    const parts = raw.split("/");
+    const s = Number(parts[0]?.trim());
+    const d = Number(parts[1]?.trim());
+    if (Number.isNaN(s) || Number.isNaN(d)) {
+      return [undefined, undefined];
+    }
+    return [s, d];
+  };
+  const [monSys, monDia] = parseMonitoringBp();
   const resolvedSleepDuration = sleepOverview?.duration_minutes ?? CLINICAL_OVERVIEW_FALLBACKS.sleepDurationMinutes;
   const resolvedSleepQuality = sleepOverview?.quality_score ?? CLINICAL_OVERVIEW_FALLBACKS.sleepQualityScore;
   const resolvedActivitySteps = activityOverview?.steps ?? CLINICAL_OVERVIEW_FALLBACKS.activitySteps;
   const resolvedWorkoutMinutes = activityOverview?.workout_minutes ?? CLINICAL_OVERVIEW_FALLBACKS.activityWorkoutMinutes;
-  const resolvedHeartRate = vitalsOverview?.heart_rate ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsHeartRate;
-  const resolvedSystolicBp = vitalsOverview?.systolic_bp ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsSystolicBp;
-  const resolvedDiastolicBp = vitalsOverview?.diastolic_bp ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsDiastolicBp;
+  const resolvedHeartRate =
+    monitoring?.hr ?? vitalsOverview?.heart_rate ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsHeartRate;
+  const resolvedSystolicBp =
+    monSys ?? vitalsOverview?.systolic_bp ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsSystolicBp;
+  const resolvedDiastolicBp =
+    monDia ?? vitalsOverview?.diastolic_bp ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsDiastolicBp;
   const resolvedSpo2 = vitalsOverview?.spo2 ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsSpo2;
   const resolvedTemperature = vitalsOverview?.temperature_c ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsTemperatureC;
-  const resolvedVitalsLoggedAt = vitalsOverview?.logged_at ?? patientReport?.linked_at ?? null;
+  const resolvedVitalsLoggedAt =
+    monitoring?.last_updated ?? vitalsOverview?.logged_at ?? patientReport?.linked_at ?? null;
 
   return (
     <AppLayout title="Doctor Dashboard" subtitle="Appointments, patient connection via QR, and connected user reports.">
@@ -545,7 +576,13 @@ const Doctor = () => {
               {selectedPatientCard ? `Viewing: ${selectedPatientCard.patient.full_name}` : "Select a connected patient to view reports."}
             </p>
             <p className="mt-1 text-[11px] text-muted-foreground">
-              Last synced: {lastSyncedAt ? lastSyncedAt.toLocaleTimeString() : "Not synced yet"}
+              Report refreshed: {lastSyncedAt ? lastSyncedAt.toLocaleString() : "Not yet"}
+              {patientReport?.overview.monitoring?.bp
+                ? ` · BP ${patientReport.overview.monitoring.bp} (source: ${patientReport.overview.monitoring.bp_source_label || patientReport.overview.monitoring.bp_source || "—"})`
+                : null}
+              {patientReport?.overview.monitoring?.hr != null
+                ? ` · HR ${patientReport.overview.monitoring.hr} (source: ${patientReport.overview.monitoring.hr_source_label || "—"})`
+                : null}
             </p>
           </div>
           {selectedPatientId ? (

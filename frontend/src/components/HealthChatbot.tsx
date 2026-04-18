@@ -13,7 +13,7 @@ type ChatMessage = {
 const quickPrompts = [
   "How do I use Instant Alert?",
   "Where is the food scan button?",
-  "How do I sync my smartwatch?",
+  "How do I add vitals or sync a device?",
   "How does profile autofill work?",
 ] as const;
 
@@ -39,7 +39,7 @@ const getBotReply = (input: string): string => {
   }
 
   if (includesAny(normalized, ["smartwatch", "bluetooth", "wearable", "steps", "heart rate", "sync"])) {
-    return "Use the Smartwatch Integration section in Settings. Tap Connect, allow Bluetooth if supported, then sync sensor values to save them in backend logs.";
+    return "Use Dashboard “Quick add reading” for manual BP/sugar, Instant Alert for symptoms, or Optional device sync in Settings. Wearable data is lowest priority vs lab reports and alerts.";
   }
 
   if (normalized.includes("profile")) {
@@ -54,7 +54,7 @@ const getBotReply = (input: string): string => {
     return "If login behavior seems stuck, log out and try again, or clear browser storage. The home page is the public landing route and auth pages are separate routes.";
   }
 
-  return "I can help with login, profile, camera autofill, Instant Alert, food scan, AQI, and smartwatch sync. Tell me which feature you need.";
+  return "I can help with login, profile, camera autofill, Instant Alert, food scan, AQI, and optional device sync. Tell me which feature you need.";
 };
 
 const initialMessage: ChatMessage = {

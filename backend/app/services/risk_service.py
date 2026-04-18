@@ -1,9 +1,16 @@
 import json
 from datetime import UTC, date, datetime
 
+from fastapi import HTTPException, status
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
+from app.core.monitoring_sources import (
+    SOURCE_INSTANT_ALERT,
+    SOURCE_LAB_REPORT,
+    SOURCE_WEARABLE,
+    normalize_source_type,
+)
 from app.models.dish_nutrition import MealLog, RestaurantInteraction
 from app.models.risk_assessment import ActivityLog, FeatureEvent, RiskAssessment, SleepLog, VitalsLog
 from app.schemas.risk import (
@@ -13,16 +20,37 @@ from app.schemas.risk import (
     InstantAlertHistoryResponse,
     InstantAlertResponse,
     InstantAlertScore,
+    LabReportIngestResponse,
     RiskAssessmentCreate,
     SleepLogCreate,
     VitalsLogCreate,
     WearableSyncCreate,
     WearableSyncResponse,
 )
+from app.services.lab_report_parser import parse_lab_report_text
+from app.services.monitoring_overview import (
+    build_data_quality_message,
+    build_monitoring_fusion,
+    build_vitals_trends,
+    compute_rule_based_risk,
+    latest_symptoms_snippet,
+)
 
 
 def create_sleep_log(db: Session, user_id: int, payload: SleepLogCreate) -> SleepLog:
-    log = SleepLog(user_id=user_id, **payload.model_dump())
+    now = datetime.now(UTC)
+    recorded = payload.recorded_at or now
+    log = SleepLog(
+        user_id=user_id,
+        sleep_date=payload.sleep_date,
+        duration_minutes=payload.duration_minutes,
+        sleep_start=payload.sleep_start,
+        sleep_end=payload.sleep_end,
+        quality_score=payload.quality_score,
+        source_type=normalize_source_type(payload.source_type),
+        recorded_at=recorded,
+        source_device=payload.source_device,
+    )
     db.add(log)
     db.commit()
     db.refresh(log)
@@ -30,7 +58,19 @@ def create_sleep_log(db: Session, user_id: int, payload: SleepLogCreate) -> Slee
 
 
 def create_activity_log(db: Session, user_id: int, payload: ActivityLogCreate) -> ActivityLog:
-    log = ActivityLog(user_id=user_id, **payload.model_dump())
+    now = datetime.now(UTC)
+    recorded = payload.recorded_at or now
+    log = ActivityLog(
+        user_id=user_id,
+        steps=payload.steps,
+        workout_minutes=payload.workout_minutes,
+        calories_burned=payload.calories_burned,
+        distance_km=payload.distance_km,
+        logged_at=recorded,
+        source_type=normalize_source_type(payload.source_type),
+        recorded_at=recorded,
+        source_device=payload.source_device,
+    )
     db.add(log)
     db.commit()
     db.refresh(log)
@@ -38,7 +78,21 @@ def create_activity_log(db: Session, user_id: int, payload: ActivityLogCreate) -
 
 
 def create_vitals_log(db: Session, user_id: int, payload: VitalsLogCreate) -> VitalsLog:
-    log = VitalsLog(user_id=user_id, **payload.model_dump())
+    now = datetime.now(UTC)
+    recorded = payload.recorded_at or now
+    log = VitalsLog(
+        user_id=user_id,
+        heart_rate=payload.heart_rate,
+        systolic_bp=payload.systolic_bp,
+        diastolic_bp=payload.diastolic_bp,
+        spo2=payload.spo2,
+        temperature_c=payload.temperature_c,
+        blood_glucose_mg_dl=payload.blood_glucose_mg_dl,
+        logged_at=recorded,
+        source_type=normalize_source_type(payload.source_type),
+        recorded_at=recorded,
+        source_device=payload.source_device,
+    )
     db.add(log)
     db.commit()
     db.refresh(log)
@@ -61,10 +115,28 @@ def create_risk_assessment(db: Session, user_id: int, payload: RiskAssessmentCre
     return assessment
 
 
-def latest_overview(db: Session, user_id: int) -> dict:
-    latest_sleep = db.scalar(select(SleepLog).where(SleepLog.user_id == user_id).order_by(SleepLog.created_at.desc()))
-    latest_activity = db.scalar(select(ActivityLog).where(ActivityLog.user_id == user_id).order_by(ActivityLog.logged_at.desc()))
-    latest_vitals = db.scalar(select(VitalsLog).where(VitalsLog.user_id == user_id).order_by(VitalsLog.logged_at.desc()))
+def latest_overview(
+    db: Session,
+    user_id: int,
+    *,
+    height_cm: float | None = None,
+    weight_kg: float | None = None,
+) -> dict:
+    latest_sleep = db.scalar(
+        select(SleepLog)
+        .where(SleepLog.user_id == user_id)
+        .order_by(func.coalesce(SleepLog.recorded_at, SleepLog.created_at).desc())
+    )
+    latest_activity = db.scalar(
+        select(ActivityLog)
+        .where(ActivityLog.user_id == user_id)
+        .order_by(func.coalesce(ActivityLog.recorded_at, ActivityLog.logged_at).desc())
+    )
+    latest_vitals = db.scalar(
+        select(VitalsLog)
+        .where(VitalsLog.user_id == user_id)
+        .order_by(func.coalesce(VitalsLog.recorded_at, VitalsLog.logged_at).desc())
+    )
     latest_food = db.scalar(
         select(MealLog)
         .where(
@@ -101,6 +173,9 @@ def latest_overview(db: Session, user_id: int) -> dict:
             "duration_minutes": latest_sleep.duration_minutes,
             "quality_score": latest_sleep.quality_score,
             "created_at": latest_sleep.created_at,
+            "source_type": normalize_source_type(latest_sleep.source_type),
+            "recorded_at": latest_sleep.recorded_at,
+            "source_device": latest_sleep.source_device,
         }
         if latest_sleep
         else None
@@ -112,6 +187,9 @@ def latest_overview(db: Session, user_id: int) -> dict:
             "calories_burned": latest_activity.calories_burned,
             "distance_km": latest_activity.distance_km,
             "logged_at": latest_activity.logged_at,
+            "source_type": normalize_source_type(latest_activity.source_type),
+            "recorded_at": latest_activity.recorded_at,
+            "source_device": latest_activity.source_device,
         }
         if latest_activity
         else None
@@ -123,7 +201,11 @@ def latest_overview(db: Session, user_id: int) -> dict:
             "diastolic_bp": latest_vitals.diastolic_bp,
             "spo2": latest_vitals.spo2,
             "temperature_c": latest_vitals.temperature_c,
+            "blood_glucose_mg_dl": latest_vitals.blood_glucose_mg_dl,
             "logged_at": latest_vitals.logged_at,
+            "source_type": normalize_source_type(latest_vitals.source_type),
+            "recorded_at": latest_vitals.recorded_at,
+            "source_device": latest_vitals.source_device,
         }
         if latest_vitals
         else None
@@ -142,11 +224,22 @@ def latest_overview(db: Session, user_id: int) -> dict:
         "recent_choices": sum(alert_counts.values()),
     }
 
+    monitoring = build_monitoring_fusion(db, user_id)
+    trends = build_vitals_trends(db, user_id)
+    rule_based_risk = compute_rule_based_risk(monitoring, trends, height_cm=height_cm, weight_kg=weight_kg)
+    data_quality = build_data_quality_message(monitoring)
+    symptoms_recent = latest_symptoms_snippet(db, user_id)
+
     return {
         "sleep": sleep_payload,
         "activity": activity_payload,
         "vitals": vitals_payload,
         "food": food_payload,
+        "monitoring": monitoring,
+        "trends": trends,
+        "rule_based_risk": rule_based_risk,
+        "data_quality": {"message": data_quality},
+        "symptoms_recent": symptoms_recent,
     }
 
 
@@ -353,14 +446,54 @@ def create_instant_alert(db: Session, user_id: int, payload: InstantAlertCreate)
         "input": payload.model_dump(),
     }
 
+    now = datetime.now(UTC)
     saved = RiskAssessment(
         user_id=user_id,
         risk_type="instant_alert",
         risk_level=overall_risk,
         summary=_serialize_instant_alert_summary(summary_payload),
-        generated_at=datetime.now(UTC),
+        generated_at=now,
     )
     db.add(saved)
+    db.flush()
+
+    has_structured_vitals = any(
+        [
+            payload.systolic_bp is not None and payload.diastolic_bp is not None,
+            payload.heart_rate is not None,
+            payload.spo2 is not None,
+            payload.glucose is not None,
+        ]
+    )
+    if has_structured_vitals:
+        db.add(
+            VitalsLog(
+                user_id=user_id,
+                heart_rate=payload.heart_rate,
+                systolic_bp=payload.systolic_bp,
+                diastolic_bp=payload.diastolic_bp,
+                spo2=payload.spo2,
+                temperature_c=None,
+                blood_glucose_mg_dl=payload.glucose,
+                logged_at=now,
+                recorded_at=now,
+                source_type=SOURCE_INSTANT_ALERT,
+                source_device=None,
+            )
+        )
+
+    notes = (payload.notes or "").strip()
+    if notes:
+        db.add(
+            FeatureEvent(
+                user_id=user_id,
+                feature="instant_alert",
+                action="symptoms",
+                metadata_json=notes[:4000],
+                created_at=now,
+            )
+        )
+
     db.commit()
     db.refresh(saved)
 
@@ -417,6 +550,8 @@ def get_instant_alert_history(db: Session, user_id: int, limit: int = 15) -> Ins
 
 def sync_wearable_data(db: Session, user_id: int, payload: WearableSyncCreate) -> WearableSyncResponse:
     synced = {"activity": False, "vitals": False, "sleep": False}
+    now = datetime.now(UTC)
+    device_label = (payload.source_device or "").strip() or "wearable"
 
     if payload.steps is not None or payload.workout_minutes is not None or payload.calories_burned is not None or payload.distance_km is not None:
         activity = ActivityLog(
@@ -425,7 +560,10 @@ def sync_wearable_data(db: Session, user_id: int, payload: WearableSyncCreate) -
             workout_minutes=payload.workout_minutes or 0,
             calories_burned=payload.calories_burned or 0,
             distance_km=payload.distance_km,
-            logged_at=datetime.now(UTC),
+            logged_at=now,
+            recorded_at=now,
+            source_type=SOURCE_WEARABLE,
+            source_device=device_label[:120],
         )
         db.add(activity)
         synced["activity"] = True
@@ -444,7 +582,10 @@ def sync_wearable_data(db: Session, user_id: int, payload: WearableSyncCreate) -
             diastolic_bp=payload.diastolic_bp,
             spo2=payload.spo2,
             temperature_c=payload.temperature_c,
-            logged_at=datetime.now(UTC),
+            logged_at=now,
+            recorded_at=now,
+            source_type=SOURCE_WEARABLE,
+            source_device=device_label[:120],
         )
         db.add(vitals)
         synced["vitals"] = True
@@ -455,7 +596,9 @@ def sync_wearable_data(db: Session, user_id: int, payload: WearableSyncCreate) -
             sleep_date=date.today(),
             duration_minutes=payload.sleep_minutes,
             quality_score=payload.sleep_quality,
-            created_at=datetime.now(UTC),
+            recorded_at=now,
+            source_type=SOURCE_WEARABLE,
+            source_device=device_label[:120],
         )
         db.add(sleep)
         synced["sleep"] = True
@@ -466,7 +609,7 @@ def sync_wearable_data(db: Session, user_id: int, payload: WearableSyncCreate) -
         feature="wearable",
         action="sync",
         metadata_json=json.dumps(metadata, ensure_ascii=False),
-        created_at=datetime.now(UTC),
+        created_at=now,
     )
     db.add(event)
     db.commit()
@@ -480,4 +623,65 @@ def sync_wearable_data(db: Session, user_id: int, payload: WearableSyncCreate) -
     return WearableSyncResponse(
         message="Wearable data synced successfully.",
         synced=synced,
+    )
+
+
+def ingest_lab_report_text(
+    db: Session,
+    user_id: int,
+    *,
+    text: str,
+    recorded_at: datetime | None = None,
+) -> LabReportIngestResponse:
+    parsed = parse_lab_report_text(text)
+    if not parsed.has_any_vital() and not parsed.diagnosis:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="Could not extract vitals or diagnosis from the supplied text.",
+        )
+
+    ts = recorded_at or datetime.now(UTC)
+    log = VitalsLog(
+        user_id=user_id,
+        heart_rate=parsed.heart_rate,
+        systolic_bp=parsed.systolic_bp,
+        diastolic_bp=parsed.diastolic_bp,
+        spo2=None,
+        temperature_c=parsed.temperature_c,
+        blood_glucose_mg_dl=parsed.blood_glucose_mg_dl,
+        logged_at=ts,
+        recorded_at=ts,
+        source_type=SOURCE_LAB_REPORT,
+        source_device="parsed_lab_report",
+    )
+    db.add(log)
+    db.flush()
+
+    if parsed.diagnosis:
+        db.add(
+            FeatureEvent(
+                user_id=user_id,
+                feature="lab_report",
+                action="diagnosis",
+                metadata_json=json.dumps({"diagnosis": parsed.diagnosis, "vitals_log_id": log.id}, ensure_ascii=False)[:4000],
+                created_at=ts,
+            )
+        )
+
+    db.commit()
+    db.refresh(log)
+
+    extracted = {
+        "systolic_bp": parsed.systolic_bp,
+        "diastolic_bp": parsed.diastolic_bp,
+        "heart_rate": parsed.heart_rate,
+        "blood_glucose_mg_dl": parsed.blood_glucose_mg_dl,
+        "temperature_c": parsed.temperature_c,
+        "diagnosis": parsed.diagnosis,
+    }
+
+    return LabReportIngestResponse(
+        vitals_log_id=log.id,
+        extracted=extracted,
+        matched_snippets=parsed.matched_snippets,
     )

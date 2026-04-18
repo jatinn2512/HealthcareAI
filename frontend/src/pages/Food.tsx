@@ -20,6 +20,7 @@ import AppLayout from "@/components/AppLayout";
 import { Button } from "@/components/Button";
 import CameraCaptureModal from "@/components/CameraCaptureModal";
 import { apiClient } from "@/lib/apiClient";
+import type { RiskOverview } from "@/lib/riskOverviewTypes";
 import { estimateFoodRiskFromImage, scanStructuredDataFromImage } from "@/lib/cameraScan";
 import { pushNotification } from "@/lib/notifications";
 
@@ -105,10 +106,6 @@ type FoodOverviewSummary = {
   latest_alert?: string | null;
   alert_counts?: { green?: number; yellow?: number; red?: number } | null;
   recent_choices?: number | null;
-};
-
-type RiskOverviewResponse = {
-  food?: FoodOverviewSummary | null;
 };
 
 type FoodScanResult = {
@@ -386,7 +383,7 @@ const Food = () => {
     setHistoryError(null);
     const [historyResponse, overviewResponse] = await Promise.all([
       apiClient.get<RestaurantInteractionHistory[]>("/restaurant/interactions?limit=120"),
-      apiClient.get<RiskOverviewResponse>("/risk/overview"),
+      apiClient.get<RiskOverview>("/risk/overview"),
     ]);
 
     setHistoryFoodSummary(overviewResponse.data?.food ?? null);

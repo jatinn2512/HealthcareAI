@@ -20,6 +20,7 @@ import AppLayout from "@/components/AppLayout";
 import { Button } from "@/components/Button";
 import { apiClient } from "@/lib/apiClient";
 import { useAuth } from "@/lib/authContext";
+import type { RiskOverview } from "@/lib/riskOverviewTypes";
 
 const weeklyData = [
   { day: "Mon", steps: 6200 },
@@ -57,7 +58,7 @@ const quickActions = [
   { label: "Log Symptoms", icon: Stethoscope, path: "/health" },
   { label: "Add Meal", icon: UtensilsCrossed, path: "/food" },
   { label: "Check AQI", icon: Wind, path: "/aqi" },
-  { label: "Sync Watch", icon: Bluetooth, path: "/settings" },
+  { label: "Devices (optional)", icon: Bluetooth, path: "/settings" },
 ] as const;
 
 const WEARABLE_SYNCED_EVENT = "curasync:wearable-synced";
@@ -75,30 +76,6 @@ type DoctorConnectTokenResponse = {
   };
 };
 
-type RiskOverview = {
-  sleep?: {
-    sleep_date?: string | null;
-    duration_minutes?: number | null;
-    quality_score?: number | null;
-    created_at?: string | null;
-  } | null;
-  activity?: {
-    steps?: number | null;
-    workout_minutes?: number | null;
-    calories_burned?: number | null;
-    distance_km?: number | null;
-    logged_at?: string | null;
-  } | null;
-  vitals?: {
-    heart_rate?: number | null;
-    systolic_bp?: number | null;
-    diastolic_bp?: number | null;
-    spo2?: number | null;
-    temperature_c?: number | null;
-    logged_at?: string | null;
-  } | null;
-};
-
 const formatLocalDateTime = (isoValue: string): string => {
   const parsed = new Date(isoValue);
   if (Number.isNaN(parsed.getTime())) return isoValue;
@@ -109,6 +86,12 @@ const Dashboard = () => {
   const [now, setNow] = useState<Date>(() => new Date());
   const [riskOverview, setRiskOverview] = useState<RiskOverview | null>(null);
   const [wearableLastSyncAt, setWearableLastSyncAt] = useState<string | null>(null);
+  const [quickSys, setQuickSys] = useState("");
+  const [quickDia, setQuickDia] = useState("");
+  const [quickSugar, setQuickSugar] = useState("");
+  const [quickSymptoms, setQuickSymptoms] = useState("");
+  const [quickSaving, setQuickSaving] = useState(false);
+  const [quickMessage, setQuickMessage] = useState("");
   const [doctorConnectToken, setDoctorConnectToken] = useState<DoctorConnectTokenResponse | null>(null);
   const [isGeneratingDoctorToken, setIsGeneratingDoctorToken] = useState(false);
   const [doctorConnectError, setDoctorConnectError] = useState("");
@@ -149,7 +132,7 @@ const Dashboard = () => {
       },
       {
         label: "Heart Rate",
-        value: `${riskOverview?.vitals?.heart_rate ?? 72}`,
+        value: `${riskOverview?.monitoring?.hr ?? riskOverview?.vitals?.heart_rate ?? 72}`,
         target: "bpm",
         icon: HeartPulse,
         color: "text-health-cyan",
@@ -172,6 +155,7 @@ const Dashboard = () => {
     if (response.data) {
       setRiskOverview(response.data);
       const latestTimestamp =
+        response.data.monitoring?.last_updated ||
         response.data.vitals?.logged_at ||
         response.data.activity?.logged_at ||
         response.data.sleep?.created_at ||
@@ -216,6 +200,59 @@ const Dashboard = () => {
     }
   };
 
+  const handleSaveQuickReading = async () => {
+    if (quickSaving) return;
+    setQuickMessage("");
+    const sys = quickSys.trim() ? Number(quickSys) : NaN;
+    const dia = quickDia.trim() ? Number(quickDia) : NaN;
+    const sugar = quickSugar.trim() ? Number(quickSugar) : NaN;
+    const hasVitals =
+      (!Number.isNaN(sys) && !Number.isNaN(dia)) || !Number.isNaN(sugar);
+    const hasSymptoms = quickSymptoms.trim().length > 0;
+    if (!hasVitals && !hasSymptoms) {
+      setQuickMessage("Enter BP (systolic/diastolic), sugar, and/or symptoms.");
+      return;
+    }
+    setQuickSaving(true);
+    try {
+      if (hasVitals) {
+        const body: Record<string, string | number> = { source_type: "manual" };
+        if (!Number.isNaN(sys) && !Number.isNaN(dia)) {
+          body.systolic_bp = sys;
+          body.diastolic_bp = dia;
+        }
+        if (!Number.isNaN(sugar)) {
+          body.blood_glucose_mg_dl = sugar;
+        }
+        const res = await apiClient.post("/risk/vitals", body);
+        if (res.error) {
+          throw new Error(res.error);
+        }
+      }
+      if (hasSymptoms) {
+        const res = await apiClient.post("/risk/events", {
+          feature: "manual_entry",
+          action: "symptoms_note",
+          metadata_json: JSON.stringify({ text: quickSymptoms.trim() }),
+        });
+        if (res.error) {
+          throw new Error(res.error);
+        }
+      }
+      setQuickSys("");
+      setQuickDia("");
+      setQuickSugar("");
+      setQuickSymptoms("");
+      setQuickMessage("Reading saved.");
+      void loadRiskOverview();
+      window.dispatchEvent(new Event(WEARABLE_SYNCED_EVENT));
+    } catch (e) {
+      setQuickMessage(e instanceof Error ? e.message : "Unable to save.");
+    } finally {
+      setQuickSaving(false);
+    }
+  };
+
   const handleCopyDoctorConnectValue = async (value: string, label: string) => {
     try {
       await navigator.clipboard.writeText(value);
@@ -257,8 +294,79 @@ const Dashboard = () => {
         ))}
       </section>
       {wearableLastSyncAt ? (
-        <section className="rounded-xl border border-health-teal/30 bg-health-teal/10 px-4 py-2.5 text-xs text-health-teal">
-          Wearable data synced at {formatLocalDateTime(wearableLastSyncAt)}
+        <section className="space-y-1 rounded-xl border border-health-teal/30 bg-health-teal/10 px-4 py-2.5 text-xs text-health-teal">
+          <p>
+            Last monitoring update: {formatLocalDateTime(wearableLastSyncAt)}
+            {riskOverview?.monitoring?.bp
+              ? ` · BP ${riskOverview.monitoring.bp} (source: ${riskOverview.monitoring.bp_source_label || riskOverview.monitoring.bp_source || "—"})`
+              : null}
+            {riskOverview?.monitoring?.hr != null && riskOverview?.monitoring?.hr !== undefined
+              ? ` · HR ${riskOverview.monitoring.hr} (source: ${riskOverview.monitoring.hr_source_label || riskOverview.monitoring.hr_source || "—"})`
+              : null}
+          </p>
+          {riskOverview?.data_quality?.message ? (
+            <p className="text-[11px] font-medium text-amber-800">{riskOverview.data_quality.message}</p>
+          ) : null}
+        </section>
+      ) : null}
+
+      <section className="rounded-2xl border border-border/60 bg-card/80 p-4">
+        <h2 className="mb-2 text-sm font-semibold text-foreground">Quick add reading</h2>
+        <p className="mb-3 text-xs text-muted-foreground">
+          Log BP, blood sugar, and/or symptoms as manual entries (stored in your health record).
+        </p>
+        <div className="grid gap-2 sm:grid-cols-3">
+          <input
+            type="number"
+            inputMode="numeric"
+            placeholder="Systolic BP"
+            value={quickSys}
+            onChange={(e) => setQuickSys(e.target.value)}
+            className="h-10 rounded-xl border border-border bg-background px-3 text-sm"
+          />
+          <input
+            type="number"
+            inputMode="numeric"
+            placeholder="Diastolic BP"
+            value={quickDia}
+            onChange={(e) => setQuickDia(e.target.value)}
+            className="h-10 rounded-xl border border-border bg-background px-3 text-sm"
+          />
+          <input
+            type="number"
+            inputMode="decimal"
+            placeholder="Sugar (mg/dL)"
+            value={quickSugar}
+            onChange={(e) => setQuickSugar(e.target.value)}
+            className="h-10 rounded-xl border border-border bg-background px-3 text-sm"
+          />
+        </div>
+        <textarea
+          placeholder="Symptoms (optional)"
+          value={quickSymptoms}
+          onChange={(e) => setQuickSymptoms(e.target.value)}
+          rows={2}
+          className="mt-2 w-full rounded-xl border border-border bg-background px-3 py-2 text-sm"
+        />
+        {quickMessage ? <p className="mt-2 text-xs text-muted-foreground">{quickMessage}</p> : null}
+        <Button
+          type="button"
+          className="mt-3 h-10 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground"
+          onClick={() => void handleSaveQuickReading()}
+          disabled={quickSaving}
+        >
+          {quickSaving ? "Saving…" : "Save reading"}
+        </Button>
+      </section>
+
+      {riskOverview?.rule_based_risk ? (
+        <section className="rounded-xl border border-border/60 bg-muted/30 px-4 py-3 text-xs text-foreground">
+          <p className="font-semibold">Rule-based risk snapshot</p>
+          <p className="mt-1 text-muted-foreground">
+            Heart: {riskOverview.rule_based_risk.heart_risk} · Diabetes: {riskOverview.rule_based_risk.diabetes_risk}
+            {riskOverview.rule_based_risk.bmi != null ? ` · BMI ${riskOverview.rule_based_risk.bmi}` : ""}
+          </p>
+          <p className="mt-1 text-muted-foreground">{riskOverview.rule_based_risk.reason}</p>
         </section>
       ) : null}
 

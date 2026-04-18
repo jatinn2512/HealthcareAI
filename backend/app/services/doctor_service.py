@@ -4,7 +4,7 @@ from uuid import uuid4
 
 from fastapi import HTTPException, status
 from sqlalchemy import select
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, selectinload
 
 from app.core.config import settings
 from app.models.doctor_link import DoctorPatientLink, PatientShareToken
@@ -203,11 +203,18 @@ def get_connected_patient_report(
     patient_user_id: int,
 ) -> tuple[DoctorPatientLink, User, dict, list[RiskAssessment]]:
     link = _assert_doctor_access(core_db, doctor_user_id, patient_user_id)
-    patient = core_db.scalar(select(User).where(User.id == patient_user_id, User.is_active.is_(True)))
+    patient = core_db.scalar(
+        select(User)
+        .where(User.id == patient_user_id, User.is_active.is_(True))
+        .options(selectinload(User.profile))
+    )
     if not patient:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Patient not found.")
 
-    overview = risk_service.latest_overview(tracking_db, patient_user_id)
+    prof = patient.profile
+    height_cm = float(prof.height_cm) if prof and prof.height_cm is not None else None
+    weight_kg = float(prof.weight_kg) if prof and prof.weight_kg is not None else None
+    overview = risk_service.latest_overview(tracking_db, patient_user_id, height_cm=height_cm, weight_kg=weight_kg)
     risk_rows = list(
         tracking_db.scalars(
             select(RiskAssessment)

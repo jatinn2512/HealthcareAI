@@ -1,6 +1,10 @@
 from datetime import date, datetime
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
+
+
+SourceType = Literal["lab_report", "instant_alert", "manual", "wearable"]
 
 
 class SleepLogCreate(BaseModel):
@@ -9,6 +13,9 @@ class SleepLogCreate(BaseModel):
     sleep_start: datetime | None = None
     sleep_end: datetime | None = None
     quality_score: int | None = Field(default=None, ge=0, le=100)
+    source_type: SourceType = "wearable"
+    recorded_at: datetime | None = None
+    source_device: str | None = Field(default=None, max_length=120)
 
 
 class ActivityLogCreate(BaseModel):
@@ -16,6 +23,9 @@ class ActivityLogCreate(BaseModel):
     workout_minutes: int = Field(ge=0)
     calories_burned: int = Field(ge=0)
     distance_km: float | None = Field(default=None, ge=0)
+    source_type: SourceType = "wearable"
+    recorded_at: datetime | None = None
+    source_device: str | None = Field(default=None, max_length=120)
 
 
 class VitalsLogCreate(BaseModel):
@@ -24,6 +34,10 @@ class VitalsLogCreate(BaseModel):
     diastolic_bp: int | None = Field(default=None, ge=40, le=180)
     spo2: float | None = Field(default=None, ge=50, le=100)
     temperature_c: float | None = Field(default=None, ge=30, le=45)
+    blood_glucose_mg_dl: float | None = Field(default=None, ge=20, le=800)
+    source_type: SourceType = "wearable"
+    recorded_at: datetime | None = None
+    source_device: str | None = Field(default=None, max_length=120)
 
 
 class FeatureEventCreate(BaseModel):
@@ -45,6 +59,9 @@ class SleepLogOut(BaseModel):
     sleep_date: date
     duration_minutes: int
     quality_score: int | None
+    source_type: str = "wearable"
+    recorded_at: datetime | None = None
+    source_device: str | None = None
     created_at: datetime
 
 
@@ -56,6 +73,9 @@ class ActivityLogOut(BaseModel):
     workout_minutes: int
     calories_burned: int
     distance_km: float | None
+    source_type: str = "wearable"
+    recorded_at: datetime | None = None
+    source_device: str | None = None
     logged_at: datetime
 
 
@@ -68,6 +88,10 @@ class VitalsLogOut(BaseModel):
     diastolic_bp: int | None
     spo2: float | None
     temperature_c: float | None
+    blood_glucose_mg_dl: float | None = None
+    source_type: str = "wearable"
+    recorded_at: datetime | None = None
+    source_device: str | None = None
     logged_at: datetime
 
 
@@ -133,3 +157,14 @@ class WearableSyncCreate(BaseModel):
 class WearableSyncResponse(BaseModel):
     message: str
     synced: dict[str, bool]
+
+
+class LabReportIngestRequest(BaseModel):
+    text: str = Field(min_length=3, max_length=50_000)
+    recorded_at: datetime | None = None
+
+
+class LabReportIngestResponse(BaseModel):
+    vitals_log_id: int
+    extracted: dict
+    matched_snippets: list[str] | None = None

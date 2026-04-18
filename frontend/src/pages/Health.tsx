@@ -26,6 +26,7 @@ import WeeklyPlanGenerator from "@/components/WeeklyPlanGenerator";
 import { getAccessToken, getApiBaseUrl } from "@/lib/auth";
 import { apiClient } from "@/lib/apiClient";
 import { pushNotification } from "@/lib/notifications";
+import type { RiskOverview } from "@/lib/riskOverviewTypes";
 
 type SymptomIntensity = "mild" | "moderate" | "severe";
 
@@ -217,27 +218,6 @@ const gymTemplates: Record<string, ExerciseTask[]> = {
 
 type ExportScope = "complete" | "weekly" | "this_month";
 
-type RiskOverview = {
-  sleep: { duration_minutes?: number | null; quality_score?: number | null; sleep_date?: string | null } | null;
-  activity: { steps?: number | null; workout_minutes?: number | null } | null;
-  vitals: { heart_rate?: number | null; systolic_bp?: number | null } | null;
-  food:
-    | {
-        latest_item?: string | null;
-        latest_logged_at?: string | null;
-        latest_calories?: number | null;
-        latest_sodium_mg?: number | null;
-        latest_note?: string | null;
-        latest_alert?: string | null;
-        latest_dish_name?: string | null;
-        latest_restaurant_name?: string | null;
-        latest_choice_at?: string | null;
-        alert_counts?: { green?: number; yellow?: number; red?: number } | null;
-        recent_choices?: number | null;
-      }
-    | null;
-};
-
 type HealthRiskApiResponse = {
   overall_risk: RiskLevel;
   conditions: {
@@ -351,8 +331,18 @@ const buildRiskPayload = (
   const bmi = heightCm && weightKg ? weightKg / ((heightCm / 100) * (heightCm / 100)) : 24;
   const latestFoodSodium = overview?.food?.latest_sodium_mg ?? 0;
   const sodiumBpBoost = latestFoodSodium >= 1200 ? 10 : latestFoodSodium >= 800 ? 5 : 0;
-  const systolic = (overview?.vitals?.systolic_bp ?? 120) + sodiumBpBoost;
-  const heartRate = overview?.vitals?.heart_rate ?? 150;
+  const monBp = overview?.monitoring?.bp;
+  let baseSystolic = 120;
+  if (monBp && monBp.includes("/")) {
+    const head = Number(monBp.split("/")[0]?.trim());
+    if (!Number.isNaN(head)) {
+      baseSystolic = head;
+    }
+  } else if (overview?.vitals?.systolic_bp != null) {
+    baseSystolic = overview.vitals.systolic_bp;
+  }
+  const systolic = baseSystolic + sodiumBpBoost;
+  const heartRate = overview?.monitoring?.hr ?? overview?.vitals?.heart_rate ?? 150;
   const steps = overview?.activity?.steps ?? 0;
   const latestFoodAlert = (overview?.food?.latest_alert ?? "").trim().toLowerCase();
   let stress: "low" | "medium" | "high" = steps < 4000 ? "high" : steps < 8000 ? "medium" : "low";
@@ -390,9 +380,13 @@ const buildConditionRisksFromApi = (risk: HealthRiskApiResponse, overview: RiskO
   const activitySummary = overview?.activity
     ? `Latest activity: ${overview.activity.steps ?? 0} steps, ${overview.activity.workout_minutes ?? 0} workout mins`
     : "Activity logs not available yet.";
-  const vitalsSummary = overview?.vitals
-    ? `Latest vitals: HR ${overview.vitals.heart_rate ?? "N/A"}, BP ${overview.vitals.systolic_bp ?? "N/A"}`
-    : "Vitals logs not available yet.";
+  const mon = overview?.monitoring;
+  const vitalsSummary =
+    mon && (mon.bp || mon.hr != null)
+      ? `Priority vitals: BP ${mon.bp ?? "N/A"} (source: ${mon.bp_source_label || mon.bp_source || "—"}), HR ${mon.hr ?? overview?.vitals?.heart_rate ?? "N/A"} (source: ${mon.hr_source_label || mon.hr_source || "—"})`
+      : overview?.vitals
+        ? `Latest vitals: HR ${overview.vitals.heart_rate ?? "N/A"}, BP ${overview.vitals.systolic_bp ?? "N/A"}`
+        : "Vitals logs not available yet.";
   const foodSummary = overview?.food?.latest_item
     ? `Latest food: ${overview.food.latest_item} (${overview.food.latest_alert ?? "N/A"} alert)`
     : "No restaurant food analysis logged yet.";

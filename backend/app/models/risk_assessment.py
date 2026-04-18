@@ -16,6 +16,9 @@ class SleepLog(TrackingBase):
     sleep_start: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     sleep_end: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
     quality_score: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    source_type: Mapped[str] = mapped_column(String(32), default="wearable", nullable=False, server_default="wearable")
+    recorded_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    source_device: Mapped[str | None] = mapped_column(String(120), nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC), nullable=False)
 
 
@@ -28,6 +31,9 @@ class ActivityLog(TrackingBase):
     workout_minutes: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     calories_burned: Mapped[int] = mapped_column(Integer, default=0, nullable=False)
     distance_km: Mapped[float | None] = mapped_column(Float, nullable=True)
+    source_type: Mapped[str] = mapped_column(String(32), default="wearable", nullable=False, server_default="wearable")
+    recorded_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    source_device: Mapped[str | None] = mapped_column(String(120), nullable=True)
     logged_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC), index=True, nullable=False)
 
 
@@ -41,6 +47,10 @@ class VitalsLog(TrackingBase):
     diastolic_bp: Mapped[int | None] = mapped_column(Integer, nullable=True)
     spo2: Mapped[float | None] = mapped_column(Float, nullable=True)
     temperature_c: Mapped[float | None] = mapped_column(Float, nullable=True)
+    blood_glucose_mg_dl: Mapped[float | None] = mapped_column(Float, nullable=True)
+    source_type: Mapped[str] = mapped_column(String(32), default="wearable", nullable=False, server_default="wearable")
+    recorded_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), nullable=True)
+    source_device: Mapped[str | None] = mapped_column(String(120), nullable=True)
     logged_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=lambda: datetime.now(UTC), index=True, nullable=False)
 
 

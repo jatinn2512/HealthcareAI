@@ -6,6 +6,7 @@ import CameraCaptureModal from "@/components/CameraCaptureModal";
 import { useAuth } from "@/lib/authContext";
 import { apiClient } from "@/lib/apiClient";
 import { scanStructuredDataFromImage } from "@/lib/cameraScan";
+import type { RiskOverview } from "@/lib/riskOverviewTypes";
 
 type RiskLevel = "Low" | "Medium" | "High";
 
@@ -30,11 +31,6 @@ type InstantAlertResponse = {
 
 type InstantAlertHistoryResponse = {
   items: InstantAlertResponse[];
-};
-
-type RiskOverviewResponse = {
-  activity?: { steps?: number | null; workout_minutes?: number | null } | null;
-  vitals?: { heart_rate?: number | null; systolic_bp?: number | null; diastolic_bp?: number | null } | null;
 };
 
 type AlertForm = {
@@ -240,7 +236,7 @@ const InstantAlert = () => {
     try {
       const [scan, overviewResponse] = await Promise.all([
         scanStructuredDataFromImage(imageDataUrl),
-        apiClient.get<RiskOverviewResponse>("/risk/overview"),
+        apiClient.get<RiskOverview>("/risk/overview"),
       ]);
       const parsed = scan?.parsed;
       const overview = overviewResponse.data;

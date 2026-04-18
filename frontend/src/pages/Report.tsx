@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import AppLayout from "@/components/AppLayout";
 import { apiClient } from "@/lib/apiClient";
+import type { RiskOverview } from "@/lib/riskOverviewTypes";
 import {
   CLINICAL_OVERVIEW_FALLBACKS,
   getBpInterpretation,
@@ -66,30 +67,6 @@ const nextSteps = [
   "Re-check analysis trend after 1 week and consult doctor if symptoms persist.",
 ] as const;
 
-type RiskOverview = {
-  sleep?: {
-    sleep_date?: string | null;
-    duration_minutes?: number | null;
-    quality_score?: number | null;
-  } | null;
-  activity?: {
-    steps?: number | null;
-    workout_minutes?: number | null;
-  } | null;
-  vitals?: {
-    heart_rate?: number | null;
-    systolic_bp?: number | null;
-    diastolic_bp?: number | null;
-    spo2?: number | null;
-    temperature_c?: number | null;
-    logged_at?: string | null;
-  } | null;
-  food?: {
-    latest_item?: string | null;
-    latest_alert?: string | null;
-  } | null;
-};
-
 const formatDateTime = (value: string | null | undefined): string => {
   if (!value) return "N/A";
   const parsed = new Date(value);
@@ -127,17 +104,41 @@ const Report = () => {
   const activityOverview = overview?.activity ?? null;
   const vitalsOverview = overview?.vitals ?? null;
   const foodOverview = overview?.food ?? null;
+  const monitoring = overview?.monitoring;
+
+  const parseMonitoringBp = (): [number | undefined, number | undefined] => {
+    const raw = monitoring?.bp;
+    if (!raw || !raw.includes("/")) {
+      return [undefined, undefined];
+    }
+    const parts = raw.split("/");
+    const s = Number(parts[0]?.trim());
+    const d = Number(parts[1]?.trim());
+    if (Number.isNaN(s) || Number.isNaN(d)) {
+      return [undefined, undefined];
+    }
+    return [s, d];
+  };
+  const [monSys, monDia] = parseMonitoringBp();
 
   const resolvedSleepDuration = sleepOverview?.duration_minutes ?? CLINICAL_OVERVIEW_FALLBACKS.sleepDurationMinutes;
   const resolvedSleepQuality = sleepOverview?.quality_score ?? CLINICAL_OVERVIEW_FALLBACKS.sleepQualityScore;
   const resolvedActivitySteps = activityOverview?.steps ?? CLINICAL_OVERVIEW_FALLBACKS.activitySteps;
   const resolvedWorkoutMinutes = activityOverview?.workout_minutes ?? CLINICAL_OVERVIEW_FALLBACKS.activityWorkoutMinutes;
-  const resolvedHeartRate = vitalsOverview?.heart_rate ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsHeartRate;
-  const resolvedSystolicBp = vitalsOverview?.systolic_bp ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsSystolicBp;
-  const resolvedDiastolicBp = vitalsOverview?.diastolic_bp ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsDiastolicBp;
+  const resolvedHeartRate =
+    monitoring?.hr ?? vitalsOverview?.heart_rate ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsHeartRate;
+  const resolvedSystolicBp =
+    monSys ?? vitalsOverview?.systolic_bp ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsSystolicBp;
+  const resolvedDiastolicBp =
+    monDia ?? vitalsOverview?.diastolic_bp ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsDiastolicBp;
   const resolvedSpo2 = vitalsOverview?.spo2 ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsSpo2;
   const resolvedTemperature = vitalsOverview?.temperature_c ?? CLINICAL_OVERVIEW_FALLBACKS.vitalsTemperatureC;
-  const resolvedVitalsLoggedAt = vitalsOverview?.logged_at ?? null;
+  const resolvedVitalsLoggedAt = monitoring?.last_updated ?? vitalsOverview?.logged_at ?? null;
+  const resolvedVitalsSourceNote = monitoring?.bp
+    ? `BP source: ${monitoring.bp_source_label || monitoring.bp_source || "—"}`
+    : vitalsOverview?.source_type
+      ? `Latest vitals source: ${vitalsOverview.source_type}`
+      : null;
   const resolvedFoodAlert = foodOverview?.latest_alert?.toUpperCase() || "N/A";
   const resolvedFoodItem = foodOverview?.latest_item || "No latest meal";
 
@@ -271,7 +272,9 @@ const Report = () => {
             <article className="rounded-2xl border border-border/60 bg-background/60 p-3">
               <p className="text-xs text-muted-foreground">Vitals Timestamp</p>
               <p className="mt-1 text-sm font-semibold">{formatDateTime(resolvedVitalsLoggedAt)}</p>
-              <p className="text-[11px] text-muted-foreground">Latest clinical capture</p>
+              <p className="text-[11px] text-muted-foreground">
+                {resolvedVitalsSourceNote || "Latest clinical capture"}
+              </p>
             </article>
           </div>
         </section>

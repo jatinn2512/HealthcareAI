@@ -217,6 +217,7 @@ def main() -> None:
                 systolic_bp = int(day.get("systolic_bp", 120))
                 stress = str(day.get("stress", "medium")).lower()
 
+                sleep_ts = _to_datetime(day_date, 8, 30)
                 sleep_log = SleepLog(
                     user_id=user.id,
                     sleep_date=day_date,
@@ -224,23 +225,31 @@ def main() -> None:
                     sleep_start=_to_datetime(day_date, 23, 0),
                     sleep_end=_to_datetime(day_date, 6, 30),
                     quality_score=_quality_from_sleep_hours(sleep_hours),
-                    created_at=_to_datetime(day_date, 8, 30),
+                    created_at=sleep_ts,
+                    source_type="wearable",
+                    recorded_at=sleep_ts,
+                    source_device="demo_seed",
                 )
                 tracking_db.add(sleep_log)
                 stats.sleep_logs += 1
 
                 workout_minutes = max(8, min(90, int(steps / 220)))
+                activity_ts = _to_datetime(day_date, 19, 0)
                 activity_log = ActivityLog(
                     user_id=user.id,
                     steps=steps,
                     workout_minutes=workout_minutes,
                     calories_burned=int((steps * 0.04) + (workout_minutes * 4.8)),
                     distance_km=round(steps / 1300, 2),
-                    logged_at=_to_datetime(day_date, 19, 0),
+                    logged_at=activity_ts,
+                    source_type="wearable",
+                    recorded_at=activity_ts,
+                    source_device="demo_seed",
                 )
                 tracking_db.add(activity_log)
                 stats.activity_logs += 1
 
+                vitals_ts = _to_datetime(day_date, 9, 0)
                 vitals_log = VitalsLog(
                     user_id=user.id,
                     heart_rate=_stress_to_heart_rate(stress, steps),
@@ -248,7 +257,11 @@ def main() -> None:
                     diastolic_bp=_systolic_to_diastolic(systolic_bp),
                     spo2=float(_clamp(99 - (1 if stress == "high" else 0), 94, 99)),
                     temperature_c=36.6,
-                    logged_at=_to_datetime(day_date, 9, 0),
+                    blood_glucose_mg_dl=float(fasting_sugar),
+                    logged_at=vitals_ts,
+                    source_type="wearable",
+                    recorded_at=vitals_ts,
+                    source_device="demo_seed",
                 )
                 tracking_db.add(vitals_log)
                 stats.vitals_logs += 1
