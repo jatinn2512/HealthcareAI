@@ -122,7 +122,7 @@ def get_connected_patient_report(
             DoctorRiskAssessmentItem(
                 risk_type=row.risk_type,
                 risk_level=row.risk_level,
-                summary=row.summary,
+                summary=doctor_service._process_risk_assessment_summary(row),
                 generated_at=row.generated_at,
             )
             for row in risk_rows

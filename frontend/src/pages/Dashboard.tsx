@@ -169,18 +169,25 @@ const Dashboard = () => {
   }, []);
 
   const loadRiskOverview = async () => {
-    const response = await apiClient.get<RiskOverview>("/risk/overview");
-    if (response.data) {
-      setRiskOverview(response.data);
-      const latestTimestamp =
-        response.data.monitoring?.last_updated ||
-        response.data.vitals?.logged_at ||
-        response.data.activity?.logged_at ||
-        response.data.sleep?.created_at ||
-        null;
-      if (latestTimestamp) {
-        setWearableLastSyncAt(latestTimestamp);
+    try {
+      // Add cache-busting parameter to force fresh data from server
+      const response = await apiClient.get<RiskOverview>(`/risk/overview?t=${Date.now()}`);
+      if (response.data) {
+        setRiskOverview(response.data);
+        const latestTimestamp =
+          response.data.monitoring?.last_updated ||
+          response.data.vitals?.logged_at ||
+          response.data.activity?.logged_at ||
+          response.data.sleep?.created_at ||
+          null;
+        if (latestTimestamp) {
+          setWearableLastSyncAt(latestTimestamp);
+        }
+      } else if (response.error) {
+        console.warn("Error loading risk overview:", response.error);
       }
+    } catch (err) {
+      console.error("Failed to load risk overview:", err);
     }
   };
 
@@ -261,8 +268,28 @@ const Dashboard = () => {
       setQuickDia("");
       setQuickSugar("");
       setQuickSymptoms("");
-      setQuickMessage("Reading saved.");
-      void loadRiskOverview();
+      setQuickMessage("Reading saved. Refreshing dashboard...");
+      
+      // Retry logic: wait and fetch multiple times to ensure data is available
+      let retries = 0;
+      const maxRetries = 3;
+      let success = false;
+      
+      while (retries < maxRetries && !success) {
+        await new Promise(resolve => setTimeout(resolve, 800 + (retries * 200)));
+        await loadRiskOverview();
+        
+        // Check if new data was actually fetched
+        if (riskOverview?.vitals?.logged_at || riskOverview?.monitoring?.last_updated) {
+          success = true;
+        }
+        retries++;
+      }
+      
+      setQuickMessage("Reading saved and dashboard updated!");
+      setTimeout(() => setQuickMessage(""), 2000);
+      
+      // Dispatch event for other components
       window.dispatchEvent(new Event(WEARABLE_SYNCED_EVENT));
     } catch (e) {
       setQuickMessage(e instanceof Error ? e.message : "Unable to save.");

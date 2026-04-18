@@ -1,6 +1,7 @@
 from datetime import UTC, datetime, timedelta
 from typing import Literal
 from uuid import uuid4
+import json
 
 from fastapi import HTTPException, status
 from sqlalchemy import select
@@ -44,6 +45,22 @@ def _normalize_token_code(token_code: str) -> str:
     if not resolved:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid token code.")
     return resolved
+
+
+def _process_risk_assessment_summary(row: RiskAssessment) -> str:
+    """Process risk assessment summary, handling instant alerts specially."""
+    if row.risk_type == "instant_alert":
+        # For instant alerts, parse the JSON summary and extract the readable summary text
+        try:
+            parsed = json.loads(row.summary or "")
+            if isinstance(parsed, dict) and "summary" in parsed:
+                return str(parsed["summary"])
+        except (json.JSONDecodeError, TypeError):
+            pass
+        return row.summary or "Instant alert generated."
+    else:
+        # For other risk types, use the summary as-is
+        return row.summary or f"{row.risk_type.replace('_', ' ').title()} assessment."
 
 
 def _generate_unique_token_code(db: Session) -> str:
