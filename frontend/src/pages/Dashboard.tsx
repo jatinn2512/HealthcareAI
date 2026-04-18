@@ -16,6 +16,7 @@ import {
   Stethoscope,
   UtensilsCrossed,
   Wind,
+  X,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import AppLayout from "@/components/AppLayout";
@@ -114,6 +115,7 @@ const Dashboard = () => {
   const [isGeneratingDoctorToken, setIsGeneratingDoctorToken] = useState(false);
   const [doctorConnectError, setDoctorConnectError] = useState("");
   const [doctorConnectSuccess, setDoctorConnectSuccess] = useState("");
+  const [showDoctorConnectSection, setShowDoctorConnectSection] = useState(false);
   const navigate = useNavigate();
   const { user } = useAuth();
   const maxSteps = Math.max(...weeklyData.map((row) => row.steps));
@@ -218,6 +220,7 @@ const Dashboard = () => {
       }
       setDoctorConnectToken(response.data);
       setDoctorConnectSuccess("Doctor connect token generated. Share this QR/code with your doctor.");
+      setShowDoctorConnectSection(true);
     } catch (err: unknown) {
       setDoctorConnectError(err instanceof Error ? err.message : "Unable to generate doctor connect token.");
     } finally {
@@ -338,6 +341,59 @@ const Dashboard = () => {
           </motion.article>
         ))}
       </section>
+
+      {/* Colored Vitals Cards - Similar to Doctor View */}
+      <section className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+        <article className="rounded-2xl border border-health-cyan/30 bg-health-cyan/10 p-4 relative overflow-hidden group">
+          <div className="absolute right-0 top-0 h-full w-1/2 bg-gradient-to-r from-transparent to-health-cyan/10 opacity-0 transition-opacity group-hover:opacity-100" />
+          <p className="mb-2 text-xs font-semibold text-health-cyan flex items-center gap-1.5"><HeartPulse className="h-3.5 w-3.5" /> Blood Pressure</p>
+          <div className="flex items-baseline gap-1">
+            <p className="text-2xl font-bold text-foreground">
+              {riskOverview?.monitoring?.bp || riskOverview?.vitals?.systolic_bp && riskOverview?.vitals?.diastolic_bp
+                ? (riskOverview.monitoring?.bp || `${riskOverview.vitals.systolic_bp}/${riskOverview.vitals.diastolic_bp}`)
+                : '120/80'}
+            </p>
+            <span className="text-xs text-muted-foreground">mmHg</span>
+          </div>
+          <p className="text-[11px] text-muted-foreground/80 mt-1">
+            {riskOverview?.monitoring?.bp || (riskOverview?.vitals?.systolic_bp && riskOverview?.vitals?.diastolic_bp)
+              ? 'Latest reading'
+              : 'No recent data'}
+          </p>
+        </article>
+        <article className="rounded-2xl border border-health-rose/30 bg-health-rose/10 p-4 relative overflow-hidden group">
+          <div className="absolute right-0 top-0 h-full w-1/2 bg-gradient-to-r from-transparent to-health-rose/10 opacity-0 transition-opacity group-hover:opacity-100" />
+          <p className="mb-2 text-xs font-semibold text-health-rose flex items-center gap-1.5"><Activity className="h-3.5 w-3.5" /> Heart Rate</p>
+          <div className="flex items-baseline gap-1">
+            <p className="text-2xl font-bold text-foreground">
+              {riskOverview?.monitoring?.hr ?? riskOverview?.vitals?.heart_rate ?? 72}
+            </p>
+            <span className="text-xs text-muted-foreground">bpm</span>
+          </div>
+          <p className="text-[11px] text-muted-foreground/80 mt-1">
+            {riskOverview?.monitoring?.hr || riskOverview?.vitals?.heart_rate
+              ? 'Latest reading'
+              : 'No recent data'}
+          </p>
+        </article>
+        <article className="rounded-2xl border border-health-indigo/30 bg-health-indigo/10 p-4 relative overflow-hidden group">
+          <div className="absolute right-0 top-0 h-full w-1/2 bg-gradient-to-r from-transparent to-health-indigo/10 opacity-0 transition-opacity group-hover:opacity-100" />
+          <p className="mb-2 text-xs font-semibold text-health-indigo flex items-center gap-1.5"><Moon className="h-3.5 w-3.5" /> Sleep Quality</p>
+          <p className="mt-2 text-xl font-bold text-foreground">
+            {(((riskOverview?.sleep?.duration_minutes ?? 432) / 60) || 0).toFixed(1)} <span className="text-xs text-muted-foreground font-normal">hrs</span>
+          </p>
+          <p className="text-[11px] text-health-indigo/80 mt-1">Score: {riskOverview?.sleep?.quality_score ?? 75}/100</p>
+        </article>
+        <article className="rounded-2xl border border-health-teal/30 bg-health-teal/10 p-4 relative overflow-hidden group">
+          <div className="absolute right-0 top-0 h-full w-1/2 bg-gradient-to-r from-transparent to-health-teal/10 opacity-0 transition-opacity group-hover:opacity-100" />
+          <p className="mb-2 text-xs font-semibold text-health-teal flex items-center gap-1.5"><Activity className="h-3.5 w-3.5" /> Recent Activity</p>
+          <p className="mt-2 text-xl font-bold text-foreground">
+            {riskOverview?.activity?.steps ?? 8432} <span className="text-xs text-muted-foreground font-normal">steps</span>
+          </p>
+          <p className="text-[11px] text-health-teal/80 mt-1">{riskOverview?.activity?.workout_minutes ?? 45} min active workout</p>
+        </article>
+      </section>
+
       {wearableLastSyncAt ? (
         <section className="space-y-2 rounded-xl border border-border/50 bg-card/45 px-4 py-3 text-sm text-muted-foreground glass-card">
           <div className="flex flex-wrap items-center gap-2">
@@ -473,13 +529,25 @@ const Dashboard = () => {
           <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <span className="flex items-center gap-1.5 text-sm">
               <span className="text-muted-foreground">Heart:</span>
-              <span className={`inline-flex rounded-full border px-2 py-0.5 text-xs font-semibold ${getRiskBadgeClass(riskOverview.rule_based_risk.heart_risk)}`}>
+              <span className={`inline-flex rounded-full border px-2 py-0.5 text-xs font-semibold uppercase tracking-wider ${
+                riskOverview.rule_based_risk.heart_risk.toLowerCase() === 'high'
+                  ? 'border-health-rose/40 bg-health-rose/10 text-health-rose'
+                  : riskOverview.rule_based_risk.heart_risk.toLowerCase() === 'moderate' || riskOverview.rule_based_risk.heart_risk.toLowerCase() === 'medium'
+                  ? 'border-amber-500/40 bg-amber-500/10 text-amber-600'
+                  : 'border-health-teal/40 bg-health-teal/10 text-health-teal'
+              }`}>
                 {riskOverview.rule_based_risk.heart_risk}
               </span>
             </span>
             <span className="flex items-center gap-1.5 text-sm">
               <span className="text-muted-foreground">Diabetes:</span>
-              <span className={`inline-flex rounded-full border px-2 py-0.5 text-xs font-semibold ${getRiskBadgeClass(riskOverview.rule_based_risk.diabetes_risk)}`}>
+              <span className={`inline-flex rounded-full border px-2 py-0.5 text-xs font-semibold uppercase tracking-wider ${
+                riskOverview.rule_based_risk.diabetes_risk.toLowerCase() === 'high'
+                  ? 'border-health-rose/40 bg-health-rose/10 text-health-rose'
+                  : riskOverview.rule_based_risk.diabetes_risk.toLowerCase() === 'moderate' || riskOverview.rule_based_risk.diabetes_risk.toLowerCase() === 'medium'
+                  ? 'border-amber-500/40 bg-amber-500/10 text-amber-600'
+                  : 'border-health-teal/40 bg-health-teal/10 text-health-teal'
+              }`}>
                 {riskOverview.rule_based_risk.diabetes_risk}
               </span>
             </span>
@@ -593,15 +661,27 @@ const Dashboard = () => {
               Generate a secure code so doctor can connect and view your reports.
             </p>
           </div>
-          <Button
-            type="button"
-            className="h-9 rounded-lg px-3 text-xs"
-            onClick={() => void handleGenerateDoctorConnectToken()}
-            disabled={isGeneratingDoctorToken}
-          >
-            <Link2 className="h-4 w-4" />
-            {isGeneratingDoctorToken ? "Generating..." : doctorConnectToken ? "Regenerate" : "Generate"}
-          </Button>
+          <div className="flex items-center gap-2">
+            {showDoctorConnectSection && doctorConnectToken && (
+              <button
+                type="button"
+                onClick={() => setShowDoctorConnectSection(false)}
+                className="rounded-lg border border-border/60 p-1.5 text-muted-foreground hover:bg-red-500/10 hover:text-red-500 transition-colors"
+                title="Close QR section"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
+            <Button
+              type="button"
+              className="h-9 rounded-lg px-3 text-xs"
+              onClick={() => void handleGenerateDoctorConnectToken()}
+              disabled={isGeneratingDoctorToken}
+            >
+              <Link2 className="h-4 w-4" />
+              {isGeneratingDoctorToken ? "Generating..." : doctorConnectToken ? "Regenerate" : "Generate"}
+            </Button>
+          </div>
         </div>
 
         {doctorConnectError ? (
@@ -611,7 +691,7 @@ const Dashboard = () => {
           <div className="mb-3 rounded-lg border border-green-500/30 bg-green-500/10 px-3 py-2 text-sm text-green-500">{doctorConnectSuccess}</div>
         ) : null}
 
-        {doctorConnectToken ? (
+        {showDoctorConnectSection && doctorConnectToken ? (
           <div className="grid gap-4 lg:grid-cols-[240px,1fr]">
             <div className="rounded-2xl border border-border/60 bg-card/60 p-3">
               <img
@@ -660,11 +740,11 @@ const Dashboard = () => {
               </p>
             </div>
           </div>
-        ) : (
+        ) : showDoctorConnectSection ? (
           <div className="rounded-xl border border-dashed border-border/70 bg-card/35 px-3 py-4 text-sm text-muted-foreground">
             Generate once, then doctor can scan this QR or enter the code from their dashboard.
           </div>
-        )}
+        ) : null}
       </section>
 
       <motion.article

@@ -60,15 +60,15 @@ type AlertForm = {
 };
 
 const levelBadgeClass: Record<RiskLevel, string> = {
-  Low: "border-emerald-500/30 bg-emerald-500/10 text-emerald-600",
-  Medium: "border-amber-500/30 bg-amber-500/10 text-amber-600",
-  High: "border-red-500/30 bg-red-500/10 text-red-600",
+  Low: "border-health-teal/40 bg-health-teal/10 text-health-teal",
+  Medium: "border-amber-500/40 bg-amber-500/10 text-amber-600",
+  High: "border-health-rose/40 bg-health-rose/10 text-health-rose",
 };
 
 const scoreCardClass: Record<RiskLevel, string> = {
-  Low: "border-emerald-500/25",
+  Low: "border-health-teal/25",
   Medium: "border-amber-500/25",
-  High: "border-red-500/25",
+  High: "border-health-rose/25",
 };
 
 const toNumberOrNull = (value: string): number | null => {
