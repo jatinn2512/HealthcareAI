@@ -256,7 +256,7 @@ const Settings = () => {
   };
 
   return (
-    <AppLayout title="Settings" subtitle="Manage app preferences, privacy controls, and connected smartwatch sync.">
+    <AppLayout title="Settings" subtitle="Manage preferences, privacy, and optional wearable or device sync (supplementary only).">
       <section className="grid gap-6 xl:grid-cols-2">
         <article className="glass-card rounded-3xl border-border/50 p-6">
           <h2 className="mb-4 flex items-center gap-2 text-xl font-semibold">
@@ -398,7 +398,7 @@ const Settings = () => {
         <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
           <h2 className="flex items-center gap-2 text-xl font-semibold">
             <Watch className="h-5 w-5 text-primary" />
-            Smartwatch Integration
+            Optional device sync
           </h2>
           <div className="flex gap-2">
             <Button type="button" variant="outline" className="h-9 rounded-lg px-3 text-xs" onClick={handleConnectWatch} disabled={isConnectingWatch}>
