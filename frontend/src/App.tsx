@@ -214,7 +214,7 @@ const AnimatedRoutes = () => {
         <Route path="/patient/user-home" element={<Navigate to="/user-home" replace />} />
         <Route path="/patient/dashboard" element={<Navigate to="/dashboard" replace />} />
         <Route path="/patient/health" element={<Navigate to="/health" replace />} />
-        <Route path="/patient/food" element={<Navigate to="/food" replace />} />
+        <Route path="/patient/food" element={<Navigate to="/health" replace />} />
         <Route path="/patient/aqi" element={<Navigate to="/aqi" replace />} />
         <Route path="/patient/analysis" element={<Navigate to="/analysis" replace />} />
         <Route path="/patient/report" element={<Navigate to="/report" replace />} />

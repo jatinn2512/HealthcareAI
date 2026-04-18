@@ -15,8 +15,8 @@ export default {
     },
     extend: {
       fontFamily: {
-        display: ['"Poppins"', 'system-ui', 'sans-serif'],
-        body: ['"Poppins"', 'system-ui', 'sans-serif'],
+        display: ['"Google Sans"', '"Google Sans Text"', '"Poppins"', 'system-ui', 'sans-serif'],
+        body: ['"Google Sans Text"', '"Google Sans"', '"Poppins"', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

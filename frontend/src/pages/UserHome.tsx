@@ -36,11 +36,11 @@ const modules = [
   {
     title: "Plan meals with better consistency",
     description: "Manage calories, macros, and hydration targets so your nutrition stays aligned with goals.",
-    to: "/food",
+    to: "/health",
     icon: Leaf,
     color: "text-health-rose",
-    label: "Food",
-    cta: "Manage Food",
+    label: "Nutrition",
+    cta: "Manage Nutrition",
     buttonClass: "bg-health-rose hover:bg-health-rose/90 text-white",
   },
   {

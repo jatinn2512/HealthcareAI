@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -42,6 +40,10 @@
     --health-violet: 266 82% 67%;
     --health-rose: 340 78% 60%;
 
+    --status-normal: 142 71% 45%;
+    --status-moderate: 38 92% 50%;
+    --status-high: 348 83% 47%;
+
     --glass-bg: 0 0% 100% / 0.72;
     --glass-border: 0 0% 100% / 0.45;
     --glass-shadow: 217 34% 12% / 0.14;
@@ -54,6 +56,9 @@
     --shadow-soft: 0 18px 38px -26px hsl(var(--glass-shadow));
     --shadow-card: 0 24px 44px -26px hsl(217 34% 12% / 0.22), inset 0 1px 0 hsl(0 0% 100% / 0.56);
     --shadow-card-hover: 0 24px 48px -24px hsl(217 34% 12% / 0.28), inset 0 1px 0 hsl(0 0% 100% / 0.58);
+
+    --font-display: "Google Sans", "Google Sans Text", "Poppins", system-ui, sans-serif;
+    --font-body: "Google Sans Text", "Google Sans", "Poppins", system-ui, sans-serif;
 
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 160 18% 13%;
@@ -94,6 +99,10 @@
     --input: 221 31% 20%;
     --ring: 183 76% 43%;
 
+    --status-normal: 142 70% 30%;
+    --status-moderate: 38 92% 38%;
+    --status-high: 348 83% 40%;
+
     --glass-bg: 224 41% 12% / 0.98;
     --glass-border: 221 31% 20% / 0.85;
     --glass-shadow: 0 0% 0% / 0.5;
@@ -125,6 +134,7 @@
 
   body {
     @apply bg-background text-foreground font-body antialiased;
+    font-family: var(--font-body);
     min-height: 100vh;
     background-image: none;
     background-attachment: fixed;
@@ -136,6 +146,7 @@
 
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
+    font-family: var(--font-display);
   }
 
   ::selection {
@@ -190,6 +201,54 @@
 
   .shadow-soft {
     box-shadow: var(--shadow-soft);
+  }
+
+  .status-badge-normal {
+    @apply border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:border-emerald-500/20 dark:bg-emerald-500/10 dark:text-emerald-400;
+  }
+
+  .status-badge-moderate {
+    @apply border-amber-500/30 bg-amber-500/10 text-amber-600 dark:border-amber-500/20 dark:bg-amber-500/10 dark:text-amber-400;
+  }
+
+  .status-badge-high {
+    @apply border-red-500/30 bg-red-500/10 text-red-600 dark:border-red-500/20 dark:bg-red-500/10 dark:text-red-400;
+  }
+
+  .source-tag {
+    @apply inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider md:text-[11px];
+  }
+  
+  .source-tag-wearable {
+    @apply border-health-teal/30 bg-health-teal/10 text-health-teal;
+  }
+  
+  .source-tag-report {
+    @apply border-health-cyan/30 bg-health-cyan/10 text-health-cyan;
+  }
+  
+  .source-tag-manual {
+    @apply border-amber-500/30 bg-amber-500/10 text-amber-600;
+  }
+  
+  .source-tag-alert {
+    @apply border-health-rose/30 bg-health-rose/10 text-health-rose;
+  }
+
+  .state-card {
+    @apply rounded-2xl border border-border/60 bg-card/55 px-4 py-3 text-sm text-muted-foreground;
+  }
+
+  .state-card-empty {
+    @apply rounded-2xl border border-dashed border-border/70 bg-card/45 px-5 py-6 text-center text-sm text-muted-foreground;
+  }
+
+  .state-card-error {
+    @apply rounded-xl border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-500;
+  }
+
+  .state-card-success {
+    @apply rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-600;
   }
 }
 

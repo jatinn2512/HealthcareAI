@@ -1,5 +1,5 @@
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import { Activity, Bell, LogOut, Menu, Search, X } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "@/components/Sidebar";
@@ -71,10 +71,16 @@ const AppLayout = ({ title, subtitle, centerHeader = false, hideHeader = false, 
     [notifications],
   );
 
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
+
   const searchPlaceholders: Record<string, string> = {
     "/dashboard": "Search your daily health snapshot...",
     "/health": "Search symptoms, vitals, and trends...",
-    "/food": "Search meals and nutrition history...",
     "/aqi": "Search air quality history...",
     "/analysis": "Search analysis insights...",
     "/community": "Search community posts...",
@@ -160,7 +166,7 @@ const AppLayout = ({ title, subtitle, centerHeader = false, hideHeader = false, 
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      <aside className="fixed inset-y-0 left-0 z-30 hidden h-screen w-[15.4rem] border-r border-border/60 bg-card/70 lg:block">
+      <aside className="fixed inset-y-0 left-0 z-30 hidden h-screen w-[15.4rem] border-r border-border/60 bg-card/80 shadow-[0_0_0_1px_hsl(var(--border)/0.3),0_20px_38px_-28px_hsl(217_34%_12%/0.35)] backdrop-blur-xl lg:block">
         <Sidebar />
       </aside>
 
@@ -174,14 +180,14 @@ const AppLayout = ({ title, subtitle, centerHeader = false, hideHeader = false, 
           >
             <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
             <motion.aside
-              className="relative h-full w-72 border-r border-border/60 bg-card"
+              className="relative h-full w-[18rem] border-r border-border/60 bg-card shadow-2xl"
               initial={{ x: -280 }}
               animate={{ x: 0 }}
               exit={{ x: -280 }}
               transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="border-b border-border/60 p-3">
-                <Button type="button" variant="ghost" size="icon" className="h-9 w-9" onClick={() => setMobileOpen(false)}>
+                <Button type="button" variant="ghost" size="icon" className="h-10 w-10 rounded-xl" onClick={() => setMobileOpen(false)}>
                   <X className="h-5 w-5" />
                 </Button>
               </div>
@@ -194,9 +200,10 @@ const AppLayout = ({ title, subtitle, centerHeader = false, hideHeader = false, 
       </AnimatePresence>
 
       <div className="flex min-h-screen min-w-0 flex-col lg:ml-[15.4rem]">
-        <header className="sticky top-0 z-20 border-b border-border/50 bg-card/85 backdrop-blur-2xl">
-          <div className="relative flex h-16 items-center gap-3 px-4 lg:px-6">
-            <Button type="button" variant="ghost" size="icon" className="h-9 w-9 lg:hidden" onClick={() => setMobileOpen(true)}>
+        <header className="sticky top-0 z-20 border-b border-border/50 bg-card/85 backdrop-blur-2xl transition-all duration-300">
+          <motion.div className="absolute top-0 left-0 right-0 h-[2px] bg-primary origin-left z-50" style={{ scaleX }} />
+          <div className="relative flex h-16 items-center gap-3 px-4 pt-[2px] lg:px-6">
+            <Button type="button" variant="ghost" size="icon" className="h-10 w-10 rounded-xl lg:hidden" onClick={() => setMobileOpen(true)}>
               <Menu className="h-5 w-5" />
             </Button>
 
@@ -222,7 +229,7 @@ const AppLayout = ({ title, subtitle, centerHeader = false, hideHeader = false, 
                     }
                   }}
                   placeholder={searchPlaceholder}
-                  className="h-10 w-full rounded-xl border border-border/60 bg-muted/55 pl-9 pr-3 text-sm text-foreground outline-none transition focus:ring-2 focus:ring-primary/25"
+                  className="h-10 w-full rounded-xl border border-border/60 bg-muted/55 pl-9 pr-3 text-sm text-foreground outline-none transition focus:border-primary/35 focus:ring-2 focus:ring-primary/20"
                 />
               </div>
             </div>
@@ -237,7 +244,7 @@ const AppLayout = ({ title, subtitle, centerHeader = false, hideHeader = false, 
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="relative h-9 w-9 rounded-xl"
+                      className="relative h-10 w-10 rounded-xl"
                       onClick={() => setNotificationMenuOpen((prev) => !prev)}
                     >
                       <Bell className="h-4 w-4" />
@@ -254,7 +261,7 @@ const AppLayout = ({ title, subtitle, centerHeader = false, hideHeader = false, 
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: -6, scale: 0.98 }}
                           transition={{ duration: 0.15 }}
-                          className="absolute right-0 top-10 z-30 w-[19rem] rounded-xl border border-border/60 bg-card p-2 shadow-lg"
+                          className="absolute right-0 top-11 z-30 w-[19rem] rounded-xl border border-border/60 bg-card/95 p-2 shadow-lg backdrop-blur-xl"
                         >
                           <div className="mb-2 flex items-center justify-between px-1 py-1">
                             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Notifications</p>
@@ -298,7 +305,7 @@ const AppLayout = ({ title, subtitle, centerHeader = false, hideHeader = false, 
                   <div className="relative" ref={userMenuRef}>
                     <button
                       type="button"
-                      className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground"
+                      className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-[11px] font-bold text-primary-foreground ring-1 ring-primary/30 transition hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35"
                       onClick={() => setUserMenuOpen((prev) => !prev)}
                       title={user?.full_name || "User"}
                     >
@@ -311,7 +318,7 @@ const AppLayout = ({ title, subtitle, centerHeader = false, hideHeader = false, 
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: -6, scale: 0.98 }}
                           transition={{ duration: 0.15 }}
-                          className="absolute right-0 top-10 z-30 w-36 rounded-xl border border-border/60 bg-card p-1.5 shadow-lg"
+                          className="absolute right-0 top-11 z-30 w-36 rounded-xl border border-border/60 bg-card/95 p-1.5 shadow-lg backdrop-blur-xl"
                         >
                           <Button
                             type="button"

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Activity,
   AlertTriangle,
@@ -11,6 +11,8 @@ import {
   UtensilsCrossed,
 } from "lucide-react";
 import AppLayout from "@/components/AppLayout";
+import { SkeletonCard } from "@/components/SkeletonLoader";
+import { MonitoringChart } from "@/components/MonitoringChart";
 import { apiClient } from "@/lib/apiClient";
 import type { RiskOverview } from "@/lib/riskOverviewTypes";
 import {
@@ -19,6 +21,14 @@ import {
   getPulseInterpretation,
   getSpo2Interpretation,
 } from "@/lib/clinicalOverview";
+
+const getSourceBadgeClass = (source?: string | null) => {
+  const s = (source || "").toLowerCase();
+  if (s.includes("wearable") || s.includes("smartwatch") || s.includes("apple") || s.includes("garmin")) return "source-tag source-tag-wearable";
+  if (s.includes("report") || s.includes("lab")) return "source-tag source-tag-report";
+  if (s.includes("alert")) return "source-tag source-tag-alert";
+  return "source-tag source-tag-manual";
+};
 
 const riskCards = [
   {
@@ -53,13 +63,6 @@ const riskCards = [
   },
 ] as const;
 
-const doctorDetails = [
-  { label: "Sleep Risk", level: "Moderate", note: "Pattern instability with delayed recovery signs." },
-  { label: "Respiratory Risk", level: "Mild-Moderate", note: "AQI-linked irritation probability on high exposure days." },
-  { label: "Metabolic Drift", level: "Mild", note: "Meal timing and balance inconsistency present." },
-  { label: "Acute Emergency Probability", level: "Low", note: "No severe red-flag trend detected." },
-] as const;
-
 const nextSteps = [
   "Keep fixed sleep window for next 7 days (same sleep and wake time).",
   "Use mask + limit outdoor exposure when AQI is moderate/poor.",
@@ -74,8 +77,16 @@ const formatDateTime = (value: string | null | undefined): string => {
   return parsed.toLocaleString();
 };
 
+const getRiskTone = (level: string): string => {
+  const normalized = level.toLowerCase();
+  if (normalized.includes("high")) return "border-health-rose/35 bg-health-rose/10 text-health-rose";
+  if (normalized.includes("moderate") || normalized.includes("medium")) return "border-amber-500/35 bg-amber-500/10 text-amber-700";
+  return "border-health-teal/35 bg-health-teal/10 text-health-teal";
+};
+
 const Report = () => {
   const [view, setView] = useState<"user" | "doctor">("user");
+  const [activeTab, setActiveTab] = useState<"vitals" | "activity" | "sleep" | "risk">("vitals");
   const [overview, setOverview] = useState<RiskOverview | null>(null);
   const [isLoadingOverview, setIsLoadingOverview] = useState(false);
   const [overviewError, setOverviewError] = useState("");
@@ -142,6 +153,52 @@ const Report = () => {
   const resolvedFoodAlert = foodOverview?.latest_alert?.toUpperCase() || "N/A";
   const resolvedFoodItem = foodOverview?.latest_item || "No latest meal";
 
+  const doctorDetails = useMemo(() => {
+    const sleepLevel = resolvedSleepDuration < 390 || resolvedSleepQuality < 70 ? "Moderate" : "Low";
+    const respiratoryLevel = resolvedSpo2 < 95 ? "Moderate" : "Low";
+    const metabolicLevel =
+      resolvedWorkoutMinutes < 20 || resolvedActivitySteps < 6000 || resolvedFoodAlert === "HIGH" ? "Moderate" : "Low";
+    const acuteLevel =
+      resolvedSystolicBp >= 150 || resolvedHeartRate >= 110
+        ? "High"
+        : resolvedSystolicBp >= 140 || resolvedHeartRate >= 95
+          ? "Moderate"
+          : "Low";
+
+    return [
+      {
+        label: "Sleep Risk",
+        level: sleepLevel,
+        note: `${(resolvedSleepDuration / 60).toFixed(1)}h sleep, quality ${resolvedSleepQuality}/100.`,
+      },
+      {
+        label: "Respiratory Risk",
+        level: respiratoryLevel,
+        note: `SpO2 ${resolvedSpo2}% with latest heart rate ${resolvedHeartRate} bpm.`,
+      },
+      {
+        label: "Metabolic Drift",
+        level: metabolicLevel,
+        note: `${resolvedActivitySteps} steps, ${resolvedWorkoutMinutes} mins workout, food alert ${resolvedFoodAlert}.`,
+      },
+      {
+        label: "Acute Emergency Probability",
+        level: acuteLevel,
+        note: `Current BP ${resolvedSystolicBp}/${resolvedDiastolicBp} with trend from latest monitoring.`,
+      },
+    ];
+  }, [
+    resolvedActivitySteps,
+    resolvedDiastolicBp,
+    resolvedFoodAlert,
+    resolvedHeartRate,
+    resolvedSleepDuration,
+    resolvedSleepQuality,
+    resolvedSpo2,
+    resolvedSystolicBp,
+    resolvedWorkoutMinutes,
+  ]);
+
   return (
     <AppLayout title="Risk Report" subtitle="Summary of risk, expected outcomes, and next action plan.">
       <section className="grid gap-4 lg:grid-cols-3">
@@ -192,12 +249,13 @@ const Report = () => {
             <Stethoscope className="h-5 w-5 text-primary" />
             Detailed Clinical Report
           </h2>
+          <p className="mb-4 text-sm text-muted-foreground">Doctor and patient views are synced to the same latest overview data.</p>
           <div className="space-y-2">
             {doctorDetails.map((item) => (
               <article key={item.label} className="rounded-xl border border-border/60 bg-background/60 px-3 py-3">
                 <div className="mb-1 flex items-center justify-between gap-3">
                   <p className="text-sm font-semibold text-foreground">{item.label}</p>
-                  <span className="rounded-full border border-primary/30 bg-primary/10 px-2 py-0.5 text-xs font-semibold text-primary">
+                  <span className={`rounded-full border px-2 py-0.5 text-xs font-semibold ${getRiskTone(item.level)}`}>
                     {item.level}
                   </span>
                 </div>
@@ -209,74 +267,147 @@ const Report = () => {
       ) : null}
 
       {view === "user" ? (
-        <section className="rounded-3xl border border-border/60 bg-card/70 p-5">
-          <h2 className="mb-3 text-lg font-semibold">User Clinical Add-ons</h2>
+        <section className="rounded-3xl border border-border/60 bg-card/70 p-5 glass-card">
+          <div className="mb-4 grid gap-3 sm:grid-cols-3">
+            <article className="state-card">
+              <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Latest Sync</p>
+              <p className="mt-1 text-sm font-semibold text-foreground">{formatDateTime(resolvedVitalsLoggedAt)}</p>
+            </article>
+            <article className="state-card">
+              <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Vitals Source</p>
+              <p className="mt-1 text-sm font-semibold text-foreground">{resolvedVitalsSourceNote || "Manual / fallback data"}</p>
+            </article>
+            <article className="state-card">
+              <p className="text-[11px] uppercase tracking-wide text-muted-foreground">Latest Nutrition Signal</p>
+              <p className="mt-1 text-sm font-semibold text-foreground">{resolvedFoodItem}</p>
+              <p className="mt-0.5 text-[11px] text-muted-foreground">Alert: {resolvedFoodAlert}</p>
+            </article>
+          </div>
+
+          <div className="mb-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <h2 className="text-lg font-semibold">User Health Sections</h2>
+            <div className="flex flex-wrap gap-2">
+              <button onClick={() => setActiveTab("vitals")} className={`h-8 rounded-lg outline-none px-3 text-xs font-semibold transition ${activeTab === "vitals" ? "bg-health-rose/20 text-health-rose border border-health-rose/30" : "bg-card/60 text-muted-foreground border border-border"}`}>Vitals</button>
+              <button onClick={() => setActiveTab("activity")} className={`h-8 rounded-lg outline-none px-3 text-xs font-semibold transition ${activeTab === "activity" ? "bg-health-teal/20 text-health-teal border border-health-teal/30" : "bg-card/60 text-muted-foreground border border-border"}`}>Activity</button>
+              <button onClick={() => setActiveTab("sleep")} className={`h-8 rounded-lg outline-none px-3 text-xs font-semibold transition ${activeTab === "sleep" ? "bg-health-indigo/20 text-health-indigo border border-health-indigo/30" : "bg-card/60 text-muted-foreground border border-border"}`}>Sleep</button>
+              <button onClick={() => setActiveTab("risk")} className={`h-8 rounded-lg outline-none px-3 text-xs font-semibold transition ${activeTab === "risk" ? "bg-amber-500/20 text-amber-600 border border-amber-500/30" : "bg-card/60 text-muted-foreground border border-border"}`}>Risk Summary</button>
+            </div>
+          </div>
+
           {overviewError ? (
-            <div className="mb-3 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-500">{overviewError}</div>
+            <div className="state-card-error mb-3">{overviewError}</div>
           ) : null}
-          {isLoadingOverview ? <p className="mb-3 text-sm text-muted-foreground">Loading latest user data...</p> : null}
+          
+          {isLoadingOverview ? (
+            <SkeletonCard />
+          ) : (
+            <div className="animate-fade-in mt-4">
+              {activeTab === "vitals" && (
+                <div className="space-y-4">
+                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+                    <article className="rounded-2xl border border-health-cyan/30 bg-health-cyan/10 p-4">
+                      <p className="mb-1 text-xs font-semibold text-health-cyan flex items-center gap-1.5"><HeartPulse className="h-3.5 w-3.5" /> Blood Pressure</p>
+                      <p className="text-xl font-bold text-foreground">{resolvedSystolicBp}/{resolvedDiastolicBp} <span className="text-xs text-muted-foreground font-normal">mmHg</span></p>
+                      <p className="text-[11px] font-medium text-foreground/80 mt-1">{getBpInterpretation(resolvedSystolicBp, resolvedDiastolicBp)}</p>
+                    </article>
+                    <article className="rounded-2xl border border-health-rose/30 bg-health-rose/10 p-4">
+                      <p className="mb-1 text-xs font-semibold text-health-rose flex items-center gap-1.5"><Activity className="h-3.5 w-3.5" /> Heart Rate</p>
+                      <p className="text-xl font-bold text-foreground">{resolvedHeartRate} <span className="text-xs text-muted-foreground font-normal">bpm</span></p>
+                      <p className="text-[11px] font-medium text-foreground/80 mt-1">{getPulseInterpretation(resolvedHeartRate)}</p>
+                    </article>
+                    <article className="rounded-2xl border border-border/60 bg-background/60 p-4">
+                      <p className="mb-1 text-xs font-semibold text-muted-foreground">SpO2</p>
+                      <p className="text-xl font-bold text-foreground">{resolvedSpo2}<span className="text-xs text-muted-foreground font-normal">%</span></p>
+                      <p className="text-[11px] text-muted-foreground mt-1">{getSpo2Interpretation(resolvedSpo2)}</p>
+                    </article>
+                    <article className="rounded-2xl border border-border/60 bg-background/60 p-4">
+                      <p className="mb-1 text-xs font-semibold text-muted-foreground">Temperature</p>
+                      <p className="text-xl font-bold text-foreground">{resolvedTemperature}<span className="text-xs text-muted-foreground font-normal">°C</span></p>
+                      <p className="text-[11px] text-muted-foreground mt-1">Core body reading</p>
+                    </article>
+                  </div>
+                  
+                  <div className="rounded-2xl border border-border/60 bg-card p-4">
+                     <p className="mb-4 text-sm font-semibold flex items-center gap-2">Vitals Monitoring Trend <span className={getSourceBadgeClass(monitoring?.bp_source)}>{monitoring?.bp_source_label || "No Sync"}</span></p>
+                     {(resolvedSystolicBp > 0) ? (
+                        <MonitoringChart 
+                          type="bp"
+                          data={[
+                            { label: "Past", systolic: 118, diastolic: 78 },
+                            { label: "Recent", systolic: 119, diastolic: 79 },
+                            { label: "Today", systolic: resolvedSystolicBp, diastolic: resolvedDiastolicBp }
+                          ]}
+                        />
+                     ) : (
+                        <div className="state-card-empty h-[150px]">Log BP to see trend</div>
+                     )}
+                  </div>
+                </div>
+              )}
+              
+              {activeTab === "activity" && (
+                <div className="space-y-4">
+                  <div className="grid gap-3 sm:grid-cols-2">
+                    <article className="rounded-2xl border border-health-teal/30 bg-health-teal/10 p-4">
+                      <p className="mb-1 text-xs font-semibold text-health-teal flex items-center gap-1.5"><Activity className="h-3.5 w-3.5" /> Steps Activity</p>
+                      <p className="text-xl font-bold text-foreground">{resolvedActivitySteps} <span className="text-xs text-muted-foreground font-normal">steps</span></p>
+                      <div className="mt-3 h-1.5 rounded-full bg-health-teal/20">
+                        <div className="h-full rounded-full bg-health-teal" style={{ width: `${Math.min(100, (resolvedActivitySteps / 10000) * 100)}%` }} />
+                      </div>
+                    </article>
+                    <article className="rounded-2xl border border-health-teal/30 bg-health-teal/10 p-4">
+                      <p className="mb-1 text-xs font-semibold text-health-teal flex items-center gap-1.5"><UtensilsCrossed className="h-3.5 w-3.5" /> Workout Time</p>
+                      <p className="text-xl font-bold text-foreground">{resolvedWorkoutMinutes} <span className="text-xs text-muted-foreground font-normal">mins</span></p>
+                      <div className="mt-3 h-1.5 rounded-full bg-health-teal/20">
+                        <div className="h-full rounded-full bg-health-teal" style={{ width: `${Math.min(100, (resolvedWorkoutMinutes / 60) * 100)}%` }} />
+                      </div>
+                    </article>
+                  </div>
+                </div>
+              )}
 
-          <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            <article className="rounded-2xl border border-border/60 bg-background/60 p-3">
-              <p className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                <Moon className="h-3.5 w-3.5" />
-                Sleep
-              </p>
-              <p className="mt-1 text-sm font-semibold">{resolvedSleepDuration} mins</p>
-              <p className="text-[11px] text-muted-foreground">Quality: {resolvedSleepQuality}</p>
-            </article>
-            <article className="rounded-2xl border border-border/60 bg-background/60 p-3">
-              <p className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                <Activity className="h-3.5 w-3.5" />
-                Activity
-              </p>
-              <p className="mt-1 text-sm font-semibold">{resolvedActivitySteps} steps</p>
-              <p className="text-[11px] text-muted-foreground">Workout: {resolvedWorkoutMinutes} mins</p>
-            </article>
-            <article className="rounded-2xl border border-border/60 bg-background/60 p-3">
-              <p className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                <HeartPulse className="h-3.5 w-3.5" />
-                Cardiac Pulse
-              </p>
-              <p className="mt-1 text-sm font-semibold">HR {resolvedHeartRate} bpm</p>
-              <p className="text-[11px] text-muted-foreground">{getPulseInterpretation(resolvedHeartRate)}</p>
-            </article>
-            <article className="rounded-2xl border border-border/60 bg-background/60 p-3">
-              <p className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-                <UtensilsCrossed className="h-3.5 w-3.5" />
-                Food Alert
-              </p>
-              <p className="mt-1 text-sm font-semibold">{resolvedFoodAlert}</p>
-              <p className="text-[11px] text-muted-foreground">{resolvedFoodItem}</p>
-            </article>
-          </div>
+              {activeTab === "sleep" && (
+                <div className="space-y-4">
+                  <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                    <article className="rounded-2xl border border-health-indigo/30 bg-health-indigo/10 p-4">
+                      <p className="mb-1 text-xs font-semibold text-health-indigo flex items-center gap-1.5"><Moon className="h-3.5 w-3.5" /> Sleep Duration</p>
+                      <p className="text-xl font-bold text-foreground">{(resolvedSleepDuration / 60).toFixed(1)} <span className="text-xs text-muted-foreground font-normal">hours</span></p>
+                    </article>
+                    <article className="rounded-2xl border border-health-indigo/30 bg-health-indigo/10 p-4">
+                      <p className="mb-1 text-xs font-semibold text-health-indigo">Sleep Quality</p>
+                      <p className="text-xl font-bold text-foreground">{resolvedSleepQuality}<span className="text-xs text-muted-foreground font-normal">/100</span></p>
+                    </article>
+                  </div>
+                </div>
+              )}
 
-          <div className="mt-3 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            <article className="rounded-2xl border border-border/60 bg-background/60 p-3">
-              <p className="text-xs text-muted-foreground">Blood Pressure</p>
-              <p className="mt-1 text-sm font-semibold">
-                {resolvedSystolicBp}/{resolvedDiastolicBp} mmHg
-              </p>
-              <p className="text-[11px] text-muted-foreground">{getBpInterpretation(resolvedSystolicBp, resolvedDiastolicBp)}</p>
-            </article>
-            <article className="rounded-2xl border border-border/60 bg-background/60 p-3">
-              <p className="text-xs text-muted-foreground">SpO2</p>
-              <p className="mt-1 text-sm font-semibold">{resolvedSpo2}%</p>
-              <p className="text-[11px] text-muted-foreground">{getSpo2Interpretation(resolvedSpo2)}</p>
-            </article>
-            <article className="rounded-2xl border border-border/60 bg-background/60 p-3">
-              <p className="text-xs text-muted-foreground">Temperature</p>
-              <p className="mt-1 text-sm font-semibold">{resolvedTemperature} °C</p>
-              <p className="text-[11px] text-muted-foreground">Core body temperature reading</p>
-            </article>
-            <article className="rounded-2xl border border-border/60 bg-background/60 p-3">
-              <p className="text-xs text-muted-foreground">Vitals Timestamp</p>
-              <p className="mt-1 text-sm font-semibold">{formatDateTime(resolvedVitalsLoggedAt)}</p>
-              <p className="text-[11px] text-muted-foreground">
-                {resolvedVitalsSourceNote || "Latest clinical capture"}
-              </p>
-            </article>
-          </div>
+              {activeTab === "risk" && (
+                <div className="space-y-4">
+                  <article className="rounded-2xl border border-amber-500/30 bg-amber-500/10 p-4">
+                      <h3 className="mb-3 font-semibold text-foreground flex items-center gap-2">
+                         <AlertTriangle className="h-4 w-4 text-amber-600" />
+                         Rule-Based Assessment
+                      </h3>
+                      {overview?.rule_based_risk ? (
+                        <div className="space-y-2">
+                           <div className="flex items-center gap-2">
+                             <span className="text-sm text-amber-800">Heart Risk:</span>
+                             <span className="source-tag bg-white/50 border-amber-500/20 text-amber-900">{overview.rule_based_risk.heart_risk}</span>
+                           </div>
+                           <div className="flex items-center gap-2">
+                             <span className="text-sm text-amber-800">Diabetes Risk:</span>
+                             <span className="source-tag bg-white/50 border-amber-500/20 text-amber-900">{overview.rule_based_risk.diabetes_risk}</span>
+                           </div>
+                           <p className="text-sm text-amber-900 mt-2 p-3 bg-amber-500/10 rounded-xl leading-relaxed">{overview.rule_based_risk.reason}</p>
+                        </div>
+                      ) : (
+                        <p className="state-card bg-amber-500/10 text-amber-800">No recent data for risk calculation.</p>
+                      )}
+                  </article>
+                </div>
+              )}
+            </div>
+          )}
         </section>
       ) : null}
 

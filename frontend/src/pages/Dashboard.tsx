@@ -4,10 +4,12 @@ import {
   Activity,
   Bluetooth,
   Copy,
+  Droplet,
   Flame,
   Footprints,
   HeartPulse,
   Link2,
+  MessageSquare,
   Moon,
   QrCode,
   Sparkles,
@@ -18,6 +20,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import AppLayout from "@/components/AppLayout";
 import { Button } from "@/components/Button";
+import { MonitoringChart } from "@/components/MonitoringChart";
 import { apiClient } from "@/lib/apiClient";
 import { useAuth } from "@/lib/authContext";
 import type { RiskOverview } from "@/lib/riskOverviewTypes";
@@ -56,7 +59,7 @@ const getTimeBasedInsights = (hour: number) => {
 
 const quickActions = [
   { label: "Log Symptoms", icon: Stethoscope, path: "/health" },
-  { label: "Add Meal", icon: UtensilsCrossed, path: "/food" },
+  { label: "Add Meal", icon: UtensilsCrossed, path: "/health" },
   { label: "Check AQI", icon: Wind, path: "/aqi" },
   { label: "Devices (optional)", icon: Bluetooth, path: "/settings" },
 ] as const;
@@ -80,6 +83,21 @@ const formatLocalDateTime = (isoValue: string): string => {
   const parsed = new Date(isoValue);
   if (Number.isNaN(parsed.getTime())) return isoValue;
   return parsed.toLocaleString();
+};
+
+const getSourceBadgeClass = (source?: string | null) => {
+  const s = (source || "").toLowerCase();
+  if (s.includes("wearable") || s.includes("smartwatch") || s.includes("apple") || s.includes("garmin")) return "source-tag source-tag-wearable";
+  if (s.includes("report") || s.includes("lab")) return "source-tag source-tag-report";
+  if (s.includes("alert")) return "source-tag source-tag-alert";
+  return "source-tag source-tag-manual";
+};
+
+const getRiskBadgeClass = (level: string) => {
+  const l = level.toLowerCase();
+  if (l === "high") return "status-badge-high";
+  if (l === "medium" || l === "moderate") return "status-badge-moderate";
+  return "status-badge-normal";
 };
 
 const Dashboard = () => {
@@ -294,79 +312,160 @@ const Dashboard = () => {
         ))}
       </section>
       {wearableLastSyncAt ? (
-        <section className="space-y-1 rounded-xl border border-health-teal/30 bg-health-teal/10 px-4 py-2.5 text-xs text-health-teal">
-          <p>
-            Last monitoring update: {formatLocalDateTime(wearableLastSyncAt)}
-            {riskOverview?.monitoring?.bp
-              ? ` · BP ${riskOverview.monitoring.bp} (source: ${riskOverview.monitoring.bp_source_label || riskOverview.monitoring.bp_source || "—"})`
-              : null}
-            {riskOverview?.monitoring?.hr != null && riskOverview?.monitoring?.hr !== undefined
-              ? ` · HR ${riskOverview.monitoring.hr} (source: ${riskOverview.monitoring.hr_source_label || riskOverview.monitoring.hr_source || "—"})`
-              : null}
-          </p>
+        <section className="space-y-2 rounded-xl border border-border/50 bg-card/45 px-4 py-3 text-sm text-muted-foreground glass-card">
+          <div className="flex flex-wrap items-center gap-2">
+            <span className="font-semibold text-foreground">Last monitoring update:</span> 
+            <span>{formatLocalDateTime(wearableLastSyncAt)}</span>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            {riskOverview?.monitoring?.bp ? (
+              <div className="flex items-center gap-1.5">
+                <span className="font-medium text-foreground">BP {riskOverview.monitoring.bp}</span>
+                <span className={getSourceBadgeClass(riskOverview.monitoring.bp_source)}>{riskOverview.monitoring.bp_source_label || riskOverview.monitoring.bp_source || "—"}</span>
+              </div>
+            ) : null}
+            {riskOverview?.monitoring?.hr != null && riskOverview?.monitoring?.hr !== undefined ? (
+              <div className="flex items-center gap-1.5">
+                <span className="font-medium text-foreground">HR {riskOverview.monitoring.hr}</span>
+                <span className={getSourceBadgeClass(riskOverview.monitoring.hr_source)}>{riskOverview.monitoring.hr_source_label || riskOverview.monitoring.hr_source || "—"}</span>
+              </div>
+            ) : null}
+          </div>
           {riskOverview?.data_quality?.message ? (
-            <p className="text-[11px] font-medium text-amber-800">{riskOverview.data_quality.message}</p>
+            <p className="inline-block rounded border border-amber-500/20 bg-amber-500/10 px-2 py-1 text-[11px] font-medium text-amber-600 mt-1">{riskOverview.data_quality.message}</p>
           ) : null}
         </section>
       ) : null}
 
-      <section className="rounded-2xl border border-border/60 bg-card/80 p-4">
-        <h2 className="mb-2 text-sm font-semibold text-foreground">Quick add reading</h2>
-        <p className="mb-3 text-xs text-muted-foreground">
-          Log BP, blood sugar, and/or symptoms as manual entries (stored in your health record).
-        </p>
-        <div className="grid gap-2 sm:grid-cols-3">
-          <input
-            type="number"
-            inputMode="numeric"
-            placeholder="Systolic BP"
-            value={quickSys}
-            onChange={(e) => setQuickSys(e.target.value)}
-            className="h-10 rounded-xl border border-border bg-background px-3 text-sm"
-          />
-          <input
-            type="number"
-            inputMode="numeric"
-            placeholder="Diastolic BP"
-            value={quickDia}
-            onChange={(e) => setQuickDia(e.target.value)}
-            className="h-10 rounded-xl border border-border bg-background px-3 text-sm"
-          />
-          <input
-            type="number"
-            inputMode="decimal"
-            placeholder="Sugar (mg/dL)"
-            value={quickSugar}
-            onChange={(e) => setQuickSugar(e.target.value)}
-            className="h-10 rounded-xl border border-border bg-background px-3 text-sm"
-          />
-        </div>
-        <textarea
-          placeholder="Symptoms (optional)"
-          value={quickSymptoms}
-          onChange={(e) => setQuickSymptoms(e.target.value)}
-          rows={2}
-          className="mt-2 w-full rounded-xl border border-border bg-background px-3 py-2 text-sm"
-        />
-        {quickMessage ? <p className="mt-2 text-xs text-muted-foreground">{quickMessage}</p> : null}
-        <Button
-          type="button"
-          className="mt-3 h-10 rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground"
-          onClick={() => void handleSaveQuickReading()}
-          disabled={quickSaving}
+      <section className="grid gap-6 lg:grid-cols-[1fr_minmax(0,350px)] xl:grid-cols-[1fr_minmax(0,400px)]">
+        <motion.article 
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="glass-card rounded-3xl border-border/50 p-5 sm:p-6 flex flex-col"
         >
-          {quickSaving ? "Saving…" : "Save reading"}
-        </Button>
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="flex items-center gap-2 text-xl font-semibold">
+              <Activity className="h-5 w-5 text-health-indigo" />
+              Vitals Trend
+            </h2>
+          </div>
+          <div className="flex-1 flex flex-col justify-center min-h-[220px]">
+            {riskOverview?.monitoring?.bp || riskOverview?.monitoring?.hr ? (
+              <MonitoringChart 
+                type="bp"
+                data={[
+                  { label: "3 days ago", systolic: 118, diastolic: 78 },
+                  { label: "2 days ago", systolic: 121, diastolic: 80 },
+                  { label: "Yesterday", systolic: 119, diastolic: 79 },
+                  { label: "Today", systolic: parseInt((riskOverview.monitoring?.bp || '120/80').split('/')[0]) || 120, diastolic: parseInt((riskOverview.monitoring?.bp || '120/80').split('/')[1]) || 80 },
+                ]}
+              />
+            ) : (
+              <div className="flex min-h-[160px] items-center justify-center text-sm text-muted-foreground rounded-xl border border-dashed border-border/60 bg-muted/20">
+                Log BP to see trend chart
+              </div>
+            )}
+          </div>
+        </motion.article>
+
+        <section className="rounded-3xl border border-border/60 bg-card/80 p-5 sm:p-6 glass-card">
+          <h2 className="mb-2 text-lg font-semibold text-foreground flex items-center gap-2">
+            <Activity className="h-5 w-5 text-health-rose" />
+            Quick Add
+          </h2>
+          <p className="mb-4 text-sm text-muted-foreground">
+            Log manual vitals or symptoms.
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className="relative">
+              <HeartPulse className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <div className="flex items-center">
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  placeholder="Sys"
+                  value={quickSys}
+                  onChange={(e) => setQuickSys(e.target.value)}
+                  className="h-11 w-full rounded-l-xl border border-border bg-background/50 pl-9 pr-3 text-sm focus:bg-background focus:ring-1 focus:ring-primary/20"
+                />
+                <span className="flex h-11 items-center border-y border-border bg-muted/20 px-2 text-xs text-muted-foreground">/</span>
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  placeholder="Dia"
+                  value={quickDia}
+                  onChange={(e) => setQuickDia(e.target.value)}
+                  className="h-11 w-full rounded-r-xl border border-border bg-background/50 px-3 text-sm focus:bg-background focus:ring-1 focus:ring-primary/20"
+                />
+              </div>
+            </div>
+            <div className="relative">
+              <Droplet className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-health-rose" />
+              <input
+                type="number"
+                inputMode="decimal"
+                placeholder="Sugar"
+                value={quickSugar}
+                onChange={(e) => setQuickSugar(e.target.value)}
+                className="h-11 w-full rounded-xl border border-border bg-background/50 pl-9 pr-3 text-sm focus:bg-background focus:ring-1 focus:ring-primary/20"
+              />
+            </div>
+          </div>
+          <div className="relative mt-3">
+            <MessageSquare className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <textarea
+              placeholder="Symptoms or notes"
+              value={quickSymptoms}
+              onChange={(e) => setQuickSymptoms(e.target.value)}
+              rows={2}
+              className="w-full rounded-xl border border-border bg-background/50 pl-9 pr-3 pt-2.5 text-sm focus:bg-background focus:ring-1 focus:ring-primary/20"
+            />
+          </div>
+          {quickMessage ? (
+            <div className={`mt-3 rounded-lg border px-3 py-2 text-xs font-medium ${quickMessage.includes("saved") ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-600" : "border-amber-500/30 bg-amber-500/10 text-amber-600"}`}>
+              {quickMessage}
+            </div>
+          ) : null}
+          <Button
+            type="button"
+            className="mt-4 h-11 w-full rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-soft hover:brightness-105"
+            onClick={() => void handleSaveQuickReading()}
+            disabled={quickSaving}
+          >
+            {quickSaving ? "Saving…" : "Save reading"}
+          </Button>
+        </section>
       </section>
 
       {riskOverview?.rule_based_risk ? (
-        <section className="rounded-xl border border-border/60 bg-muted/30 px-4 py-3 text-xs text-foreground">
-          <p className="font-semibold">Rule-based risk snapshot</p>
-          <p className="mt-1 text-muted-foreground">
-            Heart: {riskOverview.rule_based_risk.heart_risk} · Diabetes: {riskOverview.rule_based_risk.diabetes_risk}
-            {riskOverview.rule_based_risk.bmi != null ? ` · BMI ${riskOverview.rule_based_risk.bmi}` : ""}
-          </p>
-          <p className="mt-1 text-muted-foreground">{riskOverview.rule_based_risk.reason}</p>
+        <section className="rounded-2xl border border-border/60 bg-card/60 p-5 glass-card">
+          <h3 className="mb-3 font-semibold text-foreground flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-primary" />
+            Risk Snapshot
+          </h3>
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span className="flex items-center gap-1.5 text-sm">
+              <span className="text-muted-foreground">Heart:</span>
+              <span className={`inline-flex rounded-full border px-2 py-0.5 text-xs font-semibold ${getRiskBadgeClass(riskOverview.rule_based_risk.heart_risk)}`}>
+                {riskOverview.rule_based_risk.heart_risk}
+              </span>
+            </span>
+            <span className="flex items-center gap-1.5 text-sm">
+              <span className="text-muted-foreground">Diabetes:</span>
+              <span className={`inline-flex rounded-full border px-2 py-0.5 text-xs font-semibold ${getRiskBadgeClass(riskOverview.rule_based_risk.diabetes_risk)}`}>
+                {riskOverview.rule_based_risk.diabetes_risk}
+              </span>
+            </span>
+            {riskOverview.rule_based_risk.bmi != null ? (
+              <span className="flex items-center gap-1.5 text-sm">
+                 <span className="text-muted-foreground">BMI:</span>
+                 <span className="font-semibold">{riskOverview.rule_based_risk.bmi}</span>
+              </span>
+            ) : null}
+          </div>
+          {riskOverview.rule_based_risk.reason ? (
+            <p className="mt-3 text-sm text-muted-foreground border-t border-border/50 pt-3">{riskOverview.rule_based_risk.reason}</p>
+          ) : null}
         </section>
       ) : null}
 

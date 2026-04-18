@@ -1,19 +1,25 @@
 import { useEffect, useMemo, useState } from "react";
 import {
+  Activity,
   CalendarClock,
   Camera,
   Clock3,
   Download,
+  FileText,
+  HeartPulse,
   Link2,
+  Moon,
   QrCode,
   RefreshCw,
   Stethoscope,
   UserRound,
+  UtensilsCrossed,
   X,
 } from "lucide-react";
 import AppLayout from "@/components/AppLayout";
 import { Button } from "@/components/Button";
 import CameraCaptureModal from "@/components/CameraCaptureModal";
+import { SkeletonCard, SkeletonMetric } from "@/components/SkeletonLoader";
 import { doctors } from "@/data/hospitalData";
 import { getAccessToken, getApiBaseUrl } from "@/lib/auth";
 import { apiClient } from "@/lib/apiClient";
@@ -512,7 +518,7 @@ const Doctor = () => {
           <p className="mb-4 text-sm text-muted-foreground">
             Open popup to scan QR/code or enter patient ID. Connected patient data syncs automatically.
           </p>
-          {connectSuccess ? <div className="mb-3 rounded-lg border border-green-500/30 bg-green-500/10 px-3 py-2 text-sm text-green-500">{connectSuccess}</div> : null}
+          {connectSuccess ? <div className="state-card-success mb-3">{connectSuccess}</div> : null}
           <Button type="button" className="h-10 rounded-xl px-4 text-xs" onClick={() => setShowConnectModal(true)}>
             <Link2 className="h-4 w-4" />
             Connect Patient
@@ -524,44 +530,57 @@ const Doctor = () => {
           <p className="mb-4 text-sm text-muted-foreground">
             {isLoadingPatients ? "Refreshing patient list..." : `Total connected: ${connectedPatients.length}`}
           </p>
-          <div className="space-y-2.5">
+          <div className="space-y-3">
             {connectedPatients.length ? (
               connectedPatients.map((row) => (
                 <article
                   key={row.patient.id}
-                  className={`w-full rounded-2xl border px-3.5 py-3 text-left transition ${
+                  className={`group relative flex w-full flex-col gap-3 rounded-2xl border px-4 py-3.5 transition-all duration-300 ${
                     selectedPatientId === row.patient.id
-                      ? "border-primary/45 bg-primary/10"
-                      : "border-border/60 bg-card/55"
+                      ? "border-primary/40 bg-primary/5 shadow-[0_0_15px_-3px_rgba(20,184,166,0.15)]"
+                      : "border-border/60 bg-card/55 hover:border-border hover:bg-card/80 shadow-sm"
                   }`}
                 >
-                  <button
-                    type="button"
-                    onClick={() => setSelectedPatientId(row.patient.id)}
-                    className="w-full text-left"
-                  >
-                    <p className="text-sm font-semibold">{row.patient.full_name}</p>
-                    <p className="mt-1 text-xs text-muted-foreground">
-                      Age {row.patient.age} | {row.patient.gender || "N/A"}
-                    </p>
-                    <p className="mt-1 text-[11px] text-muted-foreground">Linked: {formatDateTime(row.linked_at)}</p>
-                  </button>
-                  <div className="mt-3 flex justify-end">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      className="h-8 rounded-lg px-3 text-[11px] text-red-600 hover:text-red-700"
-                      disabled={isDisconnectingPatientId === row.patient.id}
-                      onClick={() => void handleDisconnectPatient(row.patient.id)}
-                    >
-                      {isDisconnectingPatientId === row.patient.id ? "Disconnecting..." : "Disconnect"}
-                    </Button>
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-primary/5 text-sm font-bold text-primary ring-1 ring-primary/30">
+                      {row.patient.full_name.split(" ").map(n => n[0]).join("").substring(0, 2).toUpperCase()}
+                    </div>
+                    <div className="flex-1 overflow-hidden">
+                      <div className="flex items-center justify-between">
+                        <p className="truncate text-sm font-semibold">{row.patient.full_name}</p>
+                        <span className="shrink-0 text-[10px] uppercase text-muted-foreground ml-2">ID: {row.patient.id}</span>
+                      </div>
+                      <p className="truncate text-xs text-muted-foreground">
+                        Age: <span className="font-medium text-foreground">{row.patient.age}</span> • {row.patient.gender || "Undisclosed"}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between border-t border-border/40 pt-3">
+                     <p className="text-[10px] text-muted-foreground">Last Access: {formatDateTime(row.last_accessed_at || row.linked_at)}</p>
+                     <div className="flex items-center gap-2">
+                       <button
+                         type="button"
+                         onClick={() => setSelectedPatientId(row.patient.id)}
+                         className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition ${selectedPatientId === row.patient.id ? 'bg-primary text-primary-foreground' : 'bg-primary/10 text-primary hover:bg-primary/20'}`}
+                       >
+                         {selectedPatientId === row.patient.id ? "Viewing" : "View Report"}
+                       </button>
+                       <button
+                         type="button"
+                         onClick={() => void handleDisconnectPatient(row.patient.id)}
+                         className="rounded-lg p-1.5 text-muted-foreground hover:bg-red-500/10 hover:text-red-500 transition"
+                         disabled={isDisconnectingPatientId === row.patient.id}
+                         title="Disconnect"
+                       >
+                         <X className="h-4 w-4" />
+                       </button>
+                     </div>
                   </div>
                 </article>
               ))
             ) : (
-              <div className="rounded-2xl border border-dashed border-border/70 bg-card/45 px-3.5 py-4 text-sm text-muted-foreground">
-                No connected patient yet. Ask patient to generate QR/code from profile.
+              <div className="state-card-empty">
+                No connected patients. <br /><span className="text-xs">Ask patient to generate QR/code.</span>
               </div>
             )}
           </div>
@@ -632,86 +651,105 @@ const Doctor = () => {
           ) : null}
         </div>
 
-        {reportError ? <div className="mb-3 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-500">{reportError}</div> : null}
+        {reportError ? <div className="state-card-error mb-3">{reportError}</div> : null}
 
         {isLoadingReport ? (
-          <div className="rounded-xl border border-border/60 bg-card/45 px-3 py-4 text-sm text-muted-foreground">Loading report...</div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+             <SkeletonMetric />
+             <SkeletonMetric />
+             <SkeletonCard />
+             <SkeletonCard />
+          </div>
         ) : patientReport ? (
           <div className="space-y-4">
+            <h3 className="text-lg font-semibold mt-4">Latest Vitals</h3>
             <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-              <article className="rounded-2xl border border-border/60 bg-card/55 p-3">
-                <p className="text-xs text-muted-foreground">Sleep</p>
-                <p className="mt-1 text-sm font-semibold">{resolvedSleepDuration} mins</p>
-                <p className="text-[11px] text-muted-foreground">Quality: {resolvedSleepQuality}</p>
+              <article className="rounded-2xl border border-health-cyan/30 bg-health-cyan/10 p-4 relative overflow-hidden group">
+                <div className="absolute right-0 top-0 h-full w-1/2 bg-gradient-to-r from-transparent to-health-cyan/10 opacity-0 transition-opacity group-hover:opacity-100" />
+                <p className="mb-2 text-xs font-semibold text-health-cyan flex items-center gap-1.5"><HeartPulse className="h-3.5 w-3.5" /> Blood Pressure</p>
+                <div className="flex items-baseline gap-1">
+                   <p className="text-2xl font-bold text-foreground">{resolvedSystolicBp}/{resolvedDiastolicBp}</p>
+                   <span className="text-xs text-muted-foreground">mmHg</span>
+                </div>
+                <p className="text-[11px] text-muted-foreground/80 mt-1">{getBpInterpretation(resolvedSystolicBp, resolvedDiastolicBp)}</p>
               </article>
-              <article className="rounded-2xl border border-border/60 bg-card/55 p-3">
-                <p className="text-xs text-muted-foreground">Activity</p>
-                <p className="mt-1 text-sm font-semibold">{resolvedActivitySteps} steps</p>
-                <p className="text-[11px] text-muted-foreground">Workout: {resolvedWorkoutMinutes} mins</p>
+              <article className="rounded-2xl border border-health-rose/30 bg-health-rose/10 p-4 relative overflow-hidden group">
+                <div className="absolute right-0 top-0 h-full w-1/2 bg-gradient-to-r from-transparent to-health-rose/10 opacity-0 transition-opacity group-hover:opacity-100" />
+                <p className="mb-2 text-xs font-semibold text-health-rose flex items-center gap-1.5"><Activity className="h-3.5 w-3.5" /> Heart Rate</p>
+                <div className="flex items-baseline gap-1">
+                   <p className="text-2xl font-bold text-foreground">{resolvedHeartRate}</p>
+                   <span className="text-xs text-muted-foreground">bpm</span>
+                </div>
+                <p className="text-[11px] text-muted-foreground/80 mt-1">{getPulseInterpretation(resolvedHeartRate)}</p>
               </article>
-              <article className="rounded-2xl border border-border/60 bg-card/55 p-3">
-                <p className="text-xs text-muted-foreground">Cardiac Pulse</p>
-                <p className="mt-1 text-sm font-semibold">HR {resolvedHeartRate} bpm</p>
-                <p className="text-[11px] text-muted-foreground">{getPulseInterpretation(resolvedHeartRate)}</p>
+              <article className="rounded-2xl border border-border/60 bg-background/60 p-4">
+                <p className="mb-2 text-xs font-semibold text-muted-foreground">SpO2</p>
+                <div className="flex items-baseline gap-1">
+                   <p className="text-xl font-bold text-foreground">{resolvedSpo2}</p>
+                   <span className="text-xs text-muted-foreground">%</span>
+                </div>
+                <p className="text-[11px] text-muted-foreground mt-1">{getSpo2Interpretation(resolvedSpo2)}</p>
               </article>
-              <article className="rounded-2xl border border-border/60 bg-card/55 p-3">
-                <p className="text-xs text-muted-foreground">Food Alert</p>
-                <p className="mt-1 text-sm font-semibold">{foodOverview?.latest_alert?.toUpperCase() || "N/A"}</p>
-                <p className="text-[11px] text-muted-foreground">{foodOverview?.latest_item || "No latest meal"}</p>
+              <article className="rounded-2xl border border-border/60 bg-background/60 p-4">
+                <p className="mb-2 text-xs font-semibold text-muted-foreground">Temperature</p>
+                <div className="flex items-baseline gap-1">
+                   <p className="text-xl font-bold text-foreground">{resolvedTemperature}</p>
+                   <span className="text-xs text-muted-foreground">°C</span>
+                </div>
+                <p className="text-[11px] text-muted-foreground mt-1">Core body reading</p>
               </article>
             </div>
 
-            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-              <article className="rounded-2xl border border-border/60 bg-card/55 p-3">
-                <p className="text-xs text-muted-foreground">Blood Pressure</p>
-                <p className="mt-1 text-sm font-semibold">
-                  {resolvedSystolicBp}/{resolvedDiastolicBp} mmHg
-                </p>
-                <p className="text-[11px] text-muted-foreground">{getBpInterpretation(resolvedSystolicBp, resolvedDiastolicBp)}</p>
+            <h3 className="text-lg font-semibold mt-6">Lifestyle Profile</h3>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <article className="rounded-2xl border border-health-indigo/30 bg-health-indigo/10 p-4">
+                <p className="mb-1 text-xs font-semibold text-health-indigo flex items-center gap-1.5"><Moon className="h-3.5 w-3.5" /> Sleep Quality</p>
+                <p className="mt-2 text-xl font-bold text-foreground">{(resolvedSleepDuration/60).toFixed(1)} <span className="text-xs text-muted-foreground font-normal">hrs</span></p>
+                <p className="text-[11px] text-health-indigo/80 mt-1">Score: {resolvedSleepQuality}/100</p>
               </article>
-              <article className="rounded-2xl border border-border/60 bg-card/55 p-3">
-                <p className="text-xs text-muted-foreground">SpO2</p>
-                <p className="mt-1 text-sm font-semibold">{resolvedSpo2}%</p>
-                <p className="text-[11px] text-muted-foreground">{getSpo2Interpretation(resolvedSpo2)}</p>
+              <article className="rounded-2xl border border-health-teal/30 bg-health-teal/10 p-4">
+                <p className="mb-1 text-xs font-semibold text-health-teal flex items-center gap-1.5"><Activity className="h-3.5 w-3.5" /> Recent Activity</p>
+                <p className="mt-2 text-xl font-bold text-foreground">{resolvedActivitySteps} <span className="text-xs text-muted-foreground font-normal">steps</span></p>
+                <p className="text-[11px] text-health-teal/80 mt-1">{resolvedWorkoutMinutes} min active workout</p>
               </article>
-              <article className="rounded-2xl border border-border/60 bg-card/55 p-3">
-                <p className="text-xs text-muted-foreground">Temperature</p>
-                <p className="mt-1 text-sm font-semibold">{resolvedTemperature} °C</p>
-                <p className="text-[11px] text-muted-foreground">Core body temperature reading</p>
-              </article>
-              <article className="rounded-2xl border border-border/60 bg-card/55 p-3">
-                <p className="text-xs text-muted-foreground">Vitals Timestamp</p>
-                <p className="mt-1 text-sm font-semibold">{formatDateTime(resolvedVitalsLoggedAt)}</p>
-                <p className="text-[11px] text-muted-foreground">Latest clinical capture</p>
+              <article className="rounded-2xl border border-border/60 bg-background/60 p-4">
+                <p className="mb-1 text-xs font-semibold text-muted-foreground flex items-center gap-1.5"><UtensilsCrossed className="h-3.5 w-3.5" /> Food Alerts</p>
+                <p className="mt-2 text-sm font-semibold text-foreground overflow-hidden text-ellipsis whitespace-nowrap" title={foodOverview?.latest_item || "No latest meal"}>{foodOverview?.latest_item || "No logged meals"}</p>
+                <p className={`text-[11px] mt-1 font-semibold ${(foodOverview?.latest_alert?.toLowerCase() === 'high') ? 'text-health-rose' : 'text-muted-foreground'}`}>Alert Level: {foodOverview?.latest_alert?.toUpperCase() || "N/A"}</p>
               </article>
             </div>
 
-            <div className="rounded-2xl border border-border/60 bg-card/55 p-3.5">
-              <p className="text-sm font-semibold">Risk Assessment History</p>
-              <div className="mt-2 space-y-2">
+            <div className="rounded-2xl border border-border/60 bg-card/60 p-5 glass-card mt-6">
+              <p className="text-sm font-semibold mb-4">Risk Assessment History</p>
+              <div className="space-y-3">
                 {patientReport.recent_risk_assessments.length ? (
                   patientReport.recent_risk_assessments.map((risk) => (
-                    <article key={`${risk.risk_type}-${risk.generated_at}`} className="rounded-xl border border-border/60 bg-card px-3 py-2">
-                      <div className="flex flex-wrap items-center justify-between gap-2">
-                        <p className="text-sm font-semibold">
-                          {risk.risk_type} ({risk.risk_level})
-                        </p>
-                        <span className="text-[11px] text-muted-foreground">{formatDateTime(risk.generated_at)}</span>
+                    <article key={`${risk.risk_type}-${risk.generated_at}`} className="rounded-xl border border-border/60 bg-background/50 px-4 py-3">
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div className="flex items-center gap-2">
+                          <p className="text-sm font-semibold">{risk.risk_type}</p>
+                          <span className={`inline-flex rounded-full border px-2 py-0.5 text-[10px] uppercase tracking-wider font-semibold ${risk.risk_level.toLowerCase() === 'high' ? 'border-health-rose/40 bg-health-rose/10 text-health-rose' : risk.risk_level.toLowerCase() === 'moderate' || risk.risk_level.toLowerCase() === 'medium' ? 'border-amber-500/40 bg-amber-500/10 text-amber-600' : 'border-health-teal/40 bg-health-teal/10 text-health-teal'}`}>
+                             {risk.risk_level}
+                          </span>
+                        </div>
+                        <span className="text-[10px] text-muted-foreground uppercase">{formatDateTime(risk.generated_at)}</span>
                       </div>
-                      <p className="mt-1 text-xs text-muted-foreground">{risk.summary}</p>
+                      <p className="mt-2 text-sm text-foreground/80 leading-relaxed border-t border-border/40 pt-2">{risk.summary}</p>
                     </article>
                   ))
                 ) : (
-                  <div className="rounded-xl border border-dashed border-border/70 bg-card px-3 py-3 text-xs text-muted-foreground">
-                    No risk history available for this patient yet.
+                  <div className="state-card-empty">
+                    No risk history available. Wait for automatic AI generation or user trigger.
                   </div>
                 )}
               </div>
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-dashed border-border/70 bg-card/45 px-3 py-4 text-sm text-muted-foreground">
-            Connect and select a patient to open their report.
+          <div className="state-card-empty flex flex-col items-center justify-center px-6 py-10">
+            <FileText className="h-8 w-8 text-muted-foreground/50 mb-3" />
+            <p className="font-semibold text-foreground">No Patient Selected</p>
+            <p className="mt-1 text-sm text-muted-foreground max-w-sm">Connect a new patient or select an existing one from the list to view their comprehensive clinical report.</p>
           </div>
         )}
       </section>
@@ -751,9 +789,9 @@ const Doctor = () => {
               </button>
             </div>
 
-            {connectError ? <div className="mb-3 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-500">{connectError}</div> : null}
+            {connectError ? <div className="state-card-error mb-3">{connectError}</div> : null}
             {connectSuccess ? (
-              <div className="mb-3 rounded-lg border border-green-500/30 bg-green-500/10 px-3 py-2 text-sm text-green-500">{connectSuccess}</div>
+              <div className="state-card-success mb-3">{connectSuccess}</div>
             ) : null}
 
             <div className="grid gap-2 sm:grid-cols-[1fr,auto]">
@@ -761,7 +799,7 @@ const Doctor = () => {
                 value={connectCode}
                 onChange={(event) => setConnectCode(event.target.value)}
                 placeholder="Enter connect code (example: CSXXXXXXXXXX)"
-                className="h-10 rounded-xl border border-border/60 bg-card px-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/25"
+                className="h-10 rounded-xl border border-border/60 bg-card px-3 text-sm text-foreground outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/20"
               />
               <Button type="button" className="h-10 rounded-xl px-4 text-xs" onClick={() => void handleConnectWithCode()} disabled={isConnecting}>
                 <Link2 className="h-4 w-4" />
@@ -774,7 +812,7 @@ const Doctor = () => {
                 value={patientIdInput}
                 onChange={(event) => setPatientIdInput(event.target.value)}
                 placeholder="Or enter patient ID (example: 12)"
-                className="h-10 rounded-xl border border-border/60 bg-card px-3 text-sm text-foreground outline-none focus:ring-2 focus:ring-primary/25"
+                className="h-10 rounded-xl border border-border/60 bg-card px-3 text-sm text-foreground outline-none transition focus:border-primary/40 focus:ring-2 focus:ring-primary/20"
               />
               <Button type="button" variant="outline" className="h-10 rounded-xl px-4 text-xs" onClick={() => void handleConnectWithPatientId()} disabled={isConnecting}>
                 <UserRound className="h-4 w-4" />

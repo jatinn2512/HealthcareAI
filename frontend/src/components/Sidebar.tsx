@@ -8,7 +8,6 @@ import {
   Crown,
   HeartPulse,
   LayoutDashboard,
-  Leaf,
   Settings,
   Siren,
   Stethoscope,
@@ -108,7 +107,7 @@ const Sidebar = ({ onNavigate }: SidebarProps) => {
     <div className="flex h-full min-h-0 flex-col">
       <button
         type="button"
-        className="flex items-center gap-3 border-b border-border/60 px-4 py-6 text-left"
+        className="flex items-center gap-3 border-b border-border/60 px-4 py-6 text-left transition hover:bg-primary/5"
         onClick={() => {
           onNavigate?.();
           navigate(homeRoute);
@@ -131,15 +130,21 @@ const Sidebar = ({ onNavigate }: SidebarProps) => {
             onClick={() => onNavigate?.()}
             className={({ isActive }) =>
               cn(
-                "group flex items-center gap-3 rounded-xl px-3.5 py-3 text-[15px] font-medium transition-all duration-200",
+                "group relative flex items-center gap-3 overflow-hidden rounded-xl px-3.5 py-3 text-[15px] font-medium transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/35",
                 isActive
-                  ? "bg-primary text-primary-foreground shadow-soft"
-                  : "text-muted-foreground hover:bg-muted/60 hover:text-foreground",
+                  ? "bg-primary text-primary-foreground shadow-soft ring-1 ring-primary/40"
+                  : "text-muted-foreground hover:bg-primary/10 hover:text-primary",
               )
             }
           >
             {({ isActive }) => (
               <>
+                <span
+                  className={cn(
+                    "absolute left-1 top-1/2 h-7 w-1 -translate-y-1/2 rounded-full bg-primary-foreground/70 opacity-0 transition",
+                    isActive ? "opacity-100" : "group-hover:opacity-60",
+                  )}
+                />
                 <link.icon className="h-5 w-5" />
                 <span>{link.label}</span>
                 {isActive ? <ChevronRight className="ml-auto h-4 w-4" /> : null}
@@ -150,7 +155,7 @@ const Sidebar = ({ onNavigate }: SidebarProps) => {
       </nav>
 
       <div className="border-t border-border/60 p-4">
-        <div className="rounded-2xl border border-border/60 bg-card/70 p-3.5">
+        <div className="rounded-2xl border border-border/60 bg-card/70 p-3.5 shadow-soft">
           <p className="text-center text-sm text-muted-foreground">{utilityTitle}</p>
           <Button
             type="button"

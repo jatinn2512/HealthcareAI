@@ -85,7 +85,7 @@ const Register = () => {
         </section>
 
         <section className="w-full">
-          <div className="mx-auto w-full max-w-[560px] rounded-[28px] border border-border/70 bg-card p-6 shadow-[0_22px_55px_-34px_rgba(15,23,42,0.35)] sm:p-8">
+          <div className="mx-auto w-full max-w-[560px] rounded-[28px] border border-border/70 bg-card/95 p-6 shadow-[0_22px_55px_-34px_rgba(15,23,42,0.35)] backdrop-blur-xl sm:p-8">
             <div className="mb-6 flex items-start justify-between gap-3">
               <div>
                 <button
@@ -122,7 +122,7 @@ const Register = () => {
                 <label htmlFor="name" className="mb-2 block text-sm font-semibold text-foreground">
                   Full Name
                 </label>
-                <div className="flex h-12 items-center gap-2 rounded-2xl border border-border bg-background/60 px-3">
+                <div className="flex h-12 items-center gap-2 rounded-2xl border border-border bg-background/60 px-3 transition focus-within:border-primary/45 focus-within:ring-2 focus-within:ring-primary/20">
                   <UserRound className="h-4 w-4 text-muted-foreground" />
                   <input
                     id="name"
@@ -140,7 +140,7 @@ const Register = () => {
                 <label htmlFor="email" className="mb-2 block text-sm font-semibold text-foreground">
                   Email
                 </label>
-                <div className="flex h-12 items-center gap-2 rounded-2xl border border-border bg-background/60 px-3">
+                <div className="flex h-12 items-center gap-2 rounded-2xl border border-border bg-background/60 px-3 transition focus-within:border-primary/45 focus-within:ring-2 focus-within:ring-primary/20">
                   <Mail className="h-4 w-4 text-muted-foreground" />
                   <input
                     id="email"
@@ -158,7 +158,7 @@ const Register = () => {
                 <label htmlFor="password" className="mb-2 block text-sm font-semibold text-foreground">
                   Password
                 </label>
-                <div className="flex h-12 items-center gap-2 rounded-2xl border border-border bg-background/60 px-3">
+                <div className="flex h-12 items-center gap-2 rounded-2xl border border-border bg-background/60 px-3 transition focus-within:border-primary/45 focus-within:ring-2 focus-within:ring-primary/20">
                   <Lock className="h-4 w-4 text-muted-foreground" />
                   <input
                     id="password"
@@ -184,7 +184,7 @@ const Register = () => {
                 <label htmlFor="confirm-password" className="mb-2 block text-sm font-semibold text-foreground">
                   Confirm Password
                 </label>
-                <div className="flex h-12 items-center gap-2 rounded-2xl border border-border bg-background/60 px-3">
+                <div className="flex h-12 items-center gap-2 rounded-2xl border border-border bg-background/60 px-3 transition focus-within:border-primary/45 focus-within:ring-2 focus-within:ring-primary/20">
                   <Lock className="h-4 w-4 text-muted-foreground" />
                   <input
                     id="confirm-password"
